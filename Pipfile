@@ -10,6 +10,8 @@ django = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+selenium = "*"
+virtualenv = "*"
 
 [requires]
 python_version = "3.8"
