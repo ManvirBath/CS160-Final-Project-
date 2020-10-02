@@ -10,7 +10,7 @@ class Customer(models.Model):
     customer_id    = models.AutoField(primary_key=True)
     customer_id    = models.IntegerField(null=False)
     username       = models.CharField(max_length=36, unique=True, null=False)
-    password       = models.CharField(max_length=45, null=False)
+    password       = models.CharField(max_length=64, null=False)
     first_name     = models.CharField(max_length=36, null=False)
     last_name      = models.CharField(max_length=36, null=False)
     address        = models.CharField(max_length=100, null=False)
@@ -27,11 +27,14 @@ class SavingsAccount(models.Model):
     savings_acct_num = models.CharField(max_length=10, null=False, primary_key=True)
     savings_balance  = models.FloatField(null=False)
     status           = models.CharField(max_length=6, null=False)
+    routing_num      = models.CharField(max_length=9, null=False)
+
 
 class CheckingAccount(models.Model):
     checking_acct_num = models.CharField(max_length=10, null=False, primary_key=True)
     checking_balance  = models.FloatField(null=False)
     status            = models.CharField(max_length=6, null=False)
+    routing_num      = models.CharField(max_length=9, null=False)
 
 class DebitCard(models.Model):
     debit_card_num    = models.CharField(max_length=16, null=False, primary_key=True)
@@ -46,6 +49,8 @@ class Transactions(models.Model):
     trans_type        = models.CharField(max_length=25, null=False)
     location          = models.CharField(max_length=25, null=False)
     check_path        = models.CharField(max_length=25, unique=True, null=False)
+    memo              = models.CharField(max_length=255, null=False)
+		
 	
 class CustomerSavings(models.Model):
     customer_id       = models.IntegerField(null=False, db_index=True)

@@ -1,5 +1,3 @@
-
-
 drop table if exists card_transaction;
 drop table if exists checking_transaction;
 drop table if exists savings_transaction;
@@ -37,13 +35,15 @@ birthday        DATE not null
 create table savings_acct (
 savings_acct_num varchar(10) not null primary key,
 savings_balance float not null,
-status varchar(6) not null	
+status varchar(6) not null,
+routing_num varchar(9) not null	
 );
 
 create table checking_acct(
 checking_acct_num varchar(10) not null primary key,
 checking_balance float not null,
-status varchar(6) not null	
+status varchar(6) not null,
+routing_num varchar(9) not null		
 );
 
 create table debit_card (
@@ -59,7 +59,8 @@ amount	 float not null,
 trans_date DATE not null,
 trans_type varchar(25) not null,
 location varchar(25) not null,
-check_path varchar(255) unique		
+check_path varchar(255) unique,
+memo varchar(255)		
 );
 
 create table cust_savings (
@@ -119,12 +120,12 @@ insert into customer(username,password,first_name,last_name,address,city,state,z
 insert into customer(username,password,first_name,last_name,address,city,state,zipcode,phone_num,email_addr,birthday) values('ellewoods1','lik3itshard?', 'Elle', 'Woods', '1100 N Canon Dr', 'Beverly Hills', 'CA', 90210, '(424) 238-8710', 'ellewoodslaw@gmail.com', '1992-10-09');
 insert into customer(username,password,first_name,last_name,address,city,state,zipcode,phone_num,email_addr,birthday) values('jomarch','iluvwriting333', 'Jo', 'March', '2973 Walkman Court', 'Reno', 'NV', 78345, '(908)877-8970', 'jo.march.writes@gmail.com', '1989-01-01');
 
-insert into checking_acct values('4495610253',10056.87,'active');
-insert into checking_acct values('3486107813',547.00,'active');
-insert into checking_acct values('3713322887',89.34,'active');
-insert into checking_acct values('8458641605',1234567.89,'active');
-insert into checking_acct values('6382249707',50000.00,'active');
-insert into checking_acct values('2678867874',250.00,'active');
+insert into checking_acct values('4495610253',10056.87,'active', 265323074);
+insert into checking_acct values('3486107813',547.00,'active',265323074);
+insert into checking_acct values('3713322887',89.34,'active',265323074);
+insert into checking_acct values('8458641605',1234567.89,'active',265323074);
+insert into checking_acct values('6382249707',50000.00,'active',265323074);
+insert into checking_acct values('2678867874',250.00,'active',265323074);
 
 insert into debit_card values('6143485064446901','08/2024',123,7890);
 insert into debit_card values('8622345666728780','11/2023',345,8765);
@@ -147,9 +148,9 @@ insert into checking_debit values('8458641605','6855483415684734');
 insert into checking_debit values('6382249707','9402970241218315');
 insert into checking_debit values('2678867874','2337990709367116');
 
-insert into savings_acct values('6355184615',783.90,'active');
-insert into savings_acct values('9636929761',800.00,'active');
-insert into savings_acct values('2716389696',345678.89,'active');
+insert into savings_acct values('6355184615',783.90,'active',265323074);
+insert into savings_acct values('9636929761',800.00,'active',265323074);
+insert into savings_acct values('2716389696',345678.89,'active',265323074);
 
 insert into cust_savings values(2,'6355184615');
 insert into cust_savings values(3,'9636929761');
@@ -158,7 +159,7 @@ insert into cust_savings values(4,'2716389696');
 insert into transactions(transaction_id,amount,trans_date,trans_type,location) values('RXT55D8CKYSF',-100.00,'2020-09-24','withdraw','n/a');
 insert into transactions(transaction_id,amount,trans_date,trans_type,location) values('LR9F7YI7BCFE',-26.34,'2020-08-02','other','n/a');
 insert into transactions(transaction_id,amount,trans_date,trans_type,location) values('58XK7YZ7FM9K',-250.00,'2020-04-18','send','internal');
-insert into transactions(transaction_id,amount,trans_date,trans_type,location) values('GOEI9F904PLU',300.00,'2020-09-01','deposit','n/a');
+insert into transactions(transaction_id,amount,trans_date,trans_type,location,memo) values('GOEI9F904PLU',300.00,'2020-09-01','deposit','n/a','Deposit paycheck');
 insert into transactions(transaction_id,amount,trans_date,trans_type,location) values('R9V14WQALO0B',-30.91,'2020-05-12','withdraw','n/a');
 
 insert into checking_transaction values('4495610253','RXT55D8CKYSF');
@@ -166,4 +167,3 @@ insert into savings_transaction values('2716389696','58XK7YZ7FM9K');
 insert into savings_transaction values('6355184615','GOEI9F904PLU');
 insert into checking_transaction values('2678867874','R9V14WQALO0B');
 insert into savings_transaction values('2716389696','LR9F7YI7BCFE');
-
