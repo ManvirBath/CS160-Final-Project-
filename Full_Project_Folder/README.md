@@ -33,6 +33,6 @@ TESTING
 
 2) If you want to do a test, make sure to put the word 'test' in the function in the 'tests.py' file.
 
-3) Then in the 'CS160-Final-Project-' directory, type the following command to run tests (MAKE SURE YOU'RE IN THE VIRTUAL ENVIRONMENT TO DO THIS):
+3) Then in the 'CS160-Final-Project-/Full_Project_Folder' directory, in another terminal tab, type the following command to run tests (MAKE SURE YOU'RE IN THE VIRTUAL ENVIRONMENT TO DO THIS):
 
 - python manage.py test
