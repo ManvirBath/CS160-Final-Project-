@@ -14,14 +14,14 @@ BEFORE RUNNING AND TESTING BACK-END:
 4) Then activate the virtual environment:
 - source .env/bin/activate
 
-5) You should be in the virtual environment and make sure to install these packages:
+5) You should be in the virtual environment (it should show '(.env) on the left side of your terminal) and make sure to install these packages:
 - pip install django
 - pip install selenium
 
 
 !!!! DO THIS BEFORE DOING ANY TESTS !!!
 MIGRATING THE MODEL AND USING THE TEST DATABASE (WHILE TESTING):
-1) Again, make sure you're in the 'CS160-Final-Project-' directory.
+1) Again, make sure you're in the 'CS160-Final-Project-/Full_Project_Folder' directory.
 
 2) Then do the following migration commands to make the database tables:
 - python manage.py makemigrations
