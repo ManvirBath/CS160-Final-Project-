@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chase ATM Finder</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js"></script>
+    <script
+     
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIwzALxUPNbatRBj3Xi1Uhp0fFzwWNBkE&callback=initMap&libraries=places&v=weekly"
+      defer></script>
+  </head>
+  <body>
+    <div class="atm-finder">
+      <div id="findatms">Find Chase ATMs near:</div>
+
+      <div id="locationField">
+        <input
+          id="autocomplete"
+          type="text"
+          placeholder="Enter starting address"
+        />
+      </div>
+    </div>
+
+    <div id="map"></div>
+
+    <!--Holds search results-->
+    <div id="listing">
+      <table id="resultsTable">
+        <tbody id="results"></tbody>
+      </table>
+    </div>
+
+    <!--Info window for each marker-->
+    <div style="display: none">
+      <div id="info-content">
+        <table>
+          <tr id="atm-url-row" class="atm_table_row">
+            <td id="atm-icon" class="atm_table_icon"></td>
+          </tr>
+          <tr id="atm-address-row" class="atm_table_row">
+            <td class="atm_attribute_name">Address:</td>
+            <td id="atm-address"></td>
+          </tr>
+          <tr id="atm-phone-row" class="atm_table_row">
+            <td class="atm_attribute_name">Telephone:</td>
+            <td id="atm-phone"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
