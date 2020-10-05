@@ -15,7 +15,7 @@ def home(request):
         filled_form = Customer(request.POST)
         if filled_form.is_valid():
             password = filled_form.cleaned_data['text']
-            password = hash_lib.sha256(password.encode('utf-8')).hexdigest()
+            password = hashlib.sha256(password.encode('utf-8')).hexdigest()
             try:
                 Hash.objects.get(password=password)
             except Form.DoesNotExist: # if the object doesn't exist, then make a new object
