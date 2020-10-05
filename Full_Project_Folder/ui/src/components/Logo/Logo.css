@@ -1,0 +1,9 @@
+.Logo_text {
+    font-size: 2em;
+    margin: 0.5em;
+    color: white;
+}
+.Logo {
+    display: flex;
+    flex-direction: column;
+}

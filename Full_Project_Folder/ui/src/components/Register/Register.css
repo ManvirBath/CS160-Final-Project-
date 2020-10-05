@@ -1,0 +1,38 @@
+.Register {
+    background-color: #4169e1;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20vh;
+}
+.Logo {
+    margin-bottom: 1.5em;
+}
+.Register input {
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.Register .header {
+    font-size: 1.5em;
+}
+.Register .footer {
+    margin: 5px;
+    color: #d3d3d3;
+}
+.Register .footer a {
+    color: white;
+}
+.Register button {
+    background: #7b97ea;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.Register button:hover {
+    background: #1c41b0;
+}

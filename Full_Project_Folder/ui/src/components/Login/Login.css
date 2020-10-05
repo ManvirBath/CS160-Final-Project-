@@ -1,0 +1,38 @@
+.Login {
+    background-color: #4169e1;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20vh;
+}
+.Logo {
+    margin-bottom: 1.5em;
+}
+.Login input {
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.Login .header {
+    font-size: 1.5em;
+}
+.Login .footer {
+    margin: 5px;
+    color: #d3d3d3;
+}
+.Login .footer a {
+    color: white;
+}
+.Login button {
+    background: #7b97ea;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.Login button:hover {
+    background: #1c41b0;
+}
