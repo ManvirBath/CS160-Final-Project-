@@ -103,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Custom User Model (taken from https://docs.djangoproject.com/en/3.1/topics/auth/customizing/#extending-user)
-#AUTH_USER_MODEL = 'test.Customer'
+AUTH_USER_MODEL = 'test.Client'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

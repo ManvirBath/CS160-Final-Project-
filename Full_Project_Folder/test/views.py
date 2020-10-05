@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .forms import Form
-from .models import Customer
+from .models import Client
 import hashlib 
 # Create your views here.
 # from django.http import HttpResponse
@@ -12,7 +12,7 @@ import hashlib
 # GOAL IS TO RETURN TEMPLATE
 def home(request):
     if request.method == 'POST':
-        filled_form = Customer(request.POST)
+        filled_form = Client(request.POST)
         if filled_form.is_valid():
             password = filled_form.cleaned_data['text']
             password = hashlib.sha256(password.encode('utf-8')).hexdigest()
