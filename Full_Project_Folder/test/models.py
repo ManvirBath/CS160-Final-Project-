@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 
 class Manager(models.Model):
     manager_id     = models.AutoField(primary_key=True)
@@ -6,7 +7,7 @@ class Manager(models.Model):
     mgr_username   = models.CharField(max_length=25, unique=True, null=False)
     mgr_pwd        = models.CharField(max_length=25, unique=True, null=False)
 
-class Customer(models.Model):
+class Customer(AbstractBaseUser):
     customer_id    = models.AutoField(primary_key=True)
     customer_id    = models.IntegerField(null=False)
     username       = models.CharField(max_length=36, unique=True, null=False)
@@ -50,8 +51,8 @@ class Transactions(models.Model):
     location          = models.CharField(max_length=25, null=False)
     check_path        = models.CharField(max_length=25, unique=True, null=False)
     memo              = models.CharField(max_length=255, null=False)
-		
-	
+
+
 class CustomerSavings(models.Model):
     customer_id       = models.IntegerField(null=False, db_index=True)
     savings_acct_num  = models.CharField(max_length=10, null=False)
