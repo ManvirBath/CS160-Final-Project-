@@ -1,17 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 
-class Manager(models.Model):
-    manager_id     = models.AutoField(primary_key=True)
-    manager_id     = models.IntegerField(null=False)
-    mgr_username   = models.CharField(max_length=25, unique=True, null=False)
-    mgr_pwd        = models.CharField(max_length=25, unique=True, null=False)
+class Client(AbstractBaseUser):
+    client_id    = models.AutoField(primary_key=True)
+    client_id    = models.IntegerField(null=False)
+    email_addr = models.CharField(max_length=255, unique=True, null=False)
+    password = models.CharField(max_length=64, null=False)
 
-class Customer(AbstractBaseUser):
-    customer_id    = models.AutoField(primary_key=True)
-    customer_id    = models.IntegerField(null=False)
-    username       = models.CharField(max_length=36, unique=True, null=False)
-    password       = models.CharField(max_length=64, null=False)
+    is_staff       = models.BooleanField(null=False)
+    is_superuser   = models.BooleanField(null=False)
+
     first_name     = models.CharField(max_length=36, null=False)
     last_name      = models.CharField(max_length=36, null=False)
     address        = models.CharField(max_length=100, null=False)
@@ -19,8 +17,10 @@ class Customer(AbstractBaseUser):
     state          = models.CharField(max_length=5, null=False)
     zipcode        = models.CharField(max_length=5, null=False)
     phone_num      = models.CharField(max_length=13, null=False)
-    email_addr     = models.CharField(max_length=255, null=False)
     birthday       = models.DateField(null=False)
+
+    USERNAME_FIELD = 'email_addr'
+    EMAIL_FIELD = 'email_addr'
 
 
 """ ACCOUNTS """
@@ -53,17 +53,17 @@ class Transactions(models.Model):
     memo              = models.CharField(max_length=255, null=False)
 
 
-class CustomerSavings(models.Model):
-    customer_id       = models.IntegerField(null=False, db_index=True)
+class ClientSavings(models.Model):
+    Client_id       = models.IntegerField(null=False, db_index=True)
     savings_acct_num  = models.CharField(max_length=10, null=False)
-    customer_id       = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    client_id       = models.ForeignKey('Client', on_delete=models.CASCADE)
     savings_acct_num  = models.ForeignKey('SavingsAccount', on_delete=models.CASCADE)
 
 
-class CustomerChecking(models.Model):
-    customer_id       = models.IntegerField(null=False)
+class ClientChecking(models.Model):
+    client_id       = models.IntegerField(null=False)
     checking_acct_num = models.CharField(max_length=10, null=False)
-    customer_id       = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    client_id       = models.ForeignKey('Client', on_delete=models.CASCADE)
     checking_acct_num = models.ForeignKey('CheckingAccount', on_delete=models.CASCADE)
 
 class CheckingDebit(models.Model):
