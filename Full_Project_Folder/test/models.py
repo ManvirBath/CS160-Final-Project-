@@ -1,5 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager
+
+class ClientManager(BaseUserManager):
+    def create_user(self, email, password):
+        if not email:
+            raise ValueError('Users must have an email address')
+
+        user = self.model(email_addr = self.normalize_email(email))
+        user.set_password(password)
+        user.save(using=self.db)
+        return user
+
+    def create_superuser(self, email, password):
+        user = self.create(email, password)
+        user.is_superuser = True
+        user.save(using=self.db)
+        return user
 
 class Client(AbstractBaseUser):
     client_id    = models.AutoField(primary_key=True)
@@ -19,6 +36,7 @@ class Client(AbstractBaseUser):
     phone_num      = models.CharField(max_length=13, null=False)
     birthday       = models.DateField(null=False)
 
+    objects = ClientManager()
     USERNAME_FIELD = 'email_addr'
     EMAIL_FIELD = 'email_addr'
 
