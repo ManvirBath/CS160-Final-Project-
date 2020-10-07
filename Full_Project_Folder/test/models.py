@@ -1,31 +1,38 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager
+from django.utils import timezone
+import datetime, uuid
 
 class ClientManager(BaseUserManager):
-    def create_user(self, email, password):
+    def create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError('Users must have an email address')
 
-        user = self.model(email_addr = self.normalize_email(email))
+        user = self.model(email = self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self.db)
         return user
 
-    def create_superuser(self, email, password):
-        user = self.create(email, password)
-        user.is_superuser = True
+    def create_superuser(self, email, password, **extra_fields):
+        user = self.create_user(email, password, **extra_fields)
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
         user.save(using=self.db)
         return user
 
 class Client(AbstractBaseUser):
-    client_id    = models.AutoField(primary_key=True)
-    client_id    = models.IntegerField(null=False)
-    email_addr = models.CharField(max_length=255, unique=True, null=False)
+    client_id    = models.IntegerField(null=False, primary_key=True)
+    email = models.EmailField(max_length=255, null=False, unique=True, default=uuid.uuid4())
     password = models.CharField(max_length=64, null=False)
 
-    is_staff       = models.BooleanField(null=False)
-    is_superuser   = models.BooleanField(null=False)
+    is_staff       = models.BooleanField(null=False, default=False)
+    is_superuser   = models.BooleanField(null=False, default=False)
 
     first_name     = models.CharField(max_length=36, null=False)
     last_name      = models.CharField(max_length=36, null=False)
@@ -34,11 +41,11 @@ class Client(AbstractBaseUser):
     state          = models.CharField(max_length=5, null=False)
     zipcode        = models.CharField(max_length=5, null=False)
     phone_num      = models.CharField(max_length=13, null=False)
-    birthday       = models.DateField(null=False)
+    birthday       = models.DateField(null=False, default=timezone.now)
 
     objects = ClientManager()
-    USERNAME_FIELD = 'email_addr'
-    EMAIL_FIELD = 'email_addr'
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
 
 
 """ ACCOUNTS """
@@ -72,14 +79,14 @@ class Transactions(models.Model):
 
 
 class ClientSavings(models.Model):
-    Client_id       = models.IntegerField(null=False, db_index=True)
+    client_id       = models.IntegerField(null=False, db_index=True)
     savings_acct_num  = models.CharField(max_length=10, null=False)
     client_id       = models.ForeignKey('Client', on_delete=models.CASCADE)
     savings_acct_num  = models.ForeignKey('SavingsAccount', on_delete=models.CASCADE)
 
 
 class ClientChecking(models.Model):
-    client_id       = models.IntegerField(null=False)
+    client_id       = models.IntegerField(null=False, primary_key=True)
     checking_acct_num = models.CharField(max_length=10, null=False)
     client_id       = models.ForeignKey('Client', on_delete=models.CASCADE)
     checking_acct_num = models.ForeignKey('CheckingAccount', on_delete=models.CASCADE)
