@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'test' # we put the app here
 ]
 
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -82,7 +84,6 @@ DATABASES = {
         'TEST_NAME': os.path.join(BASE_DIR, 'test_db.sqlite3'), # ANY testing will spin up a new database and destory it
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

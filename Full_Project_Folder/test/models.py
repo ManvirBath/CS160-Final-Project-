@@ -1,50 +1,65 @@
+from __future__ import unicode_literals
+
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import BaseUserManager
 from django.utils import timezone
-import datetime, uuid
+from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
+from django.contrib.auth.models import BaseUserManager
+import uuid, secrets
 
-class ClientManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError('Users must have an email address')
+from django.db import models
+from django.core.mail import send_mail
+from django.utils.translation import ugettext_lazy as _
 
-        user = self.model(email = self.normalize_email(email), **extra_fields)
-        user.set_password(password)
-        user.save(using=self.db)
-        return user
+from .managers import ClientManager
 
-    def create_superuser(self, email, password, **extra_fields):
-        user = self.create_user(email, password, **extra_fields)
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+# class Client(AbstractBaseUser):
+#     client_id    = models.AutoField(primary_key=True)
+#     client_id    = models.IntegerField(null=False, default=-1)
+#     email_addr   = models.EmailField(max_length=255, null=False, unique=True, default=uuid.uuid4())
+#     password     = models.CharField(max_length=64, null=False)
 
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-        user.save(using=self.db)
-        return user
+#     is_staff       = models.BooleanField(default=False, null=False)
+#     is_superuser   = models.BooleanField(default=False, null=False)
 
-class Client(AbstractBaseUser):
-    email = models.EmailField(max_length=255, null=False, unique=True, default=uuid.uuid4())
-    password = models.CharField(max_length=64, null=False)
+#     first_name     = models.CharField(max_length=36, null=False)
+#     last_name      = models.CharField(max_length=36, null=False)
+#     address        = models.CharField(max_length=100, null=False)
+#     city           = models.CharField(max_length=36, null=False)
+#     state          = models.CharField(max_length=5, null=False)
+#     zipcode        = models.CharField(max_length=5, null=False)
+#     phone_num      = models.CharField(max_length=13, null=False)
+#     birthday       = models.DateField(null=True)
 
-    is_staff       = models.BooleanField(null=False, default=False)
-    is_superuser   = models.BooleanField(null=False, default=False)
+#     objects = ClientManager()
+#     USERNAME_FIELD = 'email_addr'
+#     EMAIL_FIELD = 'email_addr'
 
-    first_name     = models.CharField(max_length=36, null=False)
-    last_name      = models.CharField(max_length=36, null=False)
+class Client(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_('email address'), unique=True)
+    first_name = models.CharField(_('first name'), max_length=30, blank=True)
+    last_name = models.CharField(_('last name'), max_length=30, blank=True)
+    is_active = models.BooleanField(_('active'), default=True)
+
     address        = models.CharField(max_length=100, null=False)
     city           = models.CharField(max_length=36, null=False)
     state          = models.CharField(max_length=5, null=False)
     zipcode        = models.CharField(max_length=5, null=False)
     phone_num      = models.CharField(max_length=13, null=False)
-    birthday       = models.DateField(null=False, default=timezone.now)
+    birthday       = models.DateField(null=True)
 
     objects = ClientManager()
+
+    is_staff       = models.BooleanField(default=False, null=False)
+    is_superuser   = models.BooleanField(default=False, null=False)
+
     USERNAME_FIELD = 'email'
-    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    class Meta:
+        verbose_name = _('client')
+        verbose_name_plural = _('clients')
+
 
 
 """ ACCOUNTS """
@@ -56,7 +71,7 @@ class SavingsAccount(models.Model):
         ('inactive', 'inactive'),
         ('active', 'active'),
     )
-    status      = models.CharField(max_length=6, null=False, choices=STATUS)
+    status      = models.CharField(max_length=8, null=False, choices=STATUS)
 
 class CheckingAccount(models.Model):
     account_num = models.CharField(max_length=10, null=False, primary_key=True)
@@ -66,7 +81,7 @@ class CheckingAccount(models.Model):
         ('inactive', 'inactive'),
         ('active', 'active'),
     )
-    status      = models.CharField(max_length=6, null=False, choices=STATUS)
+    status      = models.CharField(max_length=8, null=False, choices=STATUS)
 
 class DebitCard(models.Model):
     card_num    = models.CharField(max_length=16, null=False, primary_key=True)
@@ -89,29 +104,4 @@ class Transaction(models.Model):
     memo        = models.CharField(max_length=255, null=False)
 
 
-""" RECEIVED Transaction """
-class SavingsTransaction(models.Model):
-    savings_acct =  models.OneToOneField(
-                    SavingsAccount,
-                    on_delete=models.CASCADE,
-                    primary_key=True,
-                )
-    Transaction    = models.ForeignKey('Transaction', on_delete=models.CASCADE)
-
-class CheckingTransaction(models.Model):
-    checking_acct = models.OneToOneField(
-                    CheckingAccount,
-                    on_delete=models.CASCADE,
-                    primary_key=True,
-                )
-    Transaction    = models.ForeignKey('Transaction', on_delete=models.CASCADE)
-
-class CardTransaction(models.Model):
-    debit_card = models.OneToOneField(
-                DebitCard,
-                on_delete=models.CASCADE,
-                primary_key=True,
-    )
-
-    Transaction    = models.ForeignKey('Transaction', on_delete=models.CASCADE)
 
