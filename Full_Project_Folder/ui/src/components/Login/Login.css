@@ -1,5 +1,4 @@
 .Login {
-    background-color: #4169e1;
     align-items: center;
     flex-direction: column;
     display: flex;
@@ -26,6 +25,13 @@
     color: #d3d3d3;
 }
 .Login .footer a {
+    color: white;
+}
+.Login .footer1 {
+    color: white;
+    margin: 25px;
+}
+.Login .footer1 a {
     color: white;
 }
 .Login button {
