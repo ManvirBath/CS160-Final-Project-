@@ -2,7 +2,7 @@ from django.test import TestCase
 from selenium import webdriver
 from .forms import Form
 import hashlib 
-from .models import Customer
+from .models import Client
 
 # # these tests describe something that a user wants to do
 # class FunctionalTestCase(TestCase):
@@ -42,9 +42,9 @@ class UnitTestCase(TestCase):
     # DATABASE TESTING
     # for password
     def test_hash_object(self):
-        hash = Customer()
+        hash = Client()
         text = 'hello'
         hash.password = '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824'
         hash.save()
-        pulled_hash = Customer.objects.get(password='2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824')
+        pulled_hash = Client.objects.get(password='2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824')
         self.assertEqual(text, pulled_hash.password)
