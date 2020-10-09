@@ -15,12 +15,7 @@ Including another URLconf
 """
 from django.urls import include, path
 from django.contrib import admin
-<<<<<<< HEAD
 from rest_framework import routers
-=======
-from django.urls import path
-from django.urls import include
->>>>>>> 8ea189131057333e23a9ff6d6f09e003673e9b7e
 from test import views
 
 router = routers.DefaultRouter()
@@ -32,13 +27,8 @@ router.register(r'transactions', views.TransactionViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('staffbreakingbass/', admin.site.urls), # keep admin secret. 
-<<<<<<< HEAD
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-=======
-    path('', views.home, name="home"),
-    path('accounts/', include('django.contrib.auth.urls')),
->>>>>>> 8ea189131057333e23a9ff6d6f09e003673e9b7e
 ]
 
 # from django.contrib import admin
