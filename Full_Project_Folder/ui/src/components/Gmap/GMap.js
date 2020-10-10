@@ -14,7 +14,7 @@ const ANIMATION = {
     BOUNCE: 1,
     DROP: 2,
 };
-const API_KEY = 'AIzaSyAE9XIkwCfLXNWnf2-TVF0cHpOXX88pLeA';
+const API_KEY = 'AIzaSyDkOuv56cGnF3wRj-ufMisKuYR04orIiWQ';
 const MARKER_PATH =
     'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 const mapStyles = {
@@ -50,13 +50,19 @@ class MapContainer extends React.Component {
             infoWindow: null,
         };
     }
-    componentDidUpdate({ prevSearchedLocation }) {
-        const { searchedLocation } = this.state;
+    componentDidUpdate(prevProps, prevState) {
         if (
-            searchedLocation !== null &&
-            prevSearchedLocation !== searchedLocation
+            this.state.searchedLocation !== null &&
+            !Object.is(this.state.searchedLocation, prevState.searchedLocation)
         ) {
+            console.log('updating');
             this.searchNearBy();
+        }
+        if (
+            this.state.searchedLocation === null &&
+            prevState.searchedLocation !== null
+        ) {
+            this.setState({ atms: [] });
         }
     }
     onLoad(input) {
@@ -69,13 +75,14 @@ class MapContainer extends React.Component {
             this.placeService = new window.google.maps.places.PlacesService(
                 this.map
             );
-            debugger;
         }
     }
     searchNearBy() {
         const { map, placeService } = this;
+        const { searchedLocation } = this.state;
+        const bounds = map.getBounds();
         const search = {
-            bounds: map.getBounds(),
+            bounds: bounds,
             types: ['atm'],
             name: ['chase atm'],
         };
@@ -99,7 +106,6 @@ class MapContainer extends React.Component {
         }
     }
     getInfoWindow() {
-        console.log('getInfoWindow is called');
         const { infoWindow } = this.state;
         const {
             formatted_address = null,
@@ -151,7 +157,6 @@ class MapContainer extends React.Component {
         return xml;
     }
     markerClick(atm) {
-        console.log('markerClicked');
         const { place_id } = atm;
         const { placeService } = this;
         const request = {
@@ -213,7 +218,8 @@ class MapContainer extends React.Component {
                                         height: '32px',
                                         padding: '0 12px',
                                         borderRadius: '3px',
-                                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+                                        boxShadow:
+                                            '0 2px 6px rgba(0, 0, 0, 0.3)',
                                         fontSize: '14px',
                                         outline: 'none',
                                         textOverflow: 'ellipses',
