@@ -14,7 +14,7 @@ const ANIMATION = {
     BOUNCE: 1,
     DROP: 2,
 };
-const API_KEY = 'AIzaSyDkOuv56cGnF3wRj-ufMisKuYR04orIiWQ';
+const API_KEY = '';
 const MARKER_PATH =
     'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 const mapStyles = {
