@@ -7,7 +7,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
             dark: false,
         };
@@ -15,14 +15,11 @@ class Login extends React.Component {
     handlePassword(e) {
         this.setState({ password: e });
     }
-    handleUsername(e) {
-        this.setState({ username: e });
-    }
-    goDark() {
-        this.setState({ dark: true });
+    handleEmail(e) {
+        this.setState({ email: e });
     }
     render() {
-        const { username, password } = this.state;
+        const { email, password } = this.state;
         return (
             <div className="Login">
                 <div className="form">
@@ -33,8 +30,8 @@ class Login extends React.Component {
                     <input
                         className="form-control"
                         type="text"
-                        placeholder="Username"
-                        onChange={this.handleUsername.bind(this)}
+                        placeholder="Email Address"
+                        onChange={this.handleEmail.bind(this)}
                     />
                     <input
                         className="form-control"
@@ -45,7 +42,7 @@ class Login extends React.Component {
                     <button
                         className="btn"
                         onClick={() => {
-                            this.props.Login({ username, password });
+                            this.props.Login({ email, password });
                         }}
                     >
                         Login
@@ -57,6 +54,9 @@ class Login extends React.Component {
                 <div className="footer">
                     Forgot your password?{' '}
                     <Link to="/recovery">Recover Password</Link>
+                </div>
+                <div className="footer1">
+                    <Link to="/GMap">ATM Locator</Link>
                 </div>
             </div>
         );

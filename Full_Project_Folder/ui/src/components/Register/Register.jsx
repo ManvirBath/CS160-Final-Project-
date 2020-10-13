@@ -10,16 +10,29 @@ class Register extends React.Component {
             firstname: '',
             lastname: '',
             email: '',
-            username: '',
             password: '',
-            dark: false,
         };
+        this.email = this.email.bind(this);
+        this.password = this.password.bind(this);
+        this.firstname = this.firstname.bind(this);
+        this.lastname = this.lastname.bind(this);
     }
-    handlePassword(e) {}
-    handleUsername(e) {}
+
+    email(e) {
+        this.setState({ email: e.target.value });
+    }
+    password(e) {
+        this.setState({ password: e.target.value });
+    }
+    firstname(e) {
+        this.setState({ firstname: e.target.value });
+    }
+    lastname(e) {
+        this.setState({ lastname: e.target.value });
+    }
 
     render() {
-        const { username, password } = this.state;
+        const { email, password } = this.state;
         return (
             <div className="Register">
                 <div className="form">
@@ -31,36 +44,30 @@ class Register extends React.Component {
                         className="form-control"
                         type="text"
                         placeholder="First Name"
-                        onChange={this.handleUsername.bind(this)}
+                        onChange={this.firstname}
                     />
                     <input
                         className="form-control"
                         type="text"
                         placeholder="Last Name"
-                        onChange={this.handleUsername.bind(this)}
+                        onChange={this.lastname}
                     />
                     <input
                         className="form-control"
                         type="text"
                         placeholder="Email Address"
-                        onChange={this.handleUsername.bind(this)}
-                    />
-                    <input
-                        className="form-control"
-                        type="text"
-                        placeholder="Username"
-                        onChange={this.handleUsername.bind(this)}
+                        onChange={this.email}
                     />
                     <input
                         className="form-control"
                         type="password"
                         placeholder="Password"
-                        onChange={this.handlePassword.bind(this)}
+                        onChange={this.password}
                     />
                     <button
                         className="btn"
                         onClick={() => {
-                            this.props.Register({ username, password });
+                            this.props.Register({ email, password });
                         }}
                     >
                         Register
