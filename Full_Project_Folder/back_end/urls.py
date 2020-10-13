@@ -28,6 +28,7 @@ router.register(r'transactions', views.TransactionViewSet)
 urlpatterns = [
     path('staffbreakingbass/', admin.site.urls), # keep admin secret. 
     path('', include(router.urls)),
+    path('register/', views.register),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 

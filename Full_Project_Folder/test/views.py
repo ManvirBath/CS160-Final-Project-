@@ -11,32 +11,40 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer
 from .models import Client, Account, Transaction
+from .managers import ClientManager
 from django.db import IntegrityError, transaction
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
+from rest_framework.views import APIView
 
 # Create your views here.
-# from django.http import HttpResponse
-
-
-# def index(request):
-#     return HttpResponse("Congrats! You got something working!")
-
-# GOAL IS TO RETURN TEMPLATE
-def home(request):
-    if request.method == 'POST':
-        filled_form = Client(request.POST)
-        if filled_form.is_valid():
-            password = filled_form.cleaned_data['text']
-            password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-            try:
-                Hash.objects.get(password=password)
-            except Form.DoesNotExist: # if the object doesn't exist, then make a new object
-                form = Form()
-                form.password = password
-                form.save()
-
-    form = Form()
-    return render(request, 'test/home.html', {'form': form})
+@api_view(['POST'])
+def register(request):
+    serializer = ClientSerializer(data=request.data)
+    if serializer.is_valid():
+        try:
+            with transaction.atomic():
+                created_first_name = serializer.data['first_name'] # need to have this as part of posting in API --> tell front end!!!
+                created_last_name = serializer.data['last_name']
+                created_email = serializer.data['email']
+                created_password = request.data['password']
+                created_superuser = serializer.data['is_superuser']
+                
+                client_entry = Client(
+                    email = created_email,
+                    first_name = created_first_name,
+                    last_name = created_last_name,
+                    is_staff = created_superuser,
+                    is_superuser = created_superuser
+                )
+                client_entry.set_password(created_password)
+                client_entry.save()
+                
+        except IntegrityError as ex:
+            return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'status': 'Register successful'})
+    else:
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
 
 class ClientViewSet(viewsets.ModelViewSet):
     """
@@ -44,7 +52,8 @@ class ClientViewSet(viewsets.ModelViewSet):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
+        
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
@@ -140,6 +149,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 # TO DO LIST
   # AUTOMATED BILL PAYMENTS
 # reset password - API
-    # enter new password in
-# create user - API
-# login  - API
+    # enter new password in 
+# create user - API $
+# login  - API 

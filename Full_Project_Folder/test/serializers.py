@@ -9,6 +9,14 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
         model = Client
         fields = ('email', 'first_name', 'last_name', 'is_active', 'address', \
                   'city', 'state', 'zipcode', 'phone_num', 'birthday', 'is_superuser')
+        extra_kwargs = {'is_active': {'required': False},
+                        'address': {'required': False } ,
+                        'city': {'required': False} ,
+                        'state': {'required': False} ,
+                        'zipcode': {'required': False} ,
+                        'phone_num': {'required': False}, 
+                        'birthday':  {'required': False} }
+            
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
