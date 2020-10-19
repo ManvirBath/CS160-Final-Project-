@@ -9,7 +9,6 @@ class Login extends React.Component {
         this.state = {
             email: '',
             password: '',
-            dark: false,
         };
     }
     handlePassword(e) {
@@ -17,6 +16,21 @@ class Login extends React.Component {
     }
     handleEmail(e) {
         this.setState({ email: e });
+    }
+    componentDidMount() {
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow',
+            headers: {
+                mode: 'cors',
+                'Access-Control-Allow-Origin': '*',
+            },
+        };
+
+        fetch('http://localhost:8000/clients', requestOptions)
+            .then((response) => response.json())
+            .then((result) => console.log(result))
+            .catch((error) => console.log('error', error));
     }
     render() {
         const { email, password } = this.state;

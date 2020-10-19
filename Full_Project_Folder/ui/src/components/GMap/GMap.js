@@ -1,5 +1,4 @@
 import React from 'react';
-import './GMap.css';
 import {
     GoogleMap,
     LoadScript,
@@ -7,14 +6,13 @@ import {
     Marker,
     InfoWindow,
 } from '@react-google-maps/api';
-import { Link } from 'react-router-dom';
 
 const ANIMATION = {
     NOANIMATION: 0,
     BOUNCE: 1,
     DROP: 2,
 };
-const API_KEY = '';
+const API_KEY = 'AIzaSyDkOuv56cGnF3wRj-ufMisKuYR04orIiWQ';
 const MARKER_PATH =
     'https://developers.google.com/maps/documentation/javascript/images/marker_green';
 const mapStyles = {
@@ -51,6 +49,7 @@ class MapContainer extends React.Component {
         };
     }
     componentDidUpdate(prevProps, prevState) {
+        debugger;
         if (
             this.state.searchedLocation !== null &&
             !Object.is(this.state.searchedLocation, prevState.searchedLocation)
