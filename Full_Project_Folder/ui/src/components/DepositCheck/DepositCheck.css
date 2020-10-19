@@ -1,0 +1,75 @@
+body {
+    background-color: #7b97ea;
+}
+
+.PageHeader {
+    background-color: #d0cece;
+    height: 15%;
+}
+.PageHeader2 {
+    background-color: #d0cece;
+}
+
+h2,
+h4 {
+    font-family: 'Times New Roman', Times, serif;
+}
+.DepositCheck,
+.DepositCheckConfirm,
+.DepositCheckTransaction {
+    margin: auto;
+    height: 100vh;
+    background-position: center;
+    background-color: white;
+    width: 75%;
+}
+
+.leftHalf {
+    margin-left: 10%;
+    float: left;
+}
+.accounts {
+    align-items: relative;
+    flex-direction: column;
+    display: flex;
+    width: 50vh;
+}
+
+.amountInput {
+    align-items: relative;
+    flex-direction: column;
+    display: flex;
+    width: 25vh;
+}
+
+.memoInput {
+    width: 35%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.rightHalf {
+    margin-right: 15%;
+    float: right;
+}
+
+.checkImg {
+    display: block;
+    max-width: 750px;
+    height: 250px;
+}
+
+.details,
+.transactionInfo {
+    margin-left: 25%;
+    flex-direction: column;
+    display: flex;
+    margin-top: 10%;
+}
+
+.buttons {
+    position: absolute;
+    right: 25%;
+    margin-top: 2.5%;
+}

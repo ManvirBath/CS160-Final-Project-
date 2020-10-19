@@ -5,12 +5,16 @@ import Recovery from './components/Recovery';
 import Register from './components/Register';
 import GMap from './components/GMap';
 import UserDashboard from './components/UserDashboard';
+import DepositCheck from './components/DepositCheck';
+import DepositCheckConfirm from './components/DepositCheck/DepositCheckConfirm';
+import DepositCheckTransaction from './components/DepositCheck/DepositCheckTransaction';
 import {
     BrowserRouter as Router,
     Route,
     Switch,
     Redirect,
 } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class App extends React.Component {
     constructor(props) {
@@ -34,6 +38,15 @@ class App extends React.Component {
                         <Route
                             path="/userdashboard"
                             component={UserDashboard}
+                        />
+                        <Route path="/depositcheck" component={DepositCheck} />
+                        <Route
+                            path="/depositcheckconfirm"
+                            component={DepositCheckConfirm}
+                        />
+                        <Route
+                            path="/depositchecktransaction"
+                            component={DepositCheckTransaction}
                         />
                         <Redirect from="*" to="/login" />
                     </Switch>
