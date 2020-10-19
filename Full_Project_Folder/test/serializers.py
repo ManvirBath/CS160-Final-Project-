@@ -1,6 +1,7 @@
 # THIS IS WHERE WE TURN DATA INTO JSON. 
 from rest_framework import serializers
 
+
 # SERIALIZE EACH OF THE MODELS FIRST
 from .models import Client, Account, Transaction
 
@@ -32,6 +33,3 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
         extra_kwargs = {'trans_type': {'required': False},
                         'account': {'required': False } ,
                         'check_path': {'required': False} }
-
-
-

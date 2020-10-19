@@ -1,4 +1,5 @@
 from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render
 from .forms import Form
 from .models import Client
@@ -6,7 +7,7 @@ import hashlib
 
 from django.contrib.auth.models import User, Group
 from rest_framework import status, viewsets
-from rest_framework import permissions
+from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer
@@ -14,7 +15,7 @@ from .models import Client, Account, Transaction
 from .managers import ClientManager
 from django.db import IntegrityError, transaction
 from rest_framework.decorators import action, api_view
-from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 @api_view(['POST'])
@@ -52,8 +53,20 @@ class ClientViewSet(viewsets.ModelViewSet):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-        
+    permission_classes = [IsAuthenticated]
+
+    def retrieve(self, request, pk=None):
+        queryset = Client.objects.all()
+        client = get_object_or_404(queryset, pk=pk)
+
+        print(request.user)
+        print(client)
+        if client == request.user:
+            serializer = ClientSerializer(client)
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Unauthorized', status=401)
+
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
@@ -63,7 +76,8 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-    
+
+
     @action(detail=True, methods=['post'])
     def deposit(self, request, pk=None):
         """
@@ -144,11 +158,13 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
 # TO DO LIST
   # AUTOMATED BILL PAYMENTS
 # reset password - API
     # enter new password in 
 # create user - API $
-# login  - API 
+
+
+# login  - API
