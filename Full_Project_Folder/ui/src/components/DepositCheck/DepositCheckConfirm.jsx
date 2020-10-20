@@ -3,6 +3,11 @@ import "./DepositCheck.css";
 import { Link } from "react-router-dom";
 
 class DepositCheckConfirm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
     return (
       <div className="DepositCheckConfirm">
@@ -13,19 +18,30 @@ class DepositCheckConfirm extends React.Component {
           Please confirm your details before submitting.
         </h6>
         <div className="details">
-          <h4>Deposit to: [insert account info]</h4>
-          <h4>Amount: [insert amount]</h4>
-          <h4>Memo: [insert memo]</h4>
-          <h4>Check file: [insert check image info]</h4>
-          <h4>[insert check image]</h4>
+          <h4>
+            Deposit to: [insert account info]{this.props.location.account}
+          </h4>
+          <h4>Amount: {this.props.location.amount}</h4>
+          <h4>Memo: {this.props.location.memo}</h4>
+          <h4>Check file: {this.props.location.check_image}</h4>
+          <img src={this.props.location.check_image}></img>
         </div>
         <div className="buttons">
           <Link to="/depositcheck">
-            <button type="button" class="btn btn-warning">
-              Make Changes
+            <button type="button" class="btn btn-danger">
+              Start Over
             </button>
           </Link>
-          <Link to="/depositchecktransaction">
+          <Link
+            to={{
+              pathname: "/depositchecktransaction",
+              account: this.props.location.account,
+              amount: this.props.location.amount,
+              memo: this.props.location.memo,
+              file: this.props.location.file,
+              check_image: this.props.location.check_image,
+            }}
+          >
             <button type="button" class="btn btn-primary">
               Submit
             </button>

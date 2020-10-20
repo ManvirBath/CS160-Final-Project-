@@ -5,9 +5,16 @@ import { Link } from "react-router-dom";
 class DepositCheckTransaction extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      amount: this.props.location.amount,
+    };
+  }
+
+  check() {
+    console.log(this.state.amount);
   }
   render() {
+    const { amount } = this.state;
     return (
       <div className="DepositCheckTransaction">
         <div
@@ -23,9 +30,10 @@ class DepositCheckTransaction extends React.Component {
         </div>
         <div className="transactionInfo">
           <h4>Transaction Number: [insert transaction number]</h4>
-          <h4>Deposit to: [insert account info]</h4>
-          <h4>Amount: [insert amount]</h4>
-          <h4>Memo: [insert memo]</h4>
+          <h4>Deposit to: {this.props.location.account}</h4>
+          <h4>Amount: {this.props.location.amount}</h4>
+          <h4>Memo: {this.props.location.memo}</h4>
+          <h4>Check file: {this.props.location.check_image}</h4>
         </div>
         <div className="buttons">
           <Link to="/depositcheck">
@@ -34,7 +42,7 @@ class DepositCheckTransaction extends React.Component {
             </button>
           </Link>
           <Link to="/userdashboard">
-            <button type="button" class="btn btn-primary">
+            <button type="button" class="btn btn-primary" onClick={this.check}>
               Back to Dashboard
             </button>
           </Link>
