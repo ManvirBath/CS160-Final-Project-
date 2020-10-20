@@ -15,6 +15,7 @@ from .managers import ClientManager
 from django.db import IntegrityError, transaction
 from rest_framework.decorators import action, api_view
 from rest_framework.views import APIView
+from random import randint
 
 # Create your views here.
 @api_view(['POST'])
@@ -53,7 +54,31 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     # permission_classes = [permissions.IsAuthenticated]
-        
+
+    @action(detail=True, methods=['post'])
+    def create_account(self, request, pk=None):
+        client_now = self.get_object()
+        serializer = AccountSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                with transaction.atomic():
+                    submitted_type = serializer.data['account_type']
+
+                    account_entry = Account(
+                            account_num = randint(10000000, 99999999), # doesn't check if they're the same one.
+                            account_type = submitted_type,
+                            client = client_now,
+                            status = serializer.data['status']
+                        )
+                    account_entry.save()
+            
+            except IntegrityError as ex:
+                return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+            return Response({'status': 'create account successful'})
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
@@ -135,6 +160,11 @@ class AccountViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+        
+        # QUESITONS: for transfer externally? 
+
+        # Create Close (Delete) Account API (make sure to get the money first) --> transfer to another account
+
                 
 
 
@@ -150,5 +180,4 @@ class TransactionViewSet(viewsets.ModelViewSet):
   # AUTOMATED BILL PAYMENTS
 # reset password - API
     # enter new password in 
-# create user - API $
-# login  - API 
+# login  - API

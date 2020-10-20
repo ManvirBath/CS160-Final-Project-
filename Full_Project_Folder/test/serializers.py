@@ -22,7 +22,8 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Account
         fields = ('account_num', 'account_type', 'client', 'balance', 'status')
-
+        extra_kwargs = {'account_num': {'required': False},
+                        'client': {'required': False}, }
 class TransactionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Transaction

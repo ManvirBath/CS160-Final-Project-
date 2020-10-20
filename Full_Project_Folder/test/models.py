@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 
 from .managers import ClientManager
+from random import randint
 
 class Client(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), unique=True, null=False)
@@ -42,7 +43,7 @@ class Client(AbstractBaseUser, PermissionsMixin):
 
 """ ACCOUNTS """
 class Account(models.Model):
-    account_num = models.CharField(max_length=10, null=False, primary_key=True)
+    account_num = models.CharField(max_length=10, null=False, unique=True, primary_key=True)
     TYPE = (
         ('checking', 'checking'),
         ('savings', 'savings'),
