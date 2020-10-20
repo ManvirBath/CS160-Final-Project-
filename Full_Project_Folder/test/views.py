@@ -7,6 +7,8 @@ import hashlib
 from django.contrib.auth.models import User, Group
 from rest_framework import status, viewsets
 from rest_framework import permissions
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer
@@ -52,8 +54,19 @@ class ClientViewSet(viewsets.ModelViewSet):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-        
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, pk=None):
+        queryset = Client.objects.all()
+        client = get_object_or_404(queryset, pk=pk)
+
+        print(request.user)
+        print(client)
+        if client == request.user:
+            serializer = ClientSerializer(client)
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Unauthorized', status=403)
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
