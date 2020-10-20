@@ -85,7 +85,7 @@ class UserDashboard extends React.Component {
                                 </a>
                             </li>
                             <li className="nav-item" id="atm-finder">
-                                <a className="nav-link" href="#">
+                                <a className="nav-link" href="/GMap">
                                     Find ATM
                                 </a>
                             </li>

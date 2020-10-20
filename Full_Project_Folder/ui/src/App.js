@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import axiosInstance from './axios';
 import Login from './components/Login';
 import Recovery from './components/Recovery';
 import Register from './components/Register';

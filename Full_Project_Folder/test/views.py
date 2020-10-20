@@ -2,11 +2,13 @@ from django.core import serializers
 from django.shortcuts import render
 from .forms import Form
 from .models import Client
-import hashlib 
+import hashlib
 
 from django.contrib.auth.models import User, Group
 from rest_framework import status, viewsets
 from rest_framework import permissions
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
 
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer
@@ -28,7 +30,7 @@ def register(request):
                 created_email = serializer.data['email']
                 created_password = request.data['password']
                 created_superuser = serializer.data['is_superuser']
-                
+
                 client_entry = Client(
                     email = created_email,
                     first_name = created_first_name,
@@ -38,7 +40,7 @@ def register(request):
                 )
                 client_entry.set_password(created_password)
                 client_entry.save()
-                
+
         except IntegrityError as ex:
             return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({'status': 'Register successful'})
@@ -52,8 +54,19 @@ class ClientViewSet(viewsets.ModelViewSet):
     """
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-        
+    permission_classes = [permissions.IsAuthenticated]
+
+    def retrieve(self, request, pk=None):
+        queryset = Client.objects.all()
+        client = get_object_or_404(queryset, pk=pk)
+
+        print(request.user)
+        print(client)
+        if client == request.user:
+            serializer = ClientSerializer(client)
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Unauthorized', status=403)
 
 class AccountViewSet(viewsets.ModelViewSet):
     """
@@ -63,7 +76,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-    
+
     @action(detail=True, methods=['post'])
     def deposit(self, request, pk=None):
         """
@@ -80,7 +93,7 @@ class AccountViewSet(viewsets.ModelViewSet):
                     location_deposited = serializer.data['location']
                     memo_on_deposit = serializer.data['memo']
                     check_path_confirmed = serializer.data['check_path']
-                    
+
                     account.balance = account.balance + amount_for_deposit
                     account.save()
                     transaction_entry = Transaction(
@@ -117,7 +130,7 @@ class AccountViewSet(viewsets.ModelViewSet):
                         return Response({'error': 'withdraw cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     location_withdrawn = serializer.data['location']
                     memo_on_withdrawn = serializer.data['memo']
-                    
+
                     account.balance = account.balance - amount_for_withdraw
                     account.save()
                     transaction_entry = Transaction(
@@ -135,7 +148,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
-                
+
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -149,6 +162,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
 # TO DO LIST
   # AUTOMATED BILL PAYMENTS
 # reset password - API
-    # enter new password in 
+    # enter new password in
 # create user - API $
 # login  - API 
