@@ -6,37 +6,6 @@
     left: 0;
     background: white;
 }
-
-#header-title {
-    font-size: 1.805em;
-    position: absolute;
-    left: 80px;
-    top: 0px;
-    color: black;
-    background-color: #6941e1;
-    border-bottom: 10px solid;
-    border-bottom-color: #6941e1;
-    padding-right: 55.155em;
-    padding-left: 2.5em;
-    padding-top: 0.1em;
-    margin: 0 -2.8em;
-}
-#header-logoff {
-    font-size: 1.8em;
-    position: absolute;
-    left: 1825px;
-    top: 3px;
-    color: black;
-}
-
-.navlist {
-    position: absolute;
-    left: -15px;
-    top: 5.8vh;
-    height: 3em;
-    width: 100%;
-    font-size: 1.25em;
-}
 .container {
     position: absolute;
     color: black;

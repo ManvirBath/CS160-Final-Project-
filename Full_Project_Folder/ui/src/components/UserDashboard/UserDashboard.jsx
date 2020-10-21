@@ -1,8 +1,7 @@
 import React from 'react';
 import './UserDashboard.css';
 import Logo from '../Logo';
-import { Link } from 'react-router-dom';
-import { Button, Navbar, FormControl, Nav, Form } from 'react-bootstrap';
+import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -25,42 +24,7 @@ class UserDashboard extends React.Component {
         const { name, saving, checking } = this.state;
         return (
             <div className="userdashboard">
-                <div id="header-title">Deep Learning Bank</div>
-                <div id="header-logoff">
-                    <Button variant="light">Logout</Button>{' '}
-                </div>
-                <div className="navlist">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <a
-                                className="nav-link active"
-                                href="/userdashboard"
-                            >
-                                Account
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Pay Bill
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Transfer
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Withdraw/Deposit
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Open Account
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <UserNavigationBar />
                 <div className="container">
                     <div id="greeting">Hello, customer!</div>
                     <div id="dashboard-logo">
@@ -85,7 +49,7 @@ class UserDashboard extends React.Component {
                                 </a>
                             </li>
                             <li className="nav-item" id="atm-finder">
-                                <a className="nav-link" href="/GMap">
+                                <a className="nav-link" href="#">
                                     Find ATM
                                 </a>
                             </li>

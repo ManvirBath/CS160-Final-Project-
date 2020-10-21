@@ -1,19 +1,19 @@
 from django.test import TestCase
 from selenium import webdriver
 from .forms import Form
-import hashlib 
+import hashlib
 from .models import Client
 
 # # these tests describe something that a user wants to do
 # class FunctionalTestCase(TestCase):
 #     def setUp(self):
 #         self.browser = webdriver.Firefox()
-    
+
 #     # put the word test first to have django run the test
 #     def test_there_is_homepage(self):
 #         self.browser.get('http://localhost:8000')
 #         self.assertIn('Enter hash here: ', self.browser.page_source)
-    
+
 
 #     def test_hash_of_hello(self):
 #         self.browser.get('http://localhost:8000')
@@ -21,7 +21,7 @@ from .models import Client
 #         text.send_keys('hello')
 #         self.browser.find_element_by_name('submit').click()
 #         self.assertIn('123613681094890128349012849012839041', self.browser.page_source)
-    
+
 #     # what happens after we run all our tests
 #     def tearDown(self):
 #         self.browser.quit()  # closes down the browser
@@ -30,7 +30,7 @@ class UnitTestCase(TestCase):
     def test_home_homepage_template(self):
         response = self.client.get('/') # get response of homepage
         self.assertTemplateUsed(response, 'test/home.html')
-    
+
     def test_form(self):
         form = Form(data={'text': 'hello'}) # should be able to make form
         self.assertTrue(form.is_valid())

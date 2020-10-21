@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:8000';
+const baseURL = 'http://localhost:8000/';
 
 const axiosInstance = axios.create({
     baseURL: baseURL,
@@ -15,24 +15,14 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    async function (error) {
+    (response) => response,
+    (error) => {
         const originalRequest = error.config;
 
-        if (typeof error.response === 'undefined') {
-            alert(
-                'A server/network error occurred. ' +
-                    'Looks like CORS might be the problem. ' +
-                    'Sorry about this - we will get it fixed shortly.'
-            );
-            return Promise.reject(error);
-        }
-
+        // Prevent infinite loops
         if (
             error.response.status === 401 &&
-            originalRequest.url === baseURL + 'token/refresh/'
+            originalRequest.url === baseURL + 'api/token/refresh/'
         ) {
             window.location.href = '/login/';
             return Promise.reject(error);
@@ -54,7 +44,7 @@ axiosInstance.interceptors.response.use(
 
                 if (tokenParts.exp > now) {
                     return axiosInstance
-                        .post('/token/refresh/', { refresh: refreshToken })
+                        .post('api/token/refresh/', { refresh: refreshToken })
                         .then((response) => {
                             localStorage.setItem(
                                 'access_token',
