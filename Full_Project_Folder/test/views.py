@@ -53,8 +53,8 @@ class ClientViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None):
         client = self.queryset.get(pk=pk)
 
-        if client is request.user:
-            serializer = ClientSerializer(client)
+        if client == request.user:
+            serializer = ClientSerializer(client, context={'request' : request})
             return Response(serializer.data)
         else:
             return HttpResponse('Unauthorized', status=403)
@@ -72,7 +72,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         Gets all of the accounts that belong to the authenticated user making this API call
         """
         accounts = list(self.queryset.filter(client=request.user))
-        serializer = self.serializer_class(accounts, many=True)
+        serializer = self.serializer_class(accounts, many=True, context={'request' : request})
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -80,7 +80,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         Gets an account from the given account number
         """
         account = self.queryset.get(client=request.user)
-        serializer = self.serializer_class(account)
+        serializer = self.serializer_class(account, context={'request' : request})
         return Response(serializer.data)
 
     @action(detail=True, methods=['get'])
@@ -95,17 +95,16 @@ class AccountViewSet(viewsets.ModelViewSet):
             if account is None:
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
-            elif account.client is request.user:
+            elif account.client == request.user:
                 transaction_set = Transaction.objects.all()
                 transactions = list(transaction_set.filter(account=account))
 
-                if transactions is None:
-                    return Response(status=status.HTTP_404_NOT_FOUND)
-                else:
-                    serializer = TransactionSerializer(transactions, many=True)
-                    return Response(serializer.data)
+                serializer = TransactionSerializer(transactions, many=True, context={'request' : request})
+                return Response(serializer.data)
 
             else:
+                print(account.client)
+                print(request.user)
                 # choosing to return not found so that people can't search for account #s by looking at the response
                 return Response(status=status.HTTP_404_NOT_FOUND)
         else:
