@@ -1,6 +1,7 @@
 import React from "react";
 import "./DepositCheck.css";
 import { Link } from "react-router-dom";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class DepositCheckConfirm extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class DepositCheckConfirm extends React.Component {
   render() {
     return (
       <div className="DepositCheckConfirm">
+        <UserNavigationBar />
         <h1 className="PageHeader" class="jumbotron">
           Confirm check deposit
         </h1>
@@ -18,9 +20,7 @@ class DepositCheckConfirm extends React.Component {
           Please confirm your details before submitting.
         </h6>
         <div className="details">
-          <h4>
-            Deposit to: [insert account info]{this.props.location.account}
-          </h4>
+          <h4>Deposit to: {this.props.location.account}</h4>
           <h4>Amount: {this.props.location.amount}</h4>
           <h4>Memo: {this.props.location.memo}</h4>
           <h4>Check file: {this.props.location.check_image}</h4>

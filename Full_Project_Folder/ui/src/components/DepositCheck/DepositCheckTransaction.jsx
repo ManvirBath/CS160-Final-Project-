@@ -1,6 +1,7 @@
 import React from "react";
 import "./DepositCheck.css";
 import { Link } from "react-router-dom";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class DepositCheckTransaction extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class DepositCheckTransaction extends React.Component {
     const { amount } = this.state;
     return (
       <div className="DepositCheckTransaction">
+        <UserNavigationBar />
         <div
           className="TransactionAlert"
           class="alert alert-success"

@@ -1,6 +1,7 @@
 import React from "react";
 import "./DepositCheck.css";
 import { Link } from "react-router-dom";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class DepositCheck extends React.Component {
   constructor(props) {
@@ -20,8 +21,8 @@ class DepositCheck extends React.Component {
   }
 
   to_account(e) {
-    this.setState({ to_account: e.target.value });
-    console.log(e.target.value);
+    this.setState({ to_account: e.target.selectedOptions[0].text });
+    //alert(e.target.selectedOptions[0].text);
   }
   amount(e) {
     this.setState({ amount: e.target.value });
@@ -39,21 +40,23 @@ class DepositCheck extends React.Component {
   render() {
     return (
       <div className="DepositCheck">
+        <UserNavigationBar />
         <h1 className="PageHeader" class="jumbotron">
           Deposit check to account
         </h1>
         <div className="leftHalf">
-          <h2>To:</h2>
+          <h2>Deposit Money To:</h2>
           <select
             className="accounts"
             id="accounts"
             class="btn btn-light dropdown-toggle"
-            onChange={this.deposit_to_account}
+            onChange={this.to_account}
+            required
           >
-            <option value="acctNum" disabled selected>
-              Deposit Money To
+            <option value="acctNumFrom" disabled selected>
+              Deposit amount to
             </option>
-            <option value="Account1">Savings Account 123</option>
+            <option value="Account123">Savings Account 123</option>
             <option value="Account2">Savings Account 345</option>
             <option value="Account3">Checking Account 678</option>
           </select>
