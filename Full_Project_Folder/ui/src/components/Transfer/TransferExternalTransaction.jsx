@@ -1,9 +1,9 @@
 import React from 'react';
-import './DepositCheck.css';
+import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
-class DepositCheckTransaction extends React.Component {
+class TransferExternalTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,39 +11,35 @@ class DepositCheckTransaction extends React.Component {
         };
     }
 
-    check() {
-        console.log(this.state.amount);
-    }
+    check() {}
     render() {
         const { amount } = this.state;
         return (
             <div className="DepositCheckTransaction">
                 <UserNavigationBar />
-                <div
-                    className="TransactionAlert"
-                    class="alert alert-success"
-                    role="alert"
-                >
-                    <p>
-                        Thank you for depositing your check! Your transtion
-                        number for this deposit is [insert transaction number
-                        here]. Please contact us if you have any questions or
-                        concerns.
-                    </p>
+                <div className="headerDivTransaction">
+                    <div
+                        className="TransactionAlert"
+                        class="alert alert-success"
+                        role="alert"
+                    >
+                        <p>
+                            Thank you for your transfer request! Please contact
+                            us if you have any questions or concerns.
+                        </p>
+                    </div>
                 </div>
                 <div className="transactionInfo">
                     <h4>Transaction Number: [insert transaction number]</h4>
-                    <h4>Deposit to: {this.props.location.account}</h4>
+                    <h4>From: {this.props.location.from_acct}</h4>
+                    <h6>New Balance: [insert new balance]</h6>
+                    <h4>To: {this.props.location.to_acct}</h4>
+                    <h6>New Balance: [insert new balance]</h6>
+                    <h4>Routing number: {this.props.location.routing_num}</h4>
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Memo: {this.props.location.memo}</h4>
-                    <h4>Check file: {this.props.location.check_image}</h4>
                 </div>
                 <div className="buttons">
-                    <Link to="/depositcheck">
-                        <button type="button" class="btn btn-success">
-                            Make Another Deposit
-                        </button>
-                    </Link>
                     <Link to="/userdashboard">
                         <button
                             type="button"
@@ -59,4 +55,4 @@ class DepositCheckTransaction extends React.Component {
     }
 }
 
-export default DepositCheckTransaction;
+export default TransferExternalTransaction;

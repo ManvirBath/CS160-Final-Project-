@@ -21,6 +21,7 @@ class DepositCheck extends React.Component {
 
     to_account(e) {
         this.setState({ to_account: e.target.value });
+        console.log(e.target.value);
     }
     amount(e) {
         this.setState({ amount: e.target.value });
@@ -49,7 +50,7 @@ class DepositCheck extends React.Component {
                         class="btn btn-light dropdown-toggle"
                         onChange={this.deposit_to_account}
                     >
-                        <option value="" disabled selected>
+                        <option value="acctNum" disabled selected>
                             Deposit Money To
                         </option>
                         <option value="Account1">Savings Account 123</option>
@@ -86,7 +87,16 @@ class DepositCheck extends React.Component {
                         class="btn btn-secondary"
                     />
                     <img className="checkImg" src={this.state.file} />
-                    <Link to="/depositcheckconfirm">
+                    <Link
+                        to={{
+                            pathname: '/depositcheckconfirm',
+                            account: this.state.to_account,
+                            amount: this.state.amount,
+                            memo: this.state.memo,
+                            file: this.state.file,
+                            check_image: this.state.check_image,
+                        }}
+                    >
                         <button type="button" class="btn btn-primary">
                             Next
                         </button>

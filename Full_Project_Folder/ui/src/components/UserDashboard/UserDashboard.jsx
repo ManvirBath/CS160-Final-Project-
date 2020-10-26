@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UserDashboard.css';
 import Logo from '../Logo';
-import UserNavigationBar from '../UserNavBar/UserNavBar';
+import { Link, useHistory } from 'react-router-dom';
+import axiosInstance from '../../axios';
+import { Button, Navbar, FormControl, Nav, Form } from 'react-bootstrap';
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -12,6 +14,7 @@ class UserDashboard extends React.Component {
             savingAccount: '',
             checkingBalance: '',
             savingBalance: '',
+            accts: [],
         };
     }
     firstName(e) {}
@@ -20,23 +23,70 @@ class UserDashboard extends React.Component {
     checkingBalance(e) {}
     savingBalance(e) {}
 
+    componentDidMount() {
+        axiosInstance.get('/accounts/').then((res) => {
+            //console.log(res.data);
+            const d = res.data;
+            this.setState({ accts: d });
+            //const d = res.data.response.items;
+            //console.log(d.account_num);
+        });
+    }
     render() {
+        let acctTemplate = this.state.accts.map((v) => (
+            <div key={v.account_num} className="acctBox">
+                <div className={v.account_type}>
+                    {v.account_type}: {v.balance}
+                    <div>{v.account_num} Balance</div>
+                </div>
+            </div>
+        ));
         const { name, saving, checking } = this.state;
         return (
             <div className="userdashboard">
-                <UserNavigationBar />
+                <div id="header-title">Deep Learning Bank</div>
+                <div id="header-logoff">
+                    <Button variant="light">Logout</Button>{' '}
+                </div>
+                <div className="navlist">
+                    <ul className="nav nav-pills nav-fill">
+                        <li className="nav-item">
+                            <a
+                                className="nav-link active"
+                                href="/userdashboard"
+                            >
+                                Account
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Pay Bill
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Transfer
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Withdraw/Deposit
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">
+                                Open Account
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <div className="container">
                     <div id="greeting">Hello, customer!</div>
                     <div id="dashboard-logo">
                         <Logo color="rgb(0,0,0)"></Logo>
                     </div>
                     <div id="greeting2">Personal Accounts</div>
-                    <div className="checking">Checking: $$$$$</div>
-                    <div className="checking-bal">*******1234 Balance</div>
-                    <div className="saving">Saving: $$$$$</div>
-                    <div className="saving-bal">*******9876 Balance</div>
-                    <div className="saving2">Saving: $$$$$</div>
-                    <div className="saving2-bal">*******5432 Balance</div>
+                    <div>{acctTemplate}</div>
                 </div>
 
                 <div id="services">Services</div>
@@ -49,7 +99,7 @@ class UserDashboard extends React.Component {
                                 </a>
                             </li>
                             <li className="nav-item" id="atm-finder">
-                                <a className="nav-link" href="#">
+                                <a className="nav-link" href="/GMap">
                                     Find ATM
                                 </a>
                             </li>

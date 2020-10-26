@@ -36,7 +36,7 @@ export default function SignUp() {
                 password: formData.password,
             })
             .then((res) => {
-                history.push('/login');
+                history.push('/registertwo');
                 console.log(res);
                 console.log(res.data);
             });
@@ -79,7 +79,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <button className="btn" type="submit" onClick={handleSubmit}>
-                    Register
+                    Next
                 </button>
             </div>
             <div className="footer">

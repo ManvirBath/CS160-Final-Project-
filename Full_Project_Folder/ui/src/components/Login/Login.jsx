@@ -75,6 +75,12 @@ export default function SignIn() {
             <div className="footer1">
                 <Link to="/GMap">ATM Locator</Link>
             </div>
+            <div className="footer">
+                <Link to="/DepositCheck">Deposit Check</Link>
+            </div>
+            <div className="footer">
+                <Link to="/UserDashboard">User dashboard</Link>
+            </div>
         </div>
     );
 }

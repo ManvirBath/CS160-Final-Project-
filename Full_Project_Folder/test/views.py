@@ -1,14 +1,6 @@
-from django.core import serializers
-from django.shortcuts import render
-from .forms import Form
-from .models import Client
-import hashlib
-
-from django.contrib.auth.models import User, Group
 from rest_framework import status, viewsets
 from rest_framework import permissions
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer
@@ -29,7 +21,7 @@ def register(request):
                 created_last_name = serializer.data['last_name']
                 created_email = serializer.data['email']
                 created_password = request.data['password']
-            #    created_superuser = serializer.data['is_superuser']
+                #created_superuser = serializer.data['is_superuser']
 
                 client_entry = Client(
                     email = created_email,
@@ -57,13 +49,10 @@ class ClientViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def retrieve(self, request, pk=None):
-        queryset = Client.objects.all()
-        client = get_object_or_404(queryset, pk=pk)
+        client = self.queryset.get(pk=pk)
 
-        print(request.user)
-        print(client)
         if client == request.user:
-            serializer = ClientSerializer(client)
+            serializer = ClientSerializer(client, context={'request' : request})
             return Response(serializer.data)
         else:
             return HttpResponse('Unauthorized', status=403)
@@ -74,8 +63,50 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
+    def list(self, request):
+        """
+        Gets all of the accounts that belong to the authenticated user making this API call
+        """
+        accounts = list(self.queryset.filter(client=request.user))
+        serializer = self.serializer_class(accounts, many=True, context={'request' : request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        """
+        Gets an account from the given account number
+        """
+        account = self.queryset.get(client=request.user)
+        serializer = self.serializer_class(account, context={'request' : request})
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def transactions(self, request, pk=None):
+        """
+        Gets all of the transactions for the provided account number assuming the requesting user is authorized for it
+        """
+        if pk is not None:
+            #TODO: look into the security vulnerability where malicious actors time how long it takes to get a response to see if an account # is valid
+            account = self.queryset.get(account_num=pk)
+
+            if account is None:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            elif account.client == request.user:
+                transaction_set = Transaction.objects.all()
+                transactions = list(transaction_set.filter(account=account))
+
+                serializer = TransactionSerializer(transactions, many=True, context={'request' : request})
+                return Response(serializer.data)
+
+            else:
+                print(account.client)
+                print(request.user)
+                # choosing to return not found so that people can't search for account #s by looking at the response
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error' : 'Expected account number'}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'])
     def deposit(self, request, pk=None):
