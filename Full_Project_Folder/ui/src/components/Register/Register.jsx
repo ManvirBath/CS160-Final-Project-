@@ -8,6 +8,8 @@ import axiosInstance from '../../axios';
 export default function SignUp() {
     const history = useHistory();
     const initialFormData = Object.freeze({
+        firstname: '',
+        lastname: '',
         email: '',
         password: '',
     });
@@ -28,6 +30,8 @@ export default function SignUp() {
 
         axiosInstance
             .post('register/', {
+                first_name: formData.firstname,
+                last_name: formData.lastname,
                 email: formData.email,
                 password: formData.password,
             })
@@ -43,30 +47,39 @@ export default function SignUp() {
                 <Logo color="rgb(255,255,255)" text="Deep Learning Bank"></Logo>
                 <input
                     className="form-control"
-                    type="text"
+                    name="firstname"
+                    label="Firstname"
+                    id="firstname"
                     placeholder="First Name"
                     onChange={handleChange}
                 />
                 <input
                     className="form-control"
-                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    label="Lastname"
                     placeholder="Last Name"
                     onChange={handleChange}
                 />
                 <input
                     className="form-control"
-                    type="text"
+                    name="email"
+                    id="email"
+                    label="email"
                     placeholder="Email Address"
                     onChange={handleChange}
                 />
                 <input
                     className="form-control"
                     type="password"
+                    name="password"
+                    id="password"
+                    label="password"
                     placeholder="Password"
                     onChange={handleChange}
                 />
                 <button className="btn" type="submit" onClick={handleSubmit}>
-                    Register
+                    Next
                 </button>
             </div>
             <div className="footer">
