@@ -2,16 +2,16 @@ body {
   background-color: #7b97ea;
 }
 
-.TransferInternal,
-.TransferExternal {
+.BillPay,
+.BillPayConfirm,
+.BillPayTransaction {
   margin: auto;
-  height: 75vh;
+  height: 100vh;
   background-position: center;
   background-color: white;
   width: 75%;
   background: white;
 }
-
 .headerDiv {
   margin-top: 5%;
 }
@@ -19,7 +19,6 @@ body {
 .headerDivTransaction {
   margin-top: 8%;
 }
-
 .PageHeader {
   background-color: #d0cece;
   margin-top: 8%;
@@ -32,7 +31,7 @@ h4 {
   font-family: "Times New Roman", Times, serif;
 }
 
-.transfer {
+.billpay {
   margin-left: 15%;
 }
 

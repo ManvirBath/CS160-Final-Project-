@@ -6,9 +6,7 @@ import UserNavigationBar from "../UserNavBar/UserNavBar";
 class TransferExternalTransaction extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      amount: this.props.location.amount,
-    };
+    this.state = {};
   }
 
   check() {}

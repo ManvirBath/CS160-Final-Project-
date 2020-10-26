@@ -14,6 +14,9 @@ import TransferInternalTransaction from "./components/Transfer/TransferInternalT
 import TransferExternal from "./components/Transfer/TransferExternal";
 import TransferExternalConfirm from "./components/Transfer/TransferExternalConfirm";
 import TransferExternalTransaction from "./components/Transfer/TransferExternalTransaction";
+import BillPay from "./components/BillPay/BillPay";
+import BillPayConfirm from "./components/BillPay/BillPayConfirm";
+import BillPayTransaction from "./components/BillPay/BillPayTransaction";
 
 import {
   BrowserRouter as Router,
@@ -70,6 +73,10 @@ class App extends React.Component {
               path="/transferexternaltransaction"
               component={TransferExternalTransaction}
             />
+            <Route path="/billpay" component={BillPay} />
+            <Route path="/billpayconfirm" component={BillPayConfirm} />
+            <Route path="/billpaytransaction" component={BillPayTransaction} />
+
             <Redirect from="*" to="/login" />
           </Switch>
         </Router>
