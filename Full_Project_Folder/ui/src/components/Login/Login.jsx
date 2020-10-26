@@ -35,7 +35,7 @@ export default function SignIn() {
                 localStorage.setItem('refresh_token', res.data.refresh);
                 axiosInstance.defaults.headers['Authorization'] =
                     'JWT ' + localStorage.getItem('access_token');
-                history.push('/');
+                history.push('/userdashboard');
                 //console.log(res);
                 //console.log(res.data);
             });
@@ -74,6 +74,12 @@ export default function SignIn() {
             </div>
             <div className="footer1">
                 <Link to="/GMap">ATM Locator</Link>
+            </div>
+            <div className="footer">
+                <Link to="/DepositCheck">Deposit Check</Link>
+            </div>
+            <div className="footer">
+                <Link to="/UserDashboard">User dashboard</Link>
             </div>
         </div>
     );
