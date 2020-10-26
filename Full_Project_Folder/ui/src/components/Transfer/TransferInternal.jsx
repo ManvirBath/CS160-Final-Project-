@@ -63,7 +63,6 @@ class TransferInternal extends React.Component {
     return (
       <div className="TransferInternal">
         <UserNavigationBar />
-
         <h1 className="PageHeader">Transfer Between My Accounts</h1>
         <div className="transfer">
           <h2>From</h2>

@@ -12,6 +12,14 @@ body {
   background: white;
 }
 
+.headerDiv {
+  margin-top: 5%;
+}
+
+.headerDivTransaction {
+  margin-top: 8%;
+}
+
 .PageHeader {
   background-color: #d0cece;
   margin-top: 8%;

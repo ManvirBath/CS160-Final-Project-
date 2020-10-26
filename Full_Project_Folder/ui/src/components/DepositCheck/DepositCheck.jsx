@@ -41,9 +41,7 @@ class DepositCheck extends React.Component {
     return (
       <div className="DepositCheck">
         <UserNavigationBar />
-        <h1 className="PageHeader" class="jumbotron">
-          Deposit check to account
-        </h1>
+        <h1 className="PageHeader">Deposit Check</h1>
         <div className="leftHalf">
           <h2>Deposit Money To:</h2>
           <select

@@ -13,12 +13,14 @@ class DepositCheckConfirm extends React.Component {
     return (
       <div className="DepositCheckConfirm">
         <UserNavigationBar />
-        <h1 className="PageHeader" class="jumbotron">
-          Confirm check deposit
-        </h1>
-        <h6 className="PageHeader2" class="lead">
-          Please confirm your details before submitting.
-        </h6>
+        <div className="headerDiv">
+          <h1 className="PageHeader" class="jumbotron">
+            Confirm check deposit
+          </h1>
+          <h6 className="PageHeader2" class="lead">
+            Please confirm your details before submitting.
+          </h6>
+        </div>
         <div className="details">
           <h4>Deposit to: {this.props.location.account}</h4>
           <h4>Amount: {this.props.location.amount}</h4>

@@ -19,16 +19,18 @@ class DepositCheckTransaction extends React.Component {
     return (
       <div className="DepositCheckTransaction">
         <UserNavigationBar />
-        <div
-          className="TransactionAlert"
-          class="alert alert-success"
-          role="alert"
-        >
-          <p>
-            Thank you for depositing your check! Your transtion number for this
-            deposit is [insert transaction number here]. Please contact us if
-            you have any questions or concerns.
-          </p>
+        <div className="headerDivTransaction">
+          <div
+            className="TransactionAlert"
+            class="alert alert-success"
+            role="alert"
+          >
+            <p>
+              Thank you for depositing your check! Your transtion number for
+              this deposit is [insert transaction number here]. Please contact
+              us if you have any questions or concerns.
+            </p>
+          </div>
         </div>
         <div className="transactionInfo">
           <h4>Transaction Number: [insert transaction number]</h4>

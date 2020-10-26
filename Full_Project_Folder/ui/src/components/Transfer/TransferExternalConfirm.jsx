@@ -13,12 +13,14 @@ class TransferExternalConfirm extends React.Component {
     return (
       <div className="DepositCheckConfirm">
         <UserNavigationBar />
-        <h1 className="PageHeader" class="jumbotron">
-          Confirm transfer
-        </h1>
-        <h6 className="PageHeader2" class="lead">
-          Please confirm your details before submitting.
-        </h6>
+        <div className="headerDiv">
+          <h1 className="PageHeader" class="jumbotron">
+            Confirm transfer
+          </h1>
+          <h6 className="PageHeader2" class="lead">
+            Please confirm your details before submitting.
+          </h6>
+        </div>
         <div className="details">
           <h4>
             Transfer From:

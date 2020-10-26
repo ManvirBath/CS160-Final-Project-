@@ -1,10 +1,16 @@
 body {
   background-color: #7b97ea;
 }
+.headerDiv {
+  margin-top: 5%;
+}
+.headerDivTransaction {
+  margin-top: 8%;
+}
 
 .PageHeader {
   background-color: #d0cece;
-  height: 15%;
+  height: 5%;
 }
 .PageHeader2 {
   background-color: #d0cece;
@@ -27,6 +33,7 @@ h4 {
 .leftHalf {
   margin-left: 10%;
   float: left;
+  margin-top: 10%;
 }
 .accounts {
   align-items: relative;
@@ -52,6 +59,7 @@ h4 {
 .rightHalf {
   margin-right: 15%;
   float: right;
+  margin-top: 10%;
 }
 
 .checkImg {
