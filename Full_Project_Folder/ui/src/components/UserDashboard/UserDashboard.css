@@ -58,8 +58,12 @@
     left: 5vw;
     font-size: 2em;
 }
+
+.acctBox {
+    position: relative;
+}
 .checking {
-    position: absolute;
+    position: relative;
     top: 15vh;
     left: 2vw;
     font-size: 2.8em;
@@ -75,14 +79,14 @@
     margin: 0 -1em;
 }
 .checking-bal {
-    position: absolute;
+    position: relative;
     top: 23.5vh;
     left: 2.5vw;
     font-size: 1.3em;
     word-spacing: 12.9em;
 }
-.saving {
-    position: absolute;
+.savings {
+    position: relative;
     top: 30vh;
     left: 2vw;
     font-size: 2.8em;
@@ -97,9 +101,8 @@
     padding-bottom: 0.5em;
     margin: 0 -1em;
 }
-.saving-bal {
-    position: absolute;
-    top: 53.5vh;
+.savings-bal {
+    position: relative;
     left: 2.1vw;
     font-size: 1.3em;
     word-spacing: 13.5em;
