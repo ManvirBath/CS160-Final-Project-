@@ -29,7 +29,7 @@ class DepositCheckConfirm extends React.Component {
                 <div className="buttons">
                     <Link to="/depositcheck">
                         <button type="button" class="btn btn-danger">
-                            Don't make deposit
+                            Go Back
                         </button>
                     </Link>
                     <Link

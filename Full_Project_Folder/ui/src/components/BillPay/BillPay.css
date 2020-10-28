@@ -6,7 +6,7 @@ body {
 .BillPayConfirm,
 .BillPayTransaction {
     margin: auto;
-    height: 100vh;
+    height: 70vh;
     background-position: center;
     background-color: white;
     width: 75%;
@@ -48,4 +48,10 @@ h4 {
     position: absolute;
     right: 25%;
     margin-top: 2.5%;
+}
+#billpay-header {
+    position: relative;
+    text-align: center;
+    bottom: 65px;
+    font-size: 2.25em;
 }

@@ -63,34 +63,29 @@ class TransferInternal extends React.Component {
         return (
             <div className="TransferInternal">
                 <UserNavigationBar />
-                <h1 className="PageHeader">Transfer Between My Accounts</h1>
+                <h1 className="PageHeader"></h1>
+                <div id="transfer-internal-header">Internal Transfer</div>
                 <div className="transfer">
-                    <h2>From</h2>
+                    <h2>Transfer From</h2>
                     <select
                         className="accounts"
                         id="accounts"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.from_acct}
                     >
-                        <option value="acctNumFrom" disabled selected>
-                            Transfer Money From
-                        </option>
-                        <option value="Account1">Savings Account 123</option>
+                        <option value="acctNumFrom">Savings Account 123</option>
                         <option value="Account2">Savings Account 345</option>
                         <option value="Account3">Checking Account 678</option>
                     </select>
 
-                    <h2>To</h2>
+                    <h2>Transfer To</h2>
                     <select
                         className="accounts"
                         id="accounts"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.to_acct}
                     >
-                        <option value="acctNumTo" disabled selected>
-                            Transfer Money To
-                        </option>
-                        <option value="Account1">Savings Account 123</option>
+                        <option value="acctNumTo">Savings Account 123</option>
                         <option value="Account2">Savings Account 345</option>
                         <option value="Account3">Checking Account 678</option>
                     </select>

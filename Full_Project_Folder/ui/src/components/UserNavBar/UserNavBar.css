@@ -1,7 +1,7 @@
 #header-title {
-    font-size: 1.805em;
+    font-size: 2.5em;
     position: absolute;
-    left: 80px;
+    left: 112px;
     top: 0px;
     color: black;
     background-color: #7b97ea;
@@ -23,7 +23,7 @@
     position: absolute;
     right: 1px;
     top: 8vh;
-    height: 1.75em;
+    height: 2.25em;
     width: 100%;
     font-size: 1.25em;
     background-color: #c9cace;

@@ -2,6 +2,7 @@ import React from 'react';
 import './BillPay.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import { Button } from 'react-bootstrap';
 
 class BillPay extends React.Component {
     constructor(props) {
@@ -46,45 +47,42 @@ class BillPay extends React.Component {
             <div className="BillPay">
                 <UserNavigationBar />
 
-                <h1 className="PageHeader">Bill Pay</h1>
+                <h1 className="PageHeader"></h1>
+                <div id="billpay-header">Bill Payment</div>
                 <div className="billpay">
-                    <h4>From</h4>
+                    <h4>Transfer From</h4>
                     <select
                         className="accounts"
                         id="accounts"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.from_acct}
                     >
-                        <option value="acctNumFrom" disabled selected>
-                            Transfer Money From:
-                        </option>
-                        <option value="Account1">Savings Account 123</option>
+                        <option value="acctNumFrom">Savings Account 123</option>
                         <option value="Account2">Savings Account 345</option>
                         <option value="Account3">Checking Account 678</option>
                     </select>
 
                     <div className="inputDiv">
-                        <h4>To</h4>
+                        <h4>Transfer To</h4>
                         <input
                             type="text"
                             className="toAccountExternal"
-                            defaultValue="Pay Bill To"
+                            placeholder="Account Number"
                             onChange={this.to_acct}
                             class="form-control"
                         ></input>
-                        <h4>Routing Number</h4>
+
                         <input
                             type="text"
                             className="routingNum"
-                            defaultValue="123456789"
+                            placeholder="Routing Number"
                             onChange={this.routing_num}
                             class="form-control"
                         ></input>
-                        <h4>Amount</h4>
                         <input
                             type="text"
                             className="amountInput"
-                            placeholder="$"
+                            placeholder="Amount"
                             onChange={this.amount}
                             class="form-control"
                         ></input>
@@ -102,10 +100,7 @@ class BillPay extends React.Component {
                             class="btn btn-light dropdown-toggle"
                             onChange={this.frequency}
                         >
-                            <option value="" disabled selected>
-                                Frequency of payment
-                            </option>
-                            <option value="onetime">One time</option>
+                            <option value="">One time</option>
                             <option value="weekly">Weekly</option>
                             <option value="monthly">Monthly</option>
                         </select>

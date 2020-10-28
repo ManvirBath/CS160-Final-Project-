@@ -8,7 +8,7 @@ import axiosInstance from '../../axios';
 export default function SignUp() {
     const history = useHistory();
     const initialFormData = Object.freeze({
-        firstname: '',
+        first_name: '',
         lastname: '',
         email: '',
         password: '',
@@ -79,7 +79,7 @@ export default function SignUp() {
                     onChange={handleChange}
                 />
                 <button className="btn" type="submit" onClick={handleSubmit}>
-                    Next
+                    Register
                 </button>
             </div>
             <div className="footer">

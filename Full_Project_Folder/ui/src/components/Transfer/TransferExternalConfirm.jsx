@@ -34,7 +34,7 @@ class TransferExternalConfirm extends React.Component {
                 <div className="buttons">
                     <Link to="/transferexternal">
                         <button type="button" class="btn btn-danger">
-                            Don't make transfer
+                            Go Back
                         </button>
                     </Link>
                     <Link

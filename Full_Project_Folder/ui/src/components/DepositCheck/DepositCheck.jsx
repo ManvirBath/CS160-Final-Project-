@@ -1,6 +1,7 @@
 import React from 'react';
 import './DepositCheck.css';
 import { Link } from 'react-router-dom';
+import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class DepositCheck extends React.Component {
     constructor(props) {
@@ -39,21 +40,18 @@ class DepositCheck extends React.Component {
     render() {
         return (
             <div className="DepositCheck">
-                <h1 className="PageHeader" class="jumbotron">
-                    Deposit check to account
-                </h1>
+                <UserNavigationBar />
+                <h1 className="PageHeader" class="jumbotron"></h1>
+                <div id="deposit-header">Deposit Check </div>
                 <div className="leftHalf">
-                    <h2>To:</h2>
+                    <h2>Deposit To:</h2>
                     <select
                         className="accounts"
                         id="accounts"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.deposit_to_account}
                     >
-                        <option value="acctNum" disabled selected>
-                            Deposit Money To
-                        </option>
-                        <option value="Account1">Savings Account 123</option>
+                        <option value="acctNum">Savings Account 123</option>
                         <option value="Account2">Savings Account 345</option>
                         <option value="Account3">Checking Account 678</option>
                     </select>

@@ -35,7 +35,7 @@ class BillPayConfirm extends React.Component {
                 <div className="buttons">
                     <Link to="/billpay">
                         <button type="button" class="btn btn-danger">
-                            Don't pay bill
+                            Go Back
                         </button>
                     </Link>
                     <Link

@@ -73,3 +73,9 @@ h4 {
     right: 25%;
     margin-top: 2.5%;
 }
+#deposit-header {
+    position: relative;
+    text-align: center;
+    bottom: 35px;
+    font-size: 2.25em;
+}

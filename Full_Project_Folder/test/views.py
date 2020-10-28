@@ -23,14 +23,14 @@ def register(request):
                 created_last_name = serializer.data['last_name']
                 created_email = serializer.data['email']
                 created_password = request.data['password']
-                created_superuser = serializer.data['is_superuser']
+            #    created_superuser = serializer.data['is_superuser']
 
                 client_entry = Client(
                     email = created_email,
                     first_name = created_first_name,
                     last_name = created_last_name,
-                    is_staff = created_superuser,
-                    is_superuser = created_superuser
+                #    is_staff = created_superuser,
+                #    is_superuser = created_superuser
                 )
                 client_entry.set_password(created_password)
                 client_entry.save()
@@ -197,4 +197,4 @@ class TransactionViewSet(viewsets.ModelViewSet):
 # reset password - API
     # enter new password in
 # create user - API $
-# login  - API 
+# login  - API

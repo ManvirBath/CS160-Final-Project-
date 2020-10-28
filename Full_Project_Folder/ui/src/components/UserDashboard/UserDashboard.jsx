@@ -3,7 +3,14 @@ import './UserDashboard.css';
 import Logo from '../Logo';
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
-import { Button, Navbar, FormControl, Nav, Form } from 'react-bootstrap';
+import {
+    Button,
+    Navbar,
+    FormControl,
+    Nav,
+    Form,
+    Dropdown,
+} from 'react-bootstrap';
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -25,11 +32,21 @@ class UserDashboard extends React.Component {
 
     componentDidMount() {
         axiosInstance.get('/accounts/').then((res) => {
-            //console.log(res.data);
+            console.log(res.data);
             const d = res.data;
             this.setState({ accts: d });
             //const d = res.data.response.items;
             //console.log(d.account_num);
+        });
+
+        axiosInstance.get('/clients/').then((res2) => {
+            let userEmail = this.props.location.email;
+            let users = res2.data.results;
+            for (var index = 0; index < users.length; index++) {
+                if (users[index].email == userEmail) {
+                    this.setState({ firstName: users[index].first_name });
+                }
+            }
         });
     }
     render() {
@@ -59,57 +76,64 @@ class UserDashboard extends React.Component {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <a className="nav-link" href="/billpay">
                                 Pay Bill
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
+                        <Dropdown>
+                            <Dropdown.Toggle variant="" id="dropdown-basic">
                                 Transfer
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item href="/transferinternal">
+                                    Between my accounts
+                                </Dropdown.Item>
+                                <Dropdown.Item href="/transferexternal">
+                                    Between external accounts
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+
+                        <li className="nav-item">
+                            <a className="nav-link" href="/depositcheck">
+                                Deposit
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Withdraw/Deposit
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Open Account
+                            <a className="nav-link" href="/withdraw">
+                                Withdraw
                             </a>
                         </li>
                     </ul>
                 </div>
                 <div className="container">
-                    <div id="greeting">Hello, customer!</div>
+                    <div id="greeting">
+                        Welcome to your dashboard, {this.state.firstName}!
+                    </div>
                     <div id="dashboard-logo">
                         <Logo color="rgb(0,0,0)"></Logo>
                     </div>
                     <div id="greeting2">Personal Accounts</div>
                     <div>{acctTemplate}</div>
                 </div>
-
-                <div id="services">Services</div>
-                <div className="container2">
-                    <div className="services-list">
-                        <ul className="nav flex-column">
-                            <li className="nav-item" id="settings">
-                                <a className="nav-link" href="#">
-                                    Settings
-                                </a>
-                            </li>
-                            <li className="nav-item" id="atm-finder">
-                                <a className="nav-link" href="/GMap">
-                                    Find ATM
-                                </a>
-                            </li>
-                            <li className="nav-item" id="contact">
-                                <a className="nav-link" href="#">
-                                    Contact Us
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                <div className="navlist2">
+                    <ul className="nav nav-pills nav-fill">
+                        <li className="nav-item">
+                            <a className="nav-link" href="/openAccount">
+                                Open Account
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/GMap">
+                                ATM Locator
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="/contact">
+                                Contact Us
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         );

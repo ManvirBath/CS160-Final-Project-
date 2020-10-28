@@ -23,7 +23,7 @@ class UserNavigationBar extends React.Component {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <a className="nav-link" href="/billpay">
                                 Pay Bill
                             </a>
                         </li>
@@ -41,13 +41,13 @@ class UserNavigationBar extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Withdraw/Deposit
+                            <a className="nav-link" href="/depositcheck">
+                                Deposit
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Open Account
+                            <a className="nav-link" href="/withdraw">
+                                Withdraw
                             </a>
                         </li>
                     </ul>
