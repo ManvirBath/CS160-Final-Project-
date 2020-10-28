@@ -61,11 +61,7 @@ class Account(models.Model):
 class Transaction(models.Model):
     amount      = models.FloatField(null=False, default=0.0)
     date        = models.DateField(null=False, default=timezone.now)
-    TYPE = (
-        ('Deposit', 'Deposit'),
-        ('Withdraw', 'Withdraw'),
-    )
-    trans_type  = models.CharField(max_length=25, null=False, choices=TYPE)
+    trans_type  = models.CharField(max_length=25, null=False)
 
     LOCATION = (
         ('Online', 'Online'),
@@ -74,7 +70,21 @@ class Transaction(models.Model):
     location    = models.CharField(max_length=255, null=False, choices=LOCATION)
     check_path  = models.CharField(max_length=255, null=True)
     memo        = models.CharField(max_length=255, null=False)
-    account      = models.ForeignKey(Account, on_delete=models.CASCADE)
+    account     = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+class BillPayment(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    routing_num = models.CharField(max_length=10, null=False)
+    to_account_num = models.CharField(max_length=10, null=False)
+    amount = models.FloatField(null=False, default=0.01)
+    date   = models.DateField(null=False, default=timezone.now)
+    STATUS = (
+        ('active', 'active'), # background tasks look for ones that are active. Due for today. 
+        ('cancelled', 'cancelled'),
+        ('processed', 'processed'),
+    )
+    status = models.CharField(max_length=10, default='active', null=False, choices=STATUS)
+
 
 
 """

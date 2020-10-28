@@ -14,14 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
+from django.conf.urls import url
 from django.contrib import admin
 from rest_framework import routers
 from test import views
+from test.views import automated_bill
 
 router = routers.DefaultRouter()
 router.register(r'clients', views.ClientViewSet)
 router.register(r'accounts', views.AccountViewSet)
 router.register(r'transactions', views.TransactionViewSet)
+router.register(r'bill_payments', views.BillPaymentViewSet)
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
@@ -29,9 +32,12 @@ urlpatterns = [
     path('staffbreakingbass/', admin.site.urls), # keep admin secret. 
     path('', include(router.urls)),
     path('register/', views.register),
+    path('reset_password/', views.reset_password),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
+automated_bill(repeat=10,repeat_until=None)
+# automated_bill(repeat=10, repeat_until=None)
 # from django.contrib import admin
 # from django.urls import path
 # from django.urls import include
