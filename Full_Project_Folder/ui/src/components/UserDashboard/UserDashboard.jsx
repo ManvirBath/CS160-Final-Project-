@@ -59,9 +59,6 @@ class UserDashboard extends React.Component {
                     <div id="greeting">
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
-                    <div id="dashboard-logo">
-                        <Logo color="rgb(0,0,0)"></Logo>
-                    </div>
                     <div id="greeting2">Personal Accounts</div>
                     <div className="acct-temp">{acctTemplate}</div>
                 </div>

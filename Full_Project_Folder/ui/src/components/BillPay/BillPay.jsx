@@ -44,83 +44,95 @@ class BillPay extends React.Component {
 
     render() {
         return (
-            <div className="BillPay">
-                <UserNavigationBar />
+            <div className="contain-billpay">
+                <div className="BillPay">
+                    <UserNavigationBar />
 
-                <h1 className="PageHeader"></h1>
-                <div id="billpay-header">Bill Payment</div>
-                <div className="billpay">
-                    <h4>Transfer From</h4>
-                    <select
-                        className="accounts"
-                        id="accounts"
-                        class="btn btn-light dropdown-toggle"
-                        onChange={this.from_acct}
-                    >
-                        <option value="acctNumFrom">Savings Account 123</option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
-                    </select>
-
-                    <div className="inputDiv">
-                        <h4>Transfer To</h4>
-                        <input
-                            type="text"
-                            className="toAccountExternal"
-                            placeholder="Account Number"
-                            onChange={this.to_acct}
-                            class="form-control"
-                        ></input>
-
-                        <input
-                            type="text"
-                            className="routingNum"
-                            placeholder="Routing Number"
-                            onChange={this.routing_num}
-                            class="form-control"
-                        ></input>
-                        <input
-                            type="text"
-                            className="amountInput"
-                            placeholder="Amount"
-                            onChange={this.amount}
-                            class="form-control"
-                        ></input>
-                        <h4>Bill Payment Date</h4>
-                        <input
-                            class="form-control"
-                            type="date"
-                            value={this.state.pay_date}
-                            id="pay-date-input"
-                            onChange={this.pay_date}
-                        />
-                        <h4>Frequency</h4>
+                    <h1 className="PageHeader"></h1>
+                    <div id="billpay-header">Bill Payment</div>
+                    <div className="billpay">
+                        <h4>Transfer From</h4>
                         <select
-                            className="frequency"
+                            className="accounts"
+                            id="accounts"
                             class="btn btn-light dropdown-toggle"
-                            onChange={this.frequency}
+                            onChange={this.from_acct}
                         >
-                            <option value="">One time</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
+                            <option value="acctNumFrom">
+                                Savings Account 123
+                            </option>
+                            <option value="Account2">
+                                Savings Account 345
+                            </option>
+                            <option value="Account3">
+                                Checking Account 678
+                            </option>
                         </select>
-                    </div>
-                    <div className="nextBtn">
-                        <Link
-                            to={{
-                                pathname: '/billpayconfirm',
-                                to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct,
-                                routing_num: this.state.routing_num,
-                                amount: this.state.amount,
-                                pay_date: this.state.pay_date,
-                                frequency: this.state.frequency,
-                            }}
-                        >
-                            <button type="button" class="btn btn-primary">
-                                Next
-                            </button>
-                        </Link>
+
+                        <div className="inputDiv">
+                            <h4>Transfer To</h4>
+                            <input
+                                type="text"
+                                className="toAccountExternal"
+                                placeholder="Account Number"
+                                onChange={this.to_acct}
+                                class="form-control"
+                            ></input>
+
+                            <input
+                                type="text"
+                                className="routingNum"
+                                placeholder="Routing Number"
+                                onChange={this.routing_num}
+                                class="form-control"
+                            ></input>
+                            <input
+                                type="text"
+                                className="amountInput"
+                                placeholder="Amount"
+                                onChange={this.amount}
+                                class="form-control"
+                            ></input>
+                            <div className="inputDiv2">
+                                <h4>Bill Payment Date</h4>
+                                <input
+                                    class="form-control"
+                                    type="date"
+                                    value={this.state.pay_date}
+                                    id="pay-date-input"
+                                    onChange={this.pay_date}
+                                />
+                            </div>
+                            <div className="inputDiv3">
+                                <h4>Frequency</h4>
+                                <select
+                                    className="frequency"
+                                    class="btn btn-light dropdown-toggle"
+                                    onChange={this.frequency}
+                                >
+                                    <option value="">One time</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="nextBtn">
+                            <Link
+                                to={{
+                                    pathname: '/billpayconfirm',
+                                    to_acct: this.state.to_acct,
+                                    from_acct: this.state.from_acct,
+                                    routing_num: this.state.routing_num,
+                                    amount: this.state.amount,
+                                    pay_date: this.state.pay_date,
+                                    frequency: this.state.frequency,
+                                }}
+                            >
+                                <button type="button" class="btn btn-primary">
+                                    Next
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

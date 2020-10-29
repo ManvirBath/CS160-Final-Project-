@@ -1,16 +1,18 @@
 body {
     background-color: #7b97ea;
 }
-
+.contain-billpay {
+    width: 1900px;
+}
 .BillPay,
 .BillPayConfirm,
 .BillPayTransaction {
     margin: auto;
-    height: 70vh;
+    height: 80vh;
     background-position: center;
     background-color: white;
     width: 75%;
-    background: white;
+    background: azure;
 }
 .headerDiv {
     margin-top: 5%;
@@ -20,7 +22,7 @@ body {
     margin-top: 8%;
 }
 .PageHeader {
-    background-color: #d0cece;
+    background-color: azure;
     margin-top: 8%;
     height: 10%;
     text-align: center;
@@ -32,16 +34,26 @@ h4 {
 }
 
 .billpay {
-    margin-left: 15%;
+    margin-left: 20%;
 }
 
 .inputDiv {
+    position: relative;
     margin-right: 75%;
+    top: 2vh;
+}
+.inputDiv2 {
+    position: relative;
+    top: 2vh;
+}
+.inputDiv3 {
+    position: relative;
+    top: 4vh;
 }
 
 .nextBtn {
-    margin-top: 25px;
-    margin-left: 50%;
+    margin-top: 75px;
+    margin-left: 55%;
 }
 
 .buttons {
@@ -49,9 +61,13 @@ h4 {
     right: 25%;
     margin-top: 2.5%;
 }
+.details {
+    position: relative;
+    bottom: 7.5vh;
+}
 #billpay-header {
     position: relative;
     text-align: center;
-    bottom: 65px;
+    bottom: 35px;
     font-size: 2.25em;
 }

@@ -23,14 +23,13 @@ def register(request):
                 created_last_name = serializer.data['last_name']
                 created_email = serializer.data['email']
                 created_password = request.data['password']
-            #    created_superuser = serializer.data['is_superuser']
 
                 client_entry = Client(
                     email = created_email,
                     first_name = created_first_name,
                     last_name = created_last_name,
-                #    is_staff = False,
-                #    is_superuser = False
+                    is_staff = False,
+                    is_superuser = False
                 )
                 client_entry.set_password(created_password)
                 client_entry.save()

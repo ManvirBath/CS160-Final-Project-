@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './UserNavBar.css';
+import Logo from '../Logo';
 
 class UserNavigationBar extends React.Component {
     constructor(props) {
@@ -12,8 +13,12 @@ class UserNavigationBar extends React.Component {
         return (
             <div className="usernavbar">
                 <div id="header-title">Deep Learning Bank</div>
+                <div id="navbar-logo">
+                    <Logo color="rgb(255,255,255)"></Logo>
+                </div>
+
                 <div id="header-logoff">
-                    <Button variant="light">Logout</Button>{' '}
+                    <Button variant="light">Logout</Button>
                 </div>
                 <div className="navlist">
                     <ul className="nav nav-pills nav-fill">
