@@ -271,7 +271,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         """
         Gets an account from the given account number
         """
-        account = self.queryset.get(client=request.user)
+        account = self.queryset.filter(client=request.user)[0]
         serializer = self.serializer_class(account, context={'request' : request})
         return Response(serializer.data)
 
