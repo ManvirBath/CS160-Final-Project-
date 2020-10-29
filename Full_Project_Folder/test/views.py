@@ -564,7 +564,7 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
 # TO DO LIST
 """
 - Create Transfer External API $$$
-- Edit Register API (create address and other fields) Edits For Addresses, Phone Numbers, ZipCode, etc. (For User)
+- Edit Register API (create address and other fields) Edits For Addresses, Phone Numbers, ZipCode, etc. (For User) $$$
 - Create Automation to do Transfer External Every 5 seconds (Just for one time payment)
 - Do Create, Edit and Delete (Just Making It Cancelled) of Bill Payments $$$
 - NO Deletions for Rest Of the Model. $$$
