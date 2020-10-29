@@ -8,7 +8,7 @@ import axiosInstance from '../../axios';
 export default function SignUp() {
     const history = useHistory();
     const initialFormData = Object.freeze({
-        first_name: '',
+        firstname: '',
         lastname: '',
         email: '',
         password: '',

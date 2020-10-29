@@ -45,11 +45,6 @@ class UserNavigationBar extends React.Component {
                                 Deposit
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/withdraw">
-                                Withdraw
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>

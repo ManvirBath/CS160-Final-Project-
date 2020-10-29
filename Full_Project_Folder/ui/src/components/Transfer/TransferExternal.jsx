@@ -41,7 +41,9 @@ class TransferExternal extends React.Component {
     render() {
         return (
             <div className="TransferExternal">
-                <UserNavigationBar />
+                <div id="active-transfer-external">
+                    <UserNavigationBar />
+                </div>
 
                 <h1 className="PageHeader"></h1>
                 <div id="transfer-external-header">External Transfer</div>

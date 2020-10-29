@@ -1,20 +1,22 @@
 .userdashboard {
     position: absolute;
+    display: flex;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     background: white;
+    flex-direction: column;
 }
 .container {
     position: absolute;
     color: black;
-    left: 80px;
+    left: 325px;
     top: 20vh;
 }
 #dashboard-logo {
     position: absolute;
-    top: 7vh;
+    top: 10vh;
     left: 1vw;
 }
 #greeting {
@@ -23,19 +25,22 @@
 }
 #greeting2 {
     position: absolute;
-    top: 7vh;
+    top: 10vh;
     left: 5vw;
     font-size: 2em;
 }
 ​ .acctBox {
     position: relative;
 }
+.acct-temp {
+    font-size: 1em;
+}
 .checking {
     position: relative;
-    top: 15vh;
+    top: 16.5vh;
     left: 2vw;
-    font-size: 2.8em;
-    word-spacing: 4em;
+    font-size: 2em;
+    word-spacing: 23em;
     border-bottom: 3px dotted;
     border-left: 3px dotted;
     border-right: 3px dotted;
@@ -55,10 +60,10 @@
 }
 .savings {
     position: relative;
-    top: 30vh;
+    top: 16.5vh;
     left: 2vw;
-    font-size: 2.8em;
-    word-spacing: 5.25em;
+    font-size: 2em;
+    word-spacing: 23em;
     border-bottom: 3px dotted;
     border-left: 3px dotted;
     border-right: 3px dotted;
@@ -117,4 +122,14 @@
     width: 100%;
     font-size: 1.25em;
     background-color: #c9cace;
+}
+#bal {
+    position: relative;
+    font-size: 0.5em;
+    word-spacing: 48em;
+}
+#acct-info {
+    position: relative;
+    font-size: 2.3em;
+    word-spacing: 22.5em;
 }

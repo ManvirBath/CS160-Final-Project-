@@ -3,14 +3,7 @@ import './UserDashboard.css';
 import Logo from '../Logo';
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
-import {
-    Button,
-    Navbar,
-    FormControl,
-    Nav,
-    Form,
-    Dropdown,
-} from 'react-bootstrap';
+import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -52,60 +45,16 @@ class UserDashboard extends React.Component {
     render() {
         let acctTemplate = this.state.accts.map((v) => (
             <div key={v.account_num} className="acctBox">
-                <div className={v.account_type}>
-                    {v.account_type}: {v.balance}
-                    <div>{v.account_num} Balance</div>
+                <div className={v.account_type} id="acct-info">
+                    {v.account_type} ${v.balance}
+                    <div id="bal">{v.account_num} Balance</div>
                 </div>
             </div>
         ));
         const { name, saving, checking } = this.state;
         return (
             <div className="userdashboard">
-                <div id="header-title">Deep Learning Bank</div>
-                <div id="header-logoff">
-                    <Button variant="light">Logout</Button>{' '}
-                </div>
-                <div className="navlist">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <a
-                                className="nav-link active"
-                                href="/userdashboard"
-                            >
-                                Account
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/billpay">
-                                Pay Bill
-                            </a>
-                        </li>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                                Transfer
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/transferinternal">
-                                    Between my accounts
-                                </Dropdown.Item>
-                                <Dropdown.Item href="/transferexternal">
-                                    Between external accounts
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-
-                        <li className="nav-item">
-                            <a className="nav-link" href="/depositcheck">
-                                Deposit
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/withdraw">
-                                Withdraw
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <UserNavigationBar />
                 <div className="container">
                     <div id="greeting">
                         Welcome to your dashboard, {this.state.firstName}!
@@ -114,7 +63,7 @@ class UserDashboard extends React.Component {
                         <Logo color="rgb(0,0,0)"></Logo>
                     </div>
                     <div id="greeting2">Personal Accounts</div>
-                    <div>{acctTemplate}</div>
+                    <div className="acct-temp">{acctTemplate}</div>
                 </div>
                 <div className="navlist2">
                     <ul className="nav nav-pills nav-fill">

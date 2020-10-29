@@ -29,8 +29,8 @@ def register(request):
                     email = created_email,
                     first_name = created_first_name,
                     last_name = created_last_name,
-                #    is_staff = created_superuser,
-                #    is_superuser = created_superuser
+                #    is_staff = False,
+                #    is_superuser = False
                 )
                 client_entry.set_password(created_password)
                 client_entry.save()
