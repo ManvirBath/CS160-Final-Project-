@@ -541,7 +541,7 @@ class AccountViewSet(viewsets.ModelViewSet):
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint for list of transactions
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
@@ -549,12 +549,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
 
 class BillPaymentViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint for client's bill payments
     """
     queryset = BillPayment.objects.all()
     account_queryset = Account.objects.all()
     serializer_class = BillPaymentSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def edit_bill_payment(self, request, pk=None):
