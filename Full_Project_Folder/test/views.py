@@ -6,10 +6,11 @@ from .forms import Form
 from .models import Client
 import hashlib 
 
-from django.contrib.auth.models import User, Group
+
 from rest_framework import status, viewsets
 from rest_framework import permissions
 from django.shortcuts import render, HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 
 from rest_framework.response import Response
 from .serializers import ClientSerializer, AccountSerializer, TransactionSerializer, BillPaymentSerializer
@@ -83,7 +84,7 @@ def register(request):
 
                 client_entry.set_password(created_password)
                 client_entry.save()
-                
+
         except IntegrityError as ex:
             return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         return Response({'status': 'Register successful'})
@@ -126,7 +127,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     account_queryset = Account.objects.all()
     serializer_class = ClientSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
     def edit_client(self, request, pk=None):
@@ -241,13 +242,65 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, pk=None):
+        client = self.queryset.get(pk=pk)
+
+        if client == request.user:
+            serializer = ClientSerializer(client, context={'request' : request})
+            return Response(serializer.data)
+        else:
+            return HttpResponse('Unauthorized', status=403)
+
 class AccountViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows accounts to be viewed or edited.
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        """
+        Gets all of the accounts that belong to the authenticated user making this API call
+        """
+        accounts = list(self.queryset.filter(client=request.user))
+        serializer = self.serializer_class(accounts, many=True, context={'request' : request})
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        """
+        Gets an account from the given account number
+        """
+        account = self.queryset.get(client=request.user)
+        serializer = self.serializer_class(account, context={'request' : request})
+        return Response(serializer.data)
+
+    @action(detail=True, methods=['get'])
+    def transactions(self, request, pk=None):
+        """
+        Gets all of the transactions for the provided account number assuming the requesting user is authorized for it
+        """
+        if pk is not None:
+            #TODO: look into the security vulnerability where malicious actors time how long it takes to get a response to see if an account # is valid
+            account = self.queryset.get(account_num=pk)
+
+            if account is None:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+
+            elif account.client == request.user:
+                transaction_set = Transaction.objects.all()
+                transactions = list(transaction_set.filter(account=account))
+
+                serializer = TransactionSerializer(transactions, many=True, context={'request' : request})
+                return Response(serializer.data)
+
+            else:
+                print(account.client)
+                print(request.user)
+                # choosing to return not found so that people can't search for account #s by looking at the response
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error' : 'Expected account number'}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'])
     def close_account(self, request, pk=None):
@@ -373,7 +426,7 @@ class AccountViewSet(viewsets.ModelViewSet):
                     location_deposited = serializer.data['location']
                     memo_on_deposit = serializer.data['memo'] # for memos, make sure to have default value from front end
                     check_path_confirmed = serializer.data['check_path']
-                    
+
                     account.balance = account.balance + amount_for_deposit
                     account.save()
                     transaction_entry = Transaction(
@@ -417,7 +470,7 @@ class AccountViewSet(viewsets.ModelViewSet):
                         return Response({'error': 'withdraw cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     location_withdrawn = serializer.data['location']
                     memo_on_withdrawn = serializer.data['memo']
-                    
+
                     account.balance = account.balance - amount_for_withdraw
                     account.save()
                     transaction_entry = Transaction(
@@ -483,6 +536,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
                 
+
 
 
 class TransactionViewSet(viewsets.ModelViewSet):

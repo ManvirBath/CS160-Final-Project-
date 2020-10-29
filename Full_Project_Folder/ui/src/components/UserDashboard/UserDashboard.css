@@ -1,0 +1,186 @@
+.userdashboard {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+}
+
+#header-title {
+    font-size: 1.805em;
+    position: absolute;
+    left: 80px;
+    top: 0px;
+    color: black;
+    background-color: #6941e1;
+    border-bottom: 10px solid;
+    border-bottom-color: #6941e1;
+    padding-right: 55.155em;
+    padding-left: 2.5em;
+    padding-top: 0.1em;
+    margin: 0 -2.8em;
+}
+#header-logoff {
+    font-size: 1.8em;
+    position: absolute;
+    left: 1825px;
+    top: 3px;
+    color: black;
+}
+
+.navlist {
+    position: absolute;
+    left: -15px;
+    top: 5.8vh;
+    height: 3em;
+    width: 100%;
+    font-size: 1.25em;
+}
+.container {
+    position: absolute;
+    color: black;
+    left: 80px;
+    top: 20vh;
+}
+#dashboard-logo {
+    position: absolute;
+    top: 7vh;
+    left: 1vw;
+}
+#greeting {
+    position: absolute;
+    font-size: 1.65em;
+}
+#greeting2 {
+    position: absolute;
+    top: 7vh;
+    left: 5vw;
+    font-size: 2em;
+}
+
+.acctBox {
+    position: relative;
+}
+.checking {
+    position: relative;
+    top: 15vh;
+    left: 2vw;
+    font-size: 2.8em;
+    word-spacing: 4em;
+    border-bottom: 3px dotted;
+    border-left: 3px dotted;
+    border-right: 3px dotted;
+    border-top: 3px dotted;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2.1em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+.checking-bal {
+    position: relative;
+    top: 23.5vh;
+    left: 2.5vw;
+    font-size: 1.3em;
+    word-spacing: 12.9em;
+}
+.savings {
+    position: relative;
+    top: 30vh;
+    left: 2vw;
+    font-size: 2.8em;
+    word-spacing: 5.25em;
+    border-bottom: 3px dotted;
+    border-left: 3px dotted;
+    border-right: 3px dotted;
+    border-top: 3px dotted;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+.savings-bal {
+    position: relative;
+    left: 2.1vw;
+    font-size: 1.3em;
+    word-spacing: 13.5em;
+}
+.saving2 {
+    position: absolute;
+    top: 45vh;
+    left: 2vw;
+    font-size: 2.8em;
+    word-spacing: 5.25em;
+    border-bottom: 3px dotted;
+    border-left: 3px dotted;
+    border-right: 3px dotted;
+    border-top: 3px dotted;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+.saving2-bal {
+    position: absolute;
+    top: 38.5vh;
+    left: 2.2vw;
+    font-size: 1.3em;
+    word-spacing: 13.3em;
+}
+#services {
+    position: absolute;
+    color: black;
+    top: 25vh;
+    left: 63.7vw;
+    font-size: 2.5em;
+    border-color: #41b9e1;
+    border-bottom: 5px solid;
+    border-left: 5px solid;
+    border-right: 5px solid;
+    border-top: 5px solid;
+    border-color: #6941e1;
+    background: #6941e1;
+    padding-top: 0;
+    padding-left: 4.45em;
+    padding-right: 5em;
+    padding-bottom: 0;
+    margin: 0 -1em;
+}
+
+.services-list {
+    position: absolute;
+    color: black;
+    top: -1vh;
+    left: 68vw;
+    font-size: 2em;
+    padding-top: 12em;
+    padding-left: 3em;
+    padding-right: 12em;
+    padding-bottom: 0;
+    margin: 0 -2em;
+}
+#settings {
+    position: absolute;
+    top: -5vh;
+    left: 6.5vw;
+    display: inline-block;
+    padding: 400px 0px;
+    font-size: 1.25em;
+}
+#atm-finder {
+    position: absolute;
+    top: 4vh;
+    left: 3.15vw;
+    padding: 400px 55px;
+    font-size: 1.25em;
+}
+#contact {
+    position: absolute;
+    top: 29vh;
+    left: 5.5vw;
+    padding: 250px 0px;
+    font-size: 1.25em;
+}

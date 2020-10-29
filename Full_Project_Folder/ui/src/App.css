@@ -2,15 +2,3 @@
     background-color: #4169e1;
     min-height: 100vh;
 }
-.dark,
-.dark * {
-    background: #222;
-    background-color: #222;
-    color: #e6e6e6;
-    border-color: #e6e6e6;
-}
-.custom-control {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-}

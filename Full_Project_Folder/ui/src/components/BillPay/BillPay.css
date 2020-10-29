@@ -1,0 +1,51 @@
+body {
+    background-color: #7b97ea;
+}
+
+.BillPay,
+.BillPayConfirm,
+.BillPayTransaction {
+    margin: auto;
+    height: 100vh;
+    background-position: center;
+    background-color: white;
+    width: 75%;
+    background: white;
+}
+.headerDiv {
+    margin-top: 5%;
+}
+
+.headerDivTransaction {
+    margin-top: 8%;
+}
+.PageHeader {
+    background-color: #d0cece;
+    margin-top: 8%;
+    height: 10%;
+    text-align: center;
+}
+
+h2,
+h4 {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.billpay {
+    margin-left: 15%;
+}
+
+.inputDiv {
+    margin-right: 75%;
+}
+
+.nextBtn {
+    margin-top: 25px;
+    margin-left: 50%;
+}
+
+.buttons {
+    position: absolute;
+    right: 25%;
+    margin-top: 2.5%;
+}
