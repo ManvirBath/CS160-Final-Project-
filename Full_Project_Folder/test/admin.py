@@ -6,10 +6,12 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Client, Account, Transaction
+from .models import Client, Account, Transaction, BillPayment
 
 admin.site.register(Transaction)
 admin.site.register(Account)
+admin.site.register(BillPayment)
+
 @admin.register(Client)
 class UserAdmin(DjangoUserAdmin):
     """Define admin model for custom User model with no email field."""
