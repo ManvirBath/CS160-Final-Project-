@@ -26,7 +26,7 @@ export default function SignIn() {
         console.log(formData);
 
         axiosInstance
-            .post(`api/token/`, {
+            .post('api/token/', {
                 email: formData.email,
                 password: formData.password,
             })
