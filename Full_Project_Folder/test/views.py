@@ -33,6 +33,22 @@ def background_view(request):
 # Create your views here.
 @api_view(['POST'])
 def register(request):
+    """
+    POST url (example): http://127.0.0.1:8000/register/
+    Postman JSON example:
+    {
+        "email": "hola@hola.com",
+        "first_name": "91919191",
+        "last_name": "123456780",
+        "password": "ohyeahhahahaha",
+        "address": "666 Nobuena Drive",
+        "city": "San Jose",
+        "state": "CA",
+        "zipcode": "95051",
+        "phone_num": "408-999-9899",
+        "birthday": "1998-09-21"
+    }
+    """
     serializer = ClientSerializer(data=request.data)
     if serializer.is_valid():
         try:
@@ -40,16 +56,31 @@ def register(request):
                 created_first_name = serializer.data['first_name'] # need to have this as part of posting in API --> tell front end!!!
                 created_last_name = serializer.data['last_name']
                 created_email = serializer.data['email']
+
+                created_address        = serializer.data['address']
+                created_city           = serializer.data['city']
+                created_state          = serializer.data['state']
+                created_zipcode        = serializer.data['zipcode']
+                created_phone_num      = serializer.data['phone_num']
+                created_birthday       = serializer.data['birthday']
                 created_password = request.data['password']
-                created_superuser = serializer.data['is_superuser']
                 
                 client_entry = Client(
                     email = created_email,
                     first_name = created_first_name,
                     last_name = created_last_name,
+
+                    address        = created_address,
+                    city           = created_city,
+                    state          = created_state,
+                    zipcode        = created_zipcode,
+                    phone_num      = created_phone_num,
+                    birthday       = created_birthday,
+
                     is_staff = False,
                     is_superuser = False
                 )
+
                 client_entry.set_password(created_password)
                 client_entry.save()
                 
@@ -62,6 +93,14 @@ def register(request):
 
 @api_view(['POST'])
 def reset_password(request):
+    """
+    POST url (example): http://127.0.0.1:8000/reset_password/
+    Postman JSON example:
+    {
+        "email": "ralphstevendc@gmail.com",
+        "password": "forthewintouchdown"
+    }
+    """
     try:
         client = Client.objects.get(email=request.data['email'])
     except Client.DoesNotExist:
@@ -90,7 +129,56 @@ class ClientViewSet(viewsets.ModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
+    def edit_client(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/clients/3/edit_client/
+        Postman Example JSON:
+        {
+            "email": "np@no.com",
+            "first_name": "91919191",
+            "last_name": "123456780",
+            "address": "666 Nobueno Drive",
+            "city": "San Jose",
+            "state": "CA",
+            "zipcode": "95051",
+            "phone_num": "408-999-9999",
+            "birthday": "1998-09-21"
+        }
+        """
+        client_now = self.get_object()
+        serializer = ClientSerializer(data=request.data)
+        if serializer.is_valid():
+            try:
+                with transaction.atomic():
+                    client_now.email = serializer.data['email']
+                    client_now.first_name = serializer.data['first_name']
+                    client_now.last_name = serializer.data['last_name']
+
+                    client_now.address        = serializer.data['address']
+                    client_now.city           = serializer.data['city']
+                    client_now.state          = serializer.data['state']
+                    client_now.zipcode        = serializer.data['zipcode']
+                    client_now.phone_num      = serializer.data['phone_num']
+                    client_now.birthday       = serializer.data['birthday']
+                    client_now.save()
+
+                return Response({'status': 'Edit user successful'})
+            except IntegrityError as ex:
+                return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['post'])
     def create_account(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/clients/2/create_account/
+
+        Postman Example JSON:
+        {
+            "account_type": "checking"
+        }
+        """
         client_now = self.get_object()
         serializer = AccountSerializer(data=request.data)
         if serializer.is_valid():
@@ -102,7 +190,7 @@ class ClientViewSet(viewsets.ModelViewSet):
                             account_num = randint(10000000, 99999999), # doesn't check if they're the same one.
                             account_type = submitted_type,
                             client = client_now,
-                            status = serializer.data['status']
+                            status = 'active'
                         )
                     account_entry.save()
             
@@ -114,43 +202,19 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
     
-    # Set Up Bill Payment
-    # @action(detail=True, methods=['post'])
-    # def pay_bill_payment(self, request, pk=None):
-    #     client_now = self.get_object()
-    #     serializer = TransactionSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         try:
-    #             acc_num = request.data["to_account_number"]
-    #             account = self.account_queryset.filter(account_num=acc_num)[0]
-
-    #             with transaction.atomic():
-                                        
-    #                 # FROM
-    #                 account.balance = account.balance - client_now.bill_payment
-    #                 cost_bill = client_now.bill_payment
-    #                 client_now.bill_payment = 0.00
-    #                 account.save()
-    #                 client_now.save()
-
-    #                 transaction_one = Transaction(
-    #                     account = account,
-    #                     amount = cost_bill,
-    #                     trans_type = 'Withdraw - External Transfer - Payed Off Bill Payment',
-    #                     location = 'Online'
-    #                 )
-    #                 transaction_one.save()
-
-    #         except IntegrityError as ex:
-    #             return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-    #         return Response({'status': 'Bill Payment transfer successful'})
-    #     else:
-    #         return Response(serializer.errors,
-    #                         status=status.HTTP_400_BAD_REQUEST)
-    
     @action(detail=True, methods=['post'])
     def create_bill_payment(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/clients/2/create_bill_payment/
+        Postman Example JSON:
+        {
+            "from_account_num": "149192", <---- (Make SURE IT'S CHARACTERS, NOT OBJECT ACCOUNT ITSELF!!)
+            "routing_num": "123456790",
+            "to_account_num": "11111111",
+            "amount": 5.00,
+            "date": "2020-10-27"
+        }
+        """
         serializer = BillPaymentSerializer(data=request.data)
         if serializer.is_valid():
             try:
@@ -187,12 +251,19 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def close_account(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/accounts/91882878/close_account/
+        Postman Example JSON:
+        {
+            "location": "Online",
+            "memo": "Closed - Client is mad"
+        }
+        """
         account = self.get_object()
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
             try:
                 with transaction.atomic():
-                    print("closed")
                     amount_for_withdraw = account.balance # need to have this as part of posting in API --> tell front end!!!
                     location_withdrawn = serializer.data['location']
                     memo_on_withdrawn = serializer.data['memo']
@@ -220,6 +291,16 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def transfer_internal(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/accounts/91919191/transfer_internal/
+        Postman Example JSON:
+        {
+            "to_account_number": "149192",
+            "amount": 10.00,
+            "location": "Online",
+            "memo": "For you loser"
+        }
+        """
         account = self.get_object()
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
@@ -273,7 +354,13 @@ class AccountViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def deposit(self, request, pk=None):
         """
-        Expecting this JSON structure example: {'amount': 5.00, 'location': 'Online', 'memo': 'Deposit #1' }
+        POST url (example): http://127.0.0.1:8000/accounts/91919191/deposit/
+        Postman Example JSON:
+        {
+            "amount": 5.00, 
+            "location": "Online", 
+            "memo": "Deposit #1" 
+        }
         """
         account = self.get_object()
         serializer = TransactionSerializer(data=request.data)
@@ -310,7 +397,13 @@ class AccountViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def withdraw(self, request, pk=None):
         """
-        Expecting this JSON structure example: {'amount': 5.00, 'location': 'Online', 'check_path': '1', 'memo': 'withdraw #1' }
+        POST url (example): http://127.0.0.1:8000/accounts/91919191/withdraw/
+        Postman Example JSON:
+        {
+            "amount": 5.00, 
+            "location": "Online", 
+            "memo": "Withdraw #1" 
+        }
         """
         account = self.get_object()
         serializer = TransactionSerializer(data=request.data)
@@ -346,11 +439,11 @@ class AccountViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def transfer_external(self, request, pk=None):
         """
+        POST url (example): http://127.0.0.1:8000/accounts/91919191/transfer_external/
         Expected External Transfer JSON API:
         {
             "amount": 10.00,
             "location": "Online",
-            "account_num": "19294019",
             "routing_num": "123456789",
             "to_account_num": "999999",
             "memo": "External Transfer #1"
@@ -358,7 +451,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         """
 
         account = self.get_object()
-        serializer = TransactionSerializer(data={key:request.data[key] for key in ['amount', 'location', 'account_num', 'memo']})
+        serializer = TransactionSerializer(data={key:request.data[key] for key in ['amount', 'location', 'memo']})
 
         if serializer.is_valid():
             try:
@@ -411,6 +504,17 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def edit_bill_payment(self, request, pk=None):
+        """
+        POST url (example): http://127.0.0.1:8000/bill_payments/2/edit_bill_payment/
+        Expected External Transfer JSON API:
+        {
+            "from_account_num": "149192",
+            "routing_num": "123456785",
+            "to_account_num": "11111112",
+            "amount": 10.00,
+            "date": "2020-10-25"
+        }
+        """
         bill_payment = self.get_object()
         serializer = BillPaymentSerializer(data=request.data)
         if serializer.is_valid():
@@ -438,6 +542,10 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def cancel_bill_payment(self, request, pk=None):
+        """
+        JUST THE URL --> POST url (example): http://127.0.0.1:8000/bill_payments/2/cancel_bill_payment/
+        Expected External Transfer JSON API:
+        """
         bill_payment = self.get_object()
         try:
             with transaction.atomic():
@@ -456,12 +564,11 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
 # TO DO LIST
 """
 - Create Transfer External API $$$
+- Edit Register API (create address and other fields) Edits For Addresses, Phone Numbers, ZipCode, etc. (For User)
 - Create Automation to do Transfer External Every 5 seconds (Just for one time payment)
 - Do Create, Edit and Delete (Just Making It Cancelled) of Bill Payments $$$
-- Edits For Addresses, Phone Numbers, ZipCode, etc. (For User)
 - NO Deletions for Rest Of the Model. $$$
 - Validating of the forms inputted.
 - Connecting backend with frontends.
 ---> Optimize Django queries (After semester is over.)
-- 
 """

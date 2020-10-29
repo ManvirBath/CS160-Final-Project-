@@ -8,7 +8,7 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
         fields = ('email', 'first_name', 'last_name', 'is_active', 'address', \
-                  'city', 'state', 'zipcode', 'phone_num', 'birthday', 'is_superuser')
+                  'city', 'state', 'zipcode', 'phone_num', 'birthday','is_staff', 'is_superuser')
         extra_kwargs =  {'first_name': {'required': False},
                         'last_name': {'required': False},
                         'is_active': {'required': False},
@@ -26,7 +26,8 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
         model = Account
         fields = ('account_num', 'account_type', 'client', 'balance', 'status')
         extra_kwargs = {'account_num': {'required': False},
-                        'client': {'required': False}, }
+                        'client': {'required': False}, 
+                        'status': {'required': False}}
 
 class TransactionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
