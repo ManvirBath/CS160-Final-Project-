@@ -58,10 +58,6 @@ class DepositCheck extends React.Component {
             e.preventDefault();
             this.setState({ errorCheck: 'Please upload a check!' });
         }
-        if (this.state.file.fileSize <= 0) {
-            e.preventDefault();
-            this.setState({ errorCheck: 'Your file is empty!' });
-        }
         //validates to account
         if (this.state.to_account === '') {
             e.preventDefault();

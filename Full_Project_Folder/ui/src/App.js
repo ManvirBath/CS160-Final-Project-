@@ -21,6 +21,8 @@ import BillPay from './components/BillPay/BillPay';
 import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
 import Contact from './components/Contact';
+import Account from './components/Account';
+
 import {
     BrowserRouter as Router,
     Route,
@@ -98,6 +100,7 @@ class App extends React.Component {
                             path="/billpaytransaction"
                             component={BillPayTransaction}
                         />
+                        <Route path="/account" component={Account} />
                         <Route path="/contact" component={Contact} />
                         <Redirect from="*" to="/login" />
                     </Switch>
