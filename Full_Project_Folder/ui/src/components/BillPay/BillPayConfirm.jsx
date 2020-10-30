@@ -14,14 +14,14 @@ class BillPayConfirm extends React.Component {
             <div className="BillPayConfirm">
                 <UserNavigationBar />
                 <div className="headerDiv">
-                    <h1
-                        className="PageHeader"
-                        class="jumbotron"
-                        id="confirm-trans"
-                    >
+                    <h1 className="PageHeader" id="confirm-trans">
                         Confirm transfer
                     </h1>
-                    <h6 className="PageHeader2" class="lead">
+                    <h6
+                        className="PageHeader2"
+                        class="lead"
+                        id="billpayconfirm-detail"
+                    >
                         Please confirm your details before submitting.
                     </h6>
                 </div>

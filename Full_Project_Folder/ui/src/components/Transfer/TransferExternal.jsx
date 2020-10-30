@@ -2,6 +2,7 @@ import React from 'react';
 import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import axiosInstance from '../../axios';
 
 class TransferExternal extends React.Component {
     constructor(props) {
@@ -12,33 +13,112 @@ class TransferExternal extends React.Component {
             routing_num: '',
             amount: '',
             memo: '',
+            errorToAcct: '',
+            errorFromAcct: '',
+            errorRouting: '',
+            errorAmount: '',
+            accts: [],
         };
         this.to_acct = this.to_acct.bind(this);
         this.from_acct = this.from_acct.bind(this);
         this.routing_num = this.routing_num.bind(this);
         this.amount = this.amount.bind(this);
         this.memo = this.memo.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentDidMount() {
+        axiosInstance.get('/accounts/').then((res) => {
+            const d = res.data;
+            this.setState({ accts: d });
+        });
     }
 
     to_acct(e) {
         this.setState({ to_acct: e.target.value });
-        //console.log(this.state.to_acct);
+        this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
         this.setState({ from_acct: e.target.selectedOptions[0].text });
-        //console.log(e.target.value);
+        this.setState({ errorFromAcct: '' });
     }
     amount(e) {
         this.setState({ amount: e.target.value });
+        this.setState({ errorAmount: '' });
     }
     memo(e) {
         this.setState({ memo: e.target.value });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value });
+        this.setState({ errorRouting: '' });
+    }
+
+    handleSubmit(e) {
+        //validates to account
+        if (this.state.to_acct === '') {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Account number cannot be empty',
+            });
+        } else if (
+            (this.state.to_acct.length > 9) |
+            (this.state.to_acct.length < 9)
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Account number must be 9 digits',
+            });
+        }
+        if (this.state.to_acct.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
+            this.setState({
+                errorToAcct:
+                    'Account number must contain only values 0-9 (inclusive)',
+            });
+        }
+
+        //validates routing number
+        if (this.state.routing_num === '') {
+            e.preventDefault();
+            this.setState({
+                errorRouting: 'Routing number cannot be empty',
+            });
+        } else if (
+            (this.state.routing_num.length > 9) |
+            (this.state.routing_num.length < 9)
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorRouting: 'Routing number must be 9 digits',
+            });
+        }
+        if (this.state.routing_num.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
+            this.setState({
+                errorRouting:
+                    'Routing number must contain only values 0-9 (inclusive)',
+            });
+        }
+        //validates from account
+        if (this.state.from_acct === '') {
+            e.preventDefault();
+            this.setState({
+                errorFromAcct: 'Select an account to transfer from',
+            });
+        }
+        //validates amount
+        if (this.state.amount <= 0) {
+            e.preventDefault();
+            this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+        }
     }
 
     render() {
+        let userAccts = this.state.accts.map((v) => (
+            <option value={v.account_num}>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
+        ));
         return (
             <div className="TransferExternal">
                 <div id="active-transfer-external">
@@ -56,11 +136,11 @@ class TransferExternal extends React.Component {
                         onChange={this.from_acct}
                     >
                         <option value="acctNumFrom" disabled selected>
-                            Savings Account 123
+                            Transfer Money From
                         </option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
+                        {userAccts}
                     </select>
+                    <h6 className="error">{this.state.errorFromAcct}</h6>
 
                     <div className="inputDiv">
                         <h2 id="external-transferto">Transfer To</h2>
@@ -71,6 +151,7 @@ class TransferExternal extends React.Component {
                             onChange={this.to_acct}
                             class="form-control"
                         ></input>
+                        <h6 className="error">{this.state.errorToAcct}</h6>
                         <input
                             type="text"
                             className="routingNum"
@@ -78,6 +159,7 @@ class TransferExternal extends React.Component {
                             onChange={this.routing_num}
                             class="form-control"
                         ></input>
+                        <h6 className="error">{this.state.errorRouting}</h6>
                         <input
                             type="text"
                             className="amountInput"
@@ -85,6 +167,7 @@ class TransferExternal extends React.Component {
                             onChange={this.amount}
                             class="form-control"
                         ></input>
+                        <h6 className="error">{this.state.errorAmount}</h6>
 
                         <h2 id="external-memo">Memo(optional)</h2>
                         <textarea
@@ -107,7 +190,11 @@ class TransferExternal extends React.Component {
                                 memo: this.state.memo,
                             }}
                         >
-                            <button type="button" class="btn btn-primary">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                onClick={this.handleSubmit}
+                            >
                                 Next
                             </button>
                         </Link>

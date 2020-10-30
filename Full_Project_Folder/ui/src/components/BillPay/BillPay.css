@@ -8,14 +8,16 @@ body {
 .BillPayConfirm,
 .BillPayTransaction {
     margin: auto;
-    height: 80vh;
+    height: 85vh;
     background-position: center;
     background-color: white;
-    width: 75%;
+    width: 70%;
     background: azure;
 }
 .headerDiv {
+    position: relative;
     margin-top: 5%;
+    top: 190px;
 }
 
 .headerDivTransaction {
@@ -23,7 +25,7 @@ body {
 }
 .PageHeader {
     background-color: azure;
-    margin-top: 8%;
+    margin-top: 0%;
     height: 10%;
     text-align: center;
 }
@@ -34,7 +36,9 @@ h4 {
 }
 
 .billpay {
+    position: relative;
     margin-left: 20%;
+    top: 55px;
 }
 
 .inputDiv {
@@ -44,11 +48,11 @@ h4 {
 }
 .inputDiv2 {
     position: relative;
-    top: 2vh;
+    top: 4vh;
 }
 .inputDiv3 {
     position: relative;
-    top: 4vh;
+    top: 6vh;
 }
 
 .nextBtn {
@@ -63,12 +67,51 @@ h4 {
 }
 .details {
     position: relative;
-    bottom: 7.5vh;
+    top: 3vh;
 }
 #billpay-header {
     position: relative;
     text-align: center;
-    bottom: 35px;
+    top: 50px;
     font-size: 2.25em;
     font-family: sans-serif;
+}
+#billpay-next {
+    position: relative;
+    bottom: 70px;
+    right: 25px;
+}
+#transfer-from {
+    position: relative;
+    top: 1px;
+}
+#transfer-to {
+    position: relative;
+    bottom: 5px;
+}
+#billpay-date {
+    position: relative;
+    top: 5px;
+}
+#pay-date-input {
+    position: relative;
+    top: 2px;
+}
+#billpay-frequency {
+    position: relative;
+    top: 3px;
+}
+#confirm-trans {
+    position: relative;
+    color: black;
+    bottom: 115px;
+}
+#billpayconfirm-detail {
+    position: relative;
+    color: black;
+    bottom: 115px;
+}
+#billpaytransaction-ty {
+    position: relative;
+    top: 25px;
 }

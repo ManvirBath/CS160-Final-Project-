@@ -23,9 +23,19 @@ class UserNavigationBar extends React.Component {
                 <div className="navlist">
                     <ul className="nav nav-pills nav-fill">
                         <li className="nav-item">
-                            <a className="nav-link" href="/userdashboard">
-                                Account
-                            </a>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="" id="dropdown-basic">
+                                    Account
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="/userdashboard">
+                                        View my Account
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="/OpenAccount">
+                                        Open an Account
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="/billpay">

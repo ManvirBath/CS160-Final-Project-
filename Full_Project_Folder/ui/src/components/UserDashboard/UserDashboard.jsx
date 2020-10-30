@@ -65,11 +65,6 @@ class UserDashboard extends React.Component {
                 <div className="navlist2">
                     <ul className="nav nav-pills nav-fill">
                         <li className="nav-item">
-                            <a className="nav-link" href="/openAccount">
-                                Open Account
-                            </a>
-                        </li>
-                        <li className="nav-item">
                             <a className="nav-link" href="/GMap">
                                 ATM Locator
                             </a>

@@ -14,14 +14,21 @@ class TransferExternalConfirm extends React.Component {
             <div className="DepositCheckConfirm">
                 <UserNavigationBar />
                 <div className="headerDiv">
-                    <h1 className="PageHeader" class="jumbotron">
+                    <h1
+                        className="PageHeader"
+                        id="external-transfer-confirmheader"
+                    >
                         Confirm transfer
                     </h1>
-                    <h6 className="PageHeader2" class="lead">
+                    <h6
+                        className="PageHeader2"
+                        class="lead"
+                        id="external-transfer-confirmheader2"
+                    >
                         Please confirm your details before submitting.
                     </h6>
                 </div>
-                <div className="details">
+                <div className="details-external-confirm">
                     <h4>
                         Transfer From:
                         {this.props.location.from_acct}
@@ -33,8 +40,12 @@ class TransferExternalConfirm extends React.Component {
                 </div>
                 <div className="buttons">
                     <Link to="/transferexternal">
-                        <button type="button" class="btn btn-danger">
-                            Go Back
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            id="transfer-external-btn"
+                        >
+                            Don't make transfer
                         </button>
                     </Link>
                     <Link
@@ -44,9 +55,14 @@ class TransferExternalConfirm extends React.Component {
                             to_acct: this.props.location.to_acct,
                             amount: this.props.location.amount,
                             memo: this.props.location.memo,
+                            routing_num: this.props.location.routing_num,
                         }}
                     >
-                        <button type="button" class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="transfer-external-btn2"
+                        >
                             Submit
                         </button>
                     </Link>

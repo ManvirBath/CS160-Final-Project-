@@ -7,7 +7,7 @@
 h1 {
     position: relative;
     text-align: center;
-    bottom: 135px;
+    bottom: 125px;
     color: white;
 }
 #line1 {
@@ -31,7 +31,7 @@ h1 {
 #jumbotron {
     position: absolute;
     top: 250px;
-    bottom: 350px;
+    bottom: 360px;
     text-align: center;
     width: 100%;
 }
@@ -85,7 +85,7 @@ h1 {
 }
 #backto-accounts {
     position: absolute;
-    top: 360px;
+    top: 350px;
     left: 862.5px;
     color: red;
 }

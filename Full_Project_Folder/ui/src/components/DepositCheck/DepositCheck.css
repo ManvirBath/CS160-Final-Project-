@@ -1,4 +1,4 @@
-ody {
+body {
     background-color: #7b97ea;
 }
 
@@ -18,9 +18,9 @@ h4 {
 .DepositCheckConfirm,
 .DepositCheckTransaction {
     margin: auto;
-    height: 100vh;
+    height: 70vh;
     background-position: center;
-    background-color: white;
+    background-color: azure;
     width: 75%;
 }
 
@@ -66,7 +66,7 @@ h4 {
     margin-left: 25%;
     flex-direction: column;
     display: flex;
-    margin-top: 10%;
+    margin-top: 13%;
 }
 
 .buttons {
@@ -77,7 +77,7 @@ h4 {
 #deposit-header {
     position: relative;
     text-align: center;
-    top: 5px;
+    top: 55px;
     font-size: 2.25em;
     font-family: sans-serif;
 }
@@ -87,7 +87,7 @@ h4 {
 }
 #img {
     position: relative;
-    top: 60px;
+    top: 70px;
 }
 #deposit-to {
     position: relative;
@@ -117,4 +117,21 @@ h4 {
 #memo-input {
     position: relative;
     top: 20px;
+}
+#depositcheck-confirm {
+    position: relative;
+    top: 160px;
+    color: black;
+}
+#depositchecktransaction-ty {
+    position: relative;
+    top: 131px;
+}
+#btn-depcheck {
+    position: relative;
+    right: 150px;
+}
+#btn-depcheck2 {
+    position: relative;
+    right: 150px;
 }
