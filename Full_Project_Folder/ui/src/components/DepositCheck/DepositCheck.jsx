@@ -1,110 +1,160 @@
-import React from 'react';
-import './DepositCheck.css';
-import { Link } from 'react-router-dom';
+import React from "react";
+import "./DepositCheck.css";
+import { Link } from "react-router-dom";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
+import axiosInstance from "../../axios";
 
 class DepositCheck extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            to_account: '',
-            amount: '',
-            memo: '',
-            check_image: '',
-            file: null,
-        };
-        this.to_account = this.to_account.bind(this);
-        this.amount = this.amount.bind(this);
-        this.memo = this.memo.bind(this);
-        this.check_image = this.check_image.bind(this);
-        this.file = this.check_image.bind(this);
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      to_account: "",
+      amount: "",
+      memo: "",
+      check_image: "",
+      file: null,
+      errorAmount: "",
+      errorAccount: "",
+      errorCheck: "",
+      accts: [],
+    };
+    this.to_account = this.to_account.bind(this);
+    this.amount = this.amount.bind(this);
+    this.memo = this.memo.bind(this);
+    this.check_image = this.check_image.bind(this);
+    this.file = this.check_image.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    to_account(e) {
-        this.setState({ to_account: e.target.value });
-        console.log(e.target.value);
-    }
-    amount(e) {
-        this.setState({ amount: e.target.value });
-    }
-    memo(e) {
-        this.setState({ memo: e.target.value });
-    }
-    check_image(e) {
-        this.setState({
-            check_image: e.target.value,
-            file: URL.createObjectURL(e.target.files[0]),
-        });
-    }
+  componentDidMount() {
+    axiosInstance.get("/accounts/").then((res) => {
+      const d = res.data;
+      this.setState({ accts: d });
+    });
+  }
 
-    render() {
-        return (
-            <div className="DepositCheck">
-                <h1 className="PageHeader" class="jumbotron">
-                    Deposit check to account
-                </h1>
-                <div className="leftHalf">
-                    <h2>To:</h2>
-                    <select
-                        className="accounts"
-                        id="accounts"
-                        class="btn btn-light dropdown-toggle"
-                        onChange={this.deposit_to_account}
-                    >
-                        <option value="acctNum" disabled selected>
-                            Deposit Money To
-                        </option>
-                        <option value="Account1">Savings Account 123</option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
-                    </select>
+  to_account(e) {
+    this.setState({ to_account: e.target.selectedOptions[0].text });
+    this.setState({ errorAccount: "" });
+  }
+  amount(e) {
+    this.setState({ amount: parseFloat(e.target.value).toFixed(2) });
+    this.setState({ errorAmount: "" });
+  }
+  memo(e) {
+    this.setState({ memo: e.target.value });
+  }
+  check_image(e) {
+    this.setState({
+      check_image: e.target.value,
+      file: URL.createObjectURL(e.target.files[0]),
+    });
+    this.setState({ errorCheck: "" });
+  }
 
-                    <h2>Amount</h2>
-                    <input
-                        type="text"
-                        className="amountInput"
-                        placeholder="$"
-                        onChange={this.amount}
-                        class="form-control"
-                    ></input>
-
-                    <h2>Memo(optional)</h2>
-                    <textarea
-                        type="text"
-                        className="memoInput"
-                        placeholder="Memo"
-                        class="form-control"
-                        onChange={this.memo}
-                    />
-                </div>
-                <div className="rightHalf">
-                    <h4>Upload Check:</h4>
-                    <input
-                        type="file"
-                        id="img"
-                        className="checkImgPath"
-                        accept="image/*"
-                        onChange={this.check_image}
-                        class="btn btn-secondary"
-                    />
-                    <img className="checkImg" src={this.state.file} />
-                    <Link
-                        to={{
-                            pathname: '/depositcheckconfirm',
-                            account: this.state.to_account,
-                            amount: this.state.amount,
-                            memo: this.state.memo,
-                            file: this.state.file,
-                            check_image: this.state.check_image,
-                        }}
-                    >
-                        <button type="button" class="btn btn-primary">
-                            Next
-                        </button>
-                    </Link>
-                </div>
-            </div>
-        );
+  handleSubmit(e) {
+    //validates check
+    if (this.state.file == null) {
+      e.preventDefault();
+      this.setState({ errorCheck: "Please upload a check!" });
     }
+    if (this.state.file.fileSize <= 0) {
+      e.preventDefault();
+      this.setState({ errorCheck: "Your file is empty!" });
+    }
+    //validates to account
+    if (this.state.to_account === "") {
+      e.preventDefault();
+      this.setState({
+        errorAccount: "Please select an account to deposit the check to!",
+      });
+    }
+    //validates amount
+    if (this.state.amount <= 0) {
+      e.preventDefault();
+      this.setState({ errorAmount: "Amount must be greater than 0.00!" });
+    }
+  }
+
+  render() {
+    let userAccts = this.state.accts.map((v) => (
+      <option value={v.account_num}>
+        {v.account_type} {v.account_num}: {v.balance}
+      </option>
+    ));
+    return (
+      <div className="DepositCheck">
+        <UserNavigationBar />
+        <div className="PageHeader">
+          <h1 class="jumbotron">Deposit Check</h1>
+        </div>
+        <div className="leftHalf">
+          <h2>To:</h2>
+          <select
+            className="accounts"
+            id="accounts"
+            class="btn btn-light dropdown-toggle"
+            onChange={this.to_account}
+          >
+            <option value="acctNumTo" disabled selected>
+              Deposit Money To
+            </option>
+            {userAccts}
+          </select>
+          <h6 className="error">{this.state.errorAccount}</h6>
+          <h2>Amount</h2>
+          <input
+            type="number"
+            className="amountInput"
+            min="0"
+            step="0.01"
+            placeholder="$"
+            onChange={this.amount}
+            class="form-control"
+          ></input>
+          <h6 className="error">{this.state.errorAmount}</h6>
+          <h2>Memo(optional)</h2>
+          <textarea
+            type="text"
+            className="memoInput"
+            placeholder="Memo"
+            class="form-control"
+            onChange={this.memo}
+          />
+        </div>
+        <div className="rightHalf">
+          <h4>Upload Check:</h4>
+          <input
+            type="file"
+            id="img"
+            className="checkImgPath"
+            accept="image/*"
+            onChange={this.check_image}
+            class="btn btn-secondary"
+          />
+          <h6 className="error">{this.state.errorCheck}</h6>
+          <img className="checkImg" src={this.state.file} />
+          <Link
+            to={{
+              pathname: "/depositcheckconfirm",
+              account: this.state.to_account,
+              amount: this.state.amount,
+              memo: this.state.memo,
+              check_image: this.state.check_image,
+            }}
+          >
+            <button
+              type="button"
+              class="btn btn-primary"
+              onClick={this.handleSubmit}
+            >
+              Next
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default DepositCheck;

@@ -1,52 +1,56 @@
 body {
-    background-color: #7b97ea;
+  background-color: #7b97ea;
 }
 
 .TransferInternal,
 .TransferExternal {
-    margin: auto;
-    height: 75vh;
-    background-position: center;
-    background-color: white;
-    width: 75%;
-    background: white;
+  margin: auto;
+  height: 75vh;
+  background-position: center;
+  background-color: white;
+  width: 75%;
+  background: white;
+}
+
+.error {
+  color: red;
 }
 
 .headerDiv {
-    margin-top: 5%;
+  margin-top: 5%;
 }
 
 .headerDivTransaction {
-    margin-top: 8%;
+  margin-top: 8%;
 }
 
 .PageHeader {
-    background-color: #d0cece;
-    margin-top: 8%;
-    height: 10%;
-    text-align: center;
+  background-color: #d0cece;
+  margin-top: 8%;
+  height: 10%;
+  text-align: center;
 }
 
 h2,
 h4 {
-    font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 .transfer {
-    margin-left: 15%;
+  margin-left: 15%;
 }
 
 .inputDiv {
-    margin-right: 75%;
+  margin-right: 75%;
 }
 
 .nextBtn {
-    margin-top: 25px;
-    margin-left: 50%;
+  margin-top: 25px;
+  margin-left: 50%;
 }
 
 .buttons {
-    position: absolute;
-    right: 25%;
-    margin-top: 2.5%;
+  position: absolute;
+  right: 25%;
+  margin-top: 2.5%;
 }
