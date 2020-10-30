@@ -22,13 +22,51 @@ from rest_framework.views import APIView
 from random import randint
 from background_task import background
 
-@background(schedule=5)
-def automated_bill():
-    print("hello")
+from django.utils import timezone
+import time
 
-def background_view(request):
-    automated_bill()
-    return HttpResponse("Hello")
+"""
+Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYMENT)
+"""
+@background(schedule=30)
+def automated_bill():
+    time.sleep(5)
+    queryset = BillPayment.objects.all()
+    for i in range(len(queryset)):
+        cur_bill_pay = queryset[i]
+        account = cur_bill_pay.account
+
+        if cur_bill_pay.status != 'active':
+            print("processed")
+            continue
+
+        if timezone.now().date() >= cur_bill_pay.date and account.balance >= cur_bill_pay.amount:
+            try:
+                with transaction.atomic():
+                    amount_for_transfer = cur_bill_pay.amount # need to have this as part of posting in API --> tell front end!!!
+                    location_transfer = 'Online' # make sure to put validator of Bill Payments though!!
+                    
+                    account.balance = account.balance - amount_for_transfer
+                    account.save()
+
+                    transaction_entry = Transaction(
+                        account = account,
+                        amount = amount_for_transfer,
+                        trans_type = 'External Transfer',
+                        location = location_transfer,
+                        memo = "Bill Payment" + " (External Transfer To Routing Number- {}, To Account Number- {})".format(cur_bill_pay.routing_num, cur_bill_pay.to_account_num)
+                    )
+                    transaction_entry.save()
+
+                    cur_bill_pay.status = 'processed'
+                    cur_bill_pay.save()
+            except IntegrityError as ex:
+                return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return 
+    
+
+
 
 
 # Create your views here.
