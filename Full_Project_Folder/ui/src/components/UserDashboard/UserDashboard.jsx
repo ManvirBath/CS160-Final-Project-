@@ -55,11 +55,11 @@ class UserDashboard extends React.Component {
         return (
             <div className="userdashboard">
                 <UserNavigationBar />
-                <div className="container">
-                    <div id="greeting">
+                <div className="container-userdash">
+                    <div id="greeting-userdash">
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
-                    <div id="greeting2">Personal Accounts</div>
+                    <div id="greeting-userdash2">Personal Accounts</div>
                     <div className="acct-temp">{acctTemplate}</div>
                 </div>
                 <div className="navlist2">

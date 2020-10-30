@@ -48,7 +48,7 @@ class TransferExternal extends React.Component {
                 <h1 className="PageHeader"></h1>
                 <div id="transfer-external-header">External Transfer</div>
                 <div className="transfer">
-                    <h2>Transfer From</h2>
+                    <h2 id="external-transferfrom">Transfer From</h2>
                     <select
                         className="accounts"
                         id="accounts"
@@ -63,7 +63,7 @@ class TransferExternal extends React.Component {
                     </select>
 
                     <div className="inputDiv">
-                        <h2>Transfer To</h2>
+                        <h2 id="external-transferto">Transfer To</h2>
                         <input
                             type="text"
                             className="toAccountExternal"
@@ -86,10 +86,11 @@ class TransferExternal extends React.Component {
                             class="form-control"
                         ></input>
 
-                        <h2>Memo(optional)</h2>
+                        <h2 id="external-memo">Memo(optional)</h2>
                         <textarea
                             type="text"
                             className="memoInput"
+                            id="external-memoInput"
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}

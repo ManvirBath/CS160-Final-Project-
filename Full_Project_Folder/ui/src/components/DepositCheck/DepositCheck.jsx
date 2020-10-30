@@ -44,7 +44,7 @@ class DepositCheck extends React.Component {
                 <h1 className="PageHeader" class="jumbotron"></h1>
                 <div id="deposit-header">Deposit Check </div>
                 <div className="leftHalf">
-                    <h2>Deposit To:</h2>
+                    <h2 id="deposit-to">Deposit To:</h2>
                     <select
                         className="accounts"
                         id="accounts"
@@ -56,26 +56,28 @@ class DepositCheck extends React.Component {
                         <option value="Account3">Checking Account 678</option>
                     </select>
 
-                    <h2>Amount</h2>
+                    <h2 id="deposit-amount">Amount</h2>
                     <input
                         type="text"
                         className="amountInput"
+                        id="amount-input"
                         placeholder="$"
                         onChange={this.amount}
                         class="form-control"
                     ></input>
 
-                    <h2>Memo(optional)</h2>
+                    <h2 id="deposit-memo">Memo(optional)</h2>
                     <textarea
                         type="text"
                         className="memoInput"
+                        id="memo-input"
                         placeholder="Memo"
                         class="form-control"
                         onChange={this.memo}
                     />
                 </div>
                 <div className="rightHalf">
-                    <h4>Upload Check:</h4>
+                    <h4 id="upload-check">Upload Check:</h4>
                     <input
                         type="file"
                         id="img"

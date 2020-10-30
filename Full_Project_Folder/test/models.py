@@ -75,18 +75,31 @@ class Transaction(models.Model):
     memo        = models.CharField(max_length=255, null=False)
     account      = models.ForeignKey(Account, on_delete=models.CASCADE)
 
+class BillPayment(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    routing_num = models.CharField(max_length=10, null=False)
+    to_account_num = models.CharField(max_length=10, null=False)
+    amount = models.FloatField(null=False, default=0.01)
+    date   = models.DateField(null=False, default=timezone.now)
+    STATUS = (
+        ('active', 'active'), # background tasks look for ones that are active. Due for today.
+        ('cancelled', 'cancelled'),
+        ('processed', 'processed'),
+    )
+    status = models.CharField(max_length=10, default='active', null=False, choices=STATUS)
+
 
 """
-PROVE THAT THIS IS GONNA WORK. 
+PROVE THAT THIS IS GONNA WORK.
 POINT OUT SIMPLIFYING THE MODEL AND OVERCOMPLICATING
 - I analyzed the model compared to the website
 
-- Only thing we need is to add or subtract funds from each account --> 
+- Only thing we need is to add or subtract funds from each account -->
 
-- Talk about internal or external transfer, external it's like withdrawing from the bank 
+- Talk about internal or external transfer, external it's like withdrawing from the bank
 and either the other bank is withdrawing it or depositing it
 
-- However you are required to provide an API (e.g. web service) 
+- However you are required to provide an API (e.g. web service)
 for remote client to credit or debit their account.
 
    - this is just withdrawing

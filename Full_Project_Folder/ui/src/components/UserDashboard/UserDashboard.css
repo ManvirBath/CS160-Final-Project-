@@ -9,7 +9,7 @@
     flex-direction: column;
     width: 1919.5px;
 }
-.container {
+.container-userdash {
     position: absolute;
     color: black;
     left: 325px;
@@ -20,11 +20,11 @@
     top: 10vh;
     left: 1vw;
 }
-#greeting {
+#greeting-userdash {
     position: absolute;
     font-size: 1.65em;
 }
-#greeting2 {
+#greeting-userdash2 {
     position: absolute;
     top: 9vh;
     left: 1vw;

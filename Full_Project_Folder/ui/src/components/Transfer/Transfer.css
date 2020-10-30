@@ -7,9 +7,9 @@ body {
     margin: auto;
     height: 75vh;
     background-position: center;
-    background-color: white;
+    background-color: azure;
     width: 75%;
-    background: white;
+    background: azure;
 }
 
 .headerDiv {
@@ -33,7 +33,7 @@ h4 {
 }
 
 .transfer {
-    margin-left: 15%;
+    margin-left: 20%;
 }
 
 .inputDiv {
@@ -50,15 +50,74 @@ h4 {
     right: 25%;
     margin-top: 2.5%;
 }
+.accounts {
+    position: relative;
+    bottom: 50px;
+}
+
+#btn-primary {
+    position: relative;
+    bottom: 20px;
+}
 #transfer-internal-header {
     position: relative;
     text-align: center;
-    bottom: 65px;
+    bottom: 25px;
     font-size: 2.25em;
+    font-family: sans-serif;
 }
 #transfer-external-header {
     position: relative;
     text-align: center;
-    bottom: 65px;
+    bottom: 25px;
     font-size: 2.25em;
+    font-family: sans-serif;
+}
+
+#internal-transerfrom {
+    position: relative;
+    top: 2.5px;
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#internal-amount {
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#transfer-internal-transerto {
+    position: relative;
+    top: 10px;
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#external-transferto {
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#external-transferfrom {
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#accounts1 {
+    position: relative;
+    top: 10px;
+}
+#transfer-internal-memo {
+    position: relative;
+    top: 15px;
+    font-size: 1.6em;
+    font-family: 'Times New Roman', Times, serif;
+}
+#memoInput {
+    position: relative;
+    top: 15px;
+}
+#external-memo {
+    position: relative;
+    top: 12.5px;
+    font-size: 1.6em;
+}
+#external-memoInput {
+    position: relative;
+    top: 12.5px;
 }

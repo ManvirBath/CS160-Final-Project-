@@ -11,7 +11,12 @@ export default function SignUp() {
         firstname: '',
         lastname: '',
         email: '',
-        password: '',
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        phone_number: '',
+        birthday: '',
     });
 
     const [formData, updateFormData] = useState(initialFormData);
@@ -34,6 +39,12 @@ export default function SignUp() {
                 last_name: formData.lastname,
                 email: formData.email,
                 password: formData.password,
+                address: formData.address,
+                city: formData.city,
+                state: formData.state,
+                zipcode: formData.zipcode,
+                phone_num: formData.phone_number,
+                birthday: formData.birthday,
             })
             .then((res) => {
                 history.push('/login');
@@ -76,6 +87,60 @@ export default function SignUp() {
                     id="password"
                     label="password"
                     placeholder="Password"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="address"
+                    name="address"
+                    id="address"
+                    label="address"
+                    placeholder="Address"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="city"
+                    name="city"
+                    id="city"
+                    label="city"
+                    placeholder="City"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="state"
+                    name="state"
+                    id="state"
+                    label="state"
+                    placeholder="State"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="zipcode"
+                    name="zipcode"
+                    id="zipcode"
+                    label="zipcode"
+                    placeholder="Zipcode"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="phone_number"
+                    name="phone_number"
+                    id="phone_number"
+                    label="phone_number"
+                    placeholder="Phone Number"
+                    onChange={handleChange}
+                />
+                <input
+                    className="form-control"
+                    type="date"
+                    name="birthday"
+                    id="birthday"
+                    label="birthday"
+                    placeholder="Birthday"
                     onChange={handleChange}
                 />
                 <button className="btn" type="submit" onClick={handleSubmit}>

@@ -5,7 +5,7 @@
     left: 123.5px;
     top: 0px;
     color: black;
-    background-color: #4e78a0;
+    background-color: #4169e1;
     width: 100%;
     height: 12.5%;
     padding-left: 2.5em;
@@ -17,7 +17,7 @@
     font-size: 2em;
     position: absolute;
     right: 30px;
-    top: 3px;
+    top: 7.5px;
     color: white;
 }
 
@@ -36,6 +36,6 @@
 }
 #navbar-logo {
     position: absolute;
-    top: 1.5vh;
+    top: 1.8vh;
     left: 1.5vw;
 }

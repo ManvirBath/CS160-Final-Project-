@@ -1,4 +1,4 @@
-# THIS IS WHERE WE TURN DATA INTO JSON. 
+# THIS IS WHERE WE TURN DATA INTO JSON.
 from rest_framework import serializers
 
 # SERIALIZE EACH OF THE MODELS FIRST
@@ -14,9 +14,9 @@ class ClientSerializer(serializers.HyperlinkedModelSerializer):
                         'city': {'required': False} ,
                         'state': {'required': False} ,
                         'zipcode': {'required': False} ,
-                        'phone_num': {'required': False}, 
+                        'phone_num': {'required': False},
                         'birthday':  {'required': False} }
-            
+
 
 class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -28,10 +28,7 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
         model = Transaction
         fields = ('amount', 'date', 'trans_type', \
                   'location', 'check_path', 'memo', 'account')
-        
+
         extra_kwargs = {'trans_type': {'required': False},
                         'account': {'required': False } ,
                         'check_path': {'required': False} }
-
-
-

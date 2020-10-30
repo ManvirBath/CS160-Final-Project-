@@ -15,6 +15,22 @@ from rest_framework.views import APIView
 # Create your views here.
 @api_view(['POST'])
 def register(request):
+    """
+    POST url (example): http://127.0.0.1:8000/register/
+    Postman JSON example:
+    {
+        "email": "hola@hola.com",
+        "first_name": "91919191",
+        "last_name": "123456780",
+        "password": "ohyeahhahahaha",
+        "address": "666 Nobuena Drive",
+        "city": "San Jose",
+        "state": "CA",
+        "zipcode": "95051",
+        "phone_num": "408-999-9899",
+        "birthday": "1998-09-21"
+    }
+    """
     serializer = ClientSerializer(data=request.data)
     if serializer.is_valid():
         try:
@@ -22,15 +38,31 @@ def register(request):
                 created_first_name = serializer.data['first_name'] # need to have this as part of posting in API --> tell front end!!!
                 created_last_name = serializer.data['last_name']
                 created_email = serializer.data['email']
+
+                created_address        = serializer.data['address']
+                created_city           = serializer.data['city']
+                created_state          = serializer.data['state']
+                created_zipcode        = serializer.data['zipcode']
+                created_phone_num      = serializer.data['phone_num']
+                created_birthday       = serializer.data['birthday']
                 created_password = request.data['password']
 
                 client_entry = Client(
                     email = created_email,
                     first_name = created_first_name,
                     last_name = created_last_name,
+
+                    address        = created_address,
+                    city           = created_city,
+                    state          = created_state,
+                    zipcode        = created_zipcode,
+                    phone_num      = created_phone_num,
+                    birthday       = created_birthday,
+
                     is_staff = False,
                     is_superuser = False
                 )
+
                 client_entry.set_password(created_password)
                 client_entry.save()
 

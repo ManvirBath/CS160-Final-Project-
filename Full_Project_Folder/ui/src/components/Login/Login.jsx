@@ -26,7 +26,7 @@ export default function SignIn() {
         console.log(formData);
 
         axiosInstance
-            .post(`api/token/`, {
+            .post('api/token/', {
                 email: formData.email,
                 password: formData.password,
             })
@@ -45,7 +45,7 @@ export default function SignIn() {
     };
     return (
         <div className="Login">
-            <div className="form">
+            <div className="form1">
                 <Logo color="rgb(255,255,255)" text="Deep Learning Bank"></Logo>
                 <input
                     className="form-control"

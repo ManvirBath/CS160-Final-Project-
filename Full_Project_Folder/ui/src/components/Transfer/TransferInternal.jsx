@@ -66,7 +66,7 @@ class TransferInternal extends React.Component {
                 <h1 className="PageHeader"></h1>
                 <div id="transfer-internal-header">Internal Transfer</div>
                 <div className="transfer">
-                    <h2>Transfer From</h2>
+                    <h2 id="internal-transerfrom">Transfer From</h2>
                     <select
                         className="accounts"
                         id="accounts"
@@ -78,10 +78,10 @@ class TransferInternal extends React.Component {
                         <option value="Account3">Checking Account 678</option>
                     </select>
 
-                    <h2>Transfer To</h2>
+                    <h2 id="transfer-internal-transerto">Transfer To</h2>
                     <select
                         className="accounts"
-                        id="accounts"
+                        id="accounts1"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.to_acct}
                     >
@@ -91,7 +91,7 @@ class TransferInternal extends React.Component {
                     </select>
 
                     <div className="inputDiv">
-                        <h2>Amount</h2>
+                        <h2 id="internal-amount">Amount</h2>
                         <input
                             type="text"
                             className="amountInput"
@@ -100,10 +100,11 @@ class TransferInternal extends React.Component {
                             class="form-control"
                         ></input>
 
-                        <h2>Memo(optional)</h2>
+                        <h2 id="transfer-internal-memo">Memo(optional)</h2>
                         <textarea
                             type="text"
                             className="memoInput"
+                            id="memoInput"
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}
@@ -121,7 +122,8 @@ class TransferInternal extends React.Component {
                         >
                             <button
                                 type="button"
-                                class="btn btn-primary"
+                                className="btn btn-primary"
+                                id="btn-primary"
                                 onClick={this.handleSubmit}
                             >
                                 Next
