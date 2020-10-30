@@ -42,7 +42,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
 
-automated_bill(repeat=10,repeat_until=None)
+automated_bill()
 # automated_bill(repeat=10, repeat_until=None)
 # from django.contrib import admin
 # from django.urls import path
