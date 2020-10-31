@@ -2,6 +2,8 @@ import React from 'react';
 import './BillPay.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import { Button } from 'react-bootstrap';
+import axiosInstance from '../../axios';
 
 class BillPay extends React.Component {
     constructor(props) {
@@ -13,6 +15,12 @@ class BillPay extends React.Component {
             amount: '',
             frequency: '',
             pay_date: '',
+            accts: [],
+            errorToAcct: '',
+            errorFromAcct: '',
+            errorRouting: '',
+            errorAmount: '',
+            errorDate: '',
         };
         this.to_acct = this.to_acct.bind(this);
         this.from_acct = this.from_acct.bind(this);
@@ -20,35 +28,129 @@ class BillPay extends React.Component {
         this.amount = this.amount.bind(this);
         this.frequency = this.frequency.bind(this);
         this.pay_date = this.pay_date.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        axiosInstance.get('/accounts/').then((res) => {
+            const d = res.data;
+            this.setState({ accts: d });
+        });
     }
 
     to_acct(e) {
         this.setState({ to_acct: e.target.value });
+        this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
         this.setState({ from_acct: e.target.selectedOptions[0].text });
+        this.setState({ errorFromAcct: '' });
     }
     amount(e) {
         this.setState({ amount: e.target.value });
+        this.setState({ errorAmount: '' });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value });
+        this.setState({ errorRouting: '' });
     }
     frequency(e) {
         this.setState({ frequency: e.target.selectedOptions[0].text });
     }
     pay_date(e) {
         this.setState({ pay_date: e.target.value });
+        this.setState({ errorDate: '' });
+    }
+
+    handleSubmit(e) {
+        //validates to account
+        if (this.state.to_acct === '') {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Account number cannot be empty',
+            });
+        } else if (
+            (this.state.to_acct.length > 9) |
+            (this.state.to_acct.length < 9)
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Account number must be 9 digits',
+            });
+        }
+        if (this.state.to_acct.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
+            this.setState({
+                errorToAcct:
+                    'Account number must contain only values 0-9 (inclusive)',
+            });
+        }
+
+        //validates routing number
+        if (this.state.routing_num === '') {
+            e.preventDefault();
+            this.setState({
+                errorRouting: 'Routing number cannot be empty',
+            });
+        } else if (
+            (this.state.routing_num.length > 9) |
+            (this.state.routing_num.length < 9)
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorRouting: 'Routing number must be 9 digits',
+            });
+        }
+        if (this.state.routing_num.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
+            this.setState({
+                errorRouting:
+                    'Routing number must contain only values 0-9 (inclusive)',
+            });
+        }
+        //validates from account
+        if (this.state.from_acct === '') {
+            e.preventDefault();
+            this.setState({
+                errorFromAcct: 'Select an account to transfer from',
+            });
+        }
+        //validates amount
+        if (this.state.amount <= 0) {
+            e.preventDefault();
+            this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+        }
+        //validate paydate (make sure date selected isn't in past)
+        var today = new Date();
+        var parts = this.state.pay_date.split('-');
+        var selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
+        if (selectedDate < today) {
+            e.preventDefault();
+            this.setState({
+                errorDate: 'Scheduled date cannot be in the past.',
+            });
+        }
+        console.log(this.state.pay_date);
+        if (this.state.pay_date == '') {
+            e.preventDefault();
+            this.setState({ errorDate: 'Select a date to pay bill' });
+        }
     }
 
     render() {
+        let userAccts = this.state.accts.map((v) => (
+            <option value={v.account_num}>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
+        ));
         return (
             <div className="BillPay">
                 <UserNavigationBar />
 
                 <h1 className="PageHeader">Bill Pay</h1>
+                <div id="billpay-header">Bill Payment</div>
                 <div className="billpay">
-                    <h4>From</h4>
+                    <h4 id="transfer-from">From</h4>
                     <select
                         className="accounts"
                         id="accounts"
@@ -56,39 +158,42 @@ class BillPay extends React.Component {
                         onChange={this.from_acct}
                     >
                         <option value="acctNumFrom" disabled selected>
-                            Transfer Money From:
+                            Transfer From
                         </option>
-                        <option value="Account1">Savings Account 123</option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
+                        {userAccts}
                     </select>
+                    <h6 className="error">{this.state.errorFromAcct}</h6>
 
                     <div className="inputDiv">
-                        <h4>To</h4>
+                        <h4 id="transfer-to">To</h4>
                         <input
                             type="text"
                             className="toAccountExternal"
-                            defaultValue="Pay Bill To"
+                            placeholder="Account Number"
                             onChange={this.to_acct}
                             class="form-control"
                         ></input>
-                        <h4>Routing Number</h4>
+                        <h6 className="error">{this.state.errorToAcct}</h6>
+
                         <input
                             type="text"
                             className="routingNum"
-                            defaultValue="123456789"
+                            placeholder="Routing number"
                             onChange={this.routing_num}
                             class="form-control"
                         ></input>
-                        <h4>Amount</h4>
+                        <h6 className="error">{this.state.errorRouting}</h6>
+
                         <input
                             type="text"
                             className="amountInput"
-                            placeholder="$"
+                            placeholder="Amount"
                             onChange={this.amount}
                             class="form-control"
                         ></input>
-                        <h4>Bill Payment Date</h4>
+                        <h6 className="error">{this.state.errorAmount}</h6>
+
+                        <h4 id="billpay-date">Bill Payment Date</h4>
                         <input
                             class="form-control"
                             type="date"
@@ -96,18 +201,17 @@ class BillPay extends React.Component {
                             id="pay-date-input"
                             onChange={this.pay_date}
                         />
-                        <h4>Frequency</h4>
+                        <h6 className="error">{this.state.errorDate}</h6>
+
+                        <h4 id="billpay-frequency">Frequency</h4>
                         <select
                             className="frequency"
                             class="btn btn-light dropdown-toggle"
                             onChange={this.frequency}
                         >
-                            <option value="" disabled selected>
-                                Frequency of payment
+                            <option value="onetime" disabled selected>
+                                One time
                             </option>
-                            <option value="onetime">One time</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
                         </select>
                     </div>
                     <div className="nextBtn">
@@ -122,7 +226,12 @@ class BillPay extends React.Component {
                                 frequency: this.state.frequency,
                             }}
                         >
-                            <button type="button" class="btn btn-primary">
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                id="billpay-next"
+                                onClick={this.handleSubmit}
+                            >
                                 Next
                             </button>
                         </Link>
