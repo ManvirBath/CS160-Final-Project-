@@ -1,0 +1,51 @@
+.Account {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+}
+
+.container {
+    position: absolute;
+    color: black;
+    left: 80px;
+    top: 20vh;
+}
+
+#dashboard-logo {
+    position: absolute;
+    top: 7vh;
+    left: 1vw;
+}
+
+.saving {
+    position: absolute;
+    top: 30vh;
+    left: 2vw;
+    font-size: 2.8em;
+    word-spacing: 5.25em;
+    border-bottom: 3px dotted;
+    border-left: 3px dotted;
+    border-right: 3px dotted;
+    border-top: 3px dotted;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+
+#title {
+    position: absolute;
+    font-size: 1.65em;
+    top: 20vh;
+}
+
+#AccountTable {
+    position: absolute;
+    top: 7vh;
+    left: 5vw;
+    font-size: 2em;
+}

@@ -26,7 +26,7 @@ export default function SignIn() {
         console.log(formData);
 
         axiosInstance
-            .post(`api/token/`, {
+            .post('api/token/', {
                 email: formData.email,
                 password: formData.password,
             })
@@ -35,14 +35,17 @@ export default function SignIn() {
                 localStorage.setItem('refresh_token', res.data.refresh);
                 axiosInstance.defaults.headers['Authorization'] =
                     'JWT ' + localStorage.getItem('access_token');
-                history.push('/userdashboard');
+                history.push({
+                    pathname: '/userdashboard',
+                    email: formData.email,
+                });
                 //console.log(res);
                 //console.log(res.data);
             });
     };
     return (
         <div className="Login">
-            <div className="form">
+            <div className="form1">
                 <Logo color="rgb(255,255,255)" text="Deep Learning Bank"></Logo>
                 <input
                     className="form-control"
@@ -71,15 +74,6 @@ export default function SignIn() {
             <div className="footer">
                 Forgot your password?{' '}
                 <Link to="/recovery">Recover Password</Link>
-            </div>
-            <div className="footer1">
-                <Link to="/GMap">ATM Locator</Link>
-            </div>
-            <div className="footer">
-                <Link to="/DepositCheck">Deposit Check</Link>
-            </div>
-            <div className="footer">
-                <Link to="/UserDashboard">User dashboard</Link>
             </div>
         </div>
     );

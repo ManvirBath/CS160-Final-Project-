@@ -2,6 +2,7 @@ import React from 'react';
 import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import axiosInstance from '../../axios';
 
 class TransferInternal extends React.Component {
     constructor(props) {
@@ -11,6 +12,11 @@ class TransferInternal extends React.Component {
             from_acct: '',
             amount: '',
             memo: '',
+            errorToAcct: '',
+            errorFromAcct: '',
+            errorAmount: '',
+            errorIsSameAcct: '',
+            accts: [],
         };
         this.to_acct = this.to_acct.bind(this);
         this.from_acct = this.from_acct.bind(this);
@@ -19,53 +25,77 @@ class TransferInternal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    inputValidation() {
-        let amnt = this.state.amount;
-        let isValidForm = true;
-        if (amnt === '100') {
-            isValidForm = false;
-            console.log('falsefalse');
-        }
-        console.log('outoutout');
-        return isValidForm;
+    componentDidMount() {
+        axiosInstance.get('/accounts/').then((res) => {
+            const d = res.data;
+            this.setState({ accts: d });
+        });
     }
 
     to_acct(e) {
         this.setState({ to_acct: e.target.selectedOptions[0].text });
-        //alert(this.state.to_acct);
+        this.setState({ errorToAcct: '' });
+        this.setState({ errorIsSameAcct: '' });
     }
     from_acct(e) {
         this.setState({ from_acct: e.target.selectedOptions[0].text });
-        //alert(e.target.selectedOptions[0].text);
+        this.setState({ errorFromAcct: '' });
+        this.setState({ errorIsSameAcct: '' });
     }
     amount(e) {
         this.setState({ amount: e.target.value });
+        this.setState({ errorAmount: '' });
     }
     memo(e) {
         this.setState({ memo: e.target.value });
     }
 
     handleSubmit(e) {
-        //console.log("handle submit 1");
-        //e.preventDefault();
-        //console.log("handle submit 2");
-        if (this.inputValidation()) {
-            return true;
-            //console.log("form submitted");
-        } else {
+        //validates from account
+        if (this.state.from_acct === '') {
             e.preventDefault();
-            //console.log("form has errors");
+            this.setState({
+                errorFromAcct: 'Select an account to transfer from',
+            });
         }
-        //alert("hello from handle submit");
+        //validates to account
+        if (this.state.to_acct === '') {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Select an account to transfer from',
+            });
+        }
+        //validates amount
+        if (this.state.amount <= 0) {
+            e.preventDefault();
+            this.setState({ errorAmount: 'Amount must be greater than 0' });
+        }
+
+        //checks if from and to account are the same
+        if (this.state.to_acct === this.state.from_acct) {
+            e.preventDefault();
+            this.setState({
+                errorIsSameAcct: 'Accounts cannot be the same!',
+            });
+        }
     }
 
     render() {
+        let userAccts = this.state.accts.map((v) => (
+            <option value={v.account_num}>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
+        ));
         return (
             <div className="TransferInternal">
                 <UserNavigationBar />
-                <h1 className="PageHeader">Transfer Between My Accounts</h1>
+                <h1 className="PageHeader"></h1>
+                <div id="transfer-internal-header">Internal Transfer</div>
                 <div className="transfer">
-                    <h2>From</h2>
+                    <h6 className="error" id="same-error">
+                        {this.state.errorIsSameAcct}
+                    </h6>
+                    <h2 id="internal-transerfrom">Transfer From</h2>
                     <select
                         className="accounts"
                         id="accounts"
@@ -75,28 +105,28 @@ class TransferInternal extends React.Component {
                         <option value="acctNumFrom" disabled selected>
                             Transfer Money From
                         </option>
-                        <option value="Account1">Savings Account 123</option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
+                        {userAccts}
                     </select>
+                    <h6 className="error">{this.state.errorFromAcct}</h6>
 
-                    <h2>To</h2>
+                    <h2 id="transfer-internal-transerto">Transfer To</h2>
                     <select
                         className="accounts"
-                        id="accounts"
+                        id="accounts1"
                         class="btn btn-light dropdown-toggle"
                         onChange={this.to_acct}
                     >
                         <option value="acctNumTo" disabled selected>
                             Transfer Money To
                         </option>
-                        <option value="Account1">Savings Account 123</option>
-                        <option value="Account2">Savings Account 345</option>
-                        <option value="Account3">Checking Account 678</option>
+                        {userAccts}
                     </select>
+                    <h6 className="error" id="transferto-error">
+                        {this.state.errorToAcct}
+                    </h6>
 
                     <div className="inputDiv">
-                        <h2>Amount</h2>
+                        <h2 id="internal-amount">Amount</h2>
                         <input
                             type="text"
                             className="amountInput"
@@ -104,11 +134,13 @@ class TransferInternal extends React.Component {
                             onChange={this.amount}
                             class="form-control"
                         ></input>
+                        <h6 className="error">{this.state.errorAmount}</h6>
 
-                        <h2>Memo(optional)</h2>
+                        <h2 id="transfer-internal-memo">Memo(optional)</h2>
                         <textarea
                             type="text"
                             className="memoInput"
+                            id="memoInput"
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}
@@ -126,7 +158,8 @@ class TransferInternal extends React.Component {
                         >
                             <button
                                 type="button"
-                                class="btn btn-primary"
+                                className="btn btn-primary"
+                                id="btn-primary"
                                 onClick={this.handleSubmit}
                             >
                                 Next

@@ -13,10 +13,10 @@ class DepositCheckConfirm extends React.Component {
         return (
             <div className="DepositCheckConfirm">
                 <UserNavigationBar />
-                <h1 className="PageHeader" class="jumbotron">
+                <h1 className="PageHeader" id="depositcheck-confirm">
                     Confirm check deposit
                 </h1>
-                <h6 className="PageHeader2" class="lead">
+                <h6 className="PageHeader2" className="lead">
                     Please confirm your details before submitting.
                 </h6>
                 <div className="details">
@@ -24,7 +24,6 @@ class DepositCheckConfirm extends React.Component {
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Memo: {this.props.location.memo}</h4>
                     <h4>Check file: {this.props.location.check_image}</h4>
-                    <img src={this.props.location.check_image}></img>
                 </div>
                 <div className="buttons">
                     <Link to="/depositcheck">
@@ -38,7 +37,6 @@ class DepositCheckConfirm extends React.Component {
                             account: this.props.location.account,
                             amount: this.props.location.amount,
                             memo: this.props.location.memo,
-                            file: this.props.location.file,
                             check_image: this.props.location.check_image,
                         }}
                     >

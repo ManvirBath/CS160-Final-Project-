@@ -1,30 +1,41 @@
 #header-title {
-    font-size: 1.805em;
+    font-size: 2.75em;
+    font-family: sans-serif;
     position: absolute;
-    left: 80px;
+    left: 123.5px;
     top: 0px;
     color: black;
-    background-color: #7b97ea;
+    background-color: #4169e1;
     width: 100%;
     height: 12.5%;
     padding-left: 2.5em;
-    padding-top: 0.1em;
+    padding-top: 0.15em;
     margin: 0 -2.8em;
+    color: white;
 }
 #header-logoff {
-    font-size: 1.8em;
+    font-size: 2em;
     position: absolute;
-    right: 10px;
-    top: 3px;
-    color: black;
+    right: 30px;
+    top: 7.5px;
+    color: white;
 }
 
 .navlist {
     position: absolute;
     right: 1px;
     top: 8vh;
-    height: 1.75em;
+    height: 2.25em;
     width: 100%;
-    font-size: 1.25em;
-    background-color: #c9cace;
+    font-size: 1.5em;
+    background-color: #dcdcdc;
+}
+#dropdown-basic {
+    font-size: 1em;
+    color: #6e87d2;
+}
+#navbar-logo {
+    position: absolute;
+    top: 1.8vh;
+    left: 1.5vw;
 }

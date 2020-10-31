@@ -14,18 +14,19 @@ class BillPayConfirm extends React.Component {
             <div className="BillPayConfirm">
                 <UserNavigationBar />
                 <div className="headerDiv">
-                    <h1 className="PageHeader" class="jumbotron">
+                    <h1 className="PageHeader" id="confirm-trans">
                         Confirm transfer
                     </h1>
-                    <h6 className="PageHeader2" class="lead">
+                    <h6
+                        className="PageHeader2"
+                        class="lead"
+                        id="billpayconfirm-detail"
+                    >
                         Please confirm your details before submitting.
                     </h6>
                 </div>
                 <div className="details">
-                    <h4>
-                        Transfer From:
-                        {this.props.location.from_acct}
-                    </h4>
+                    <h4>Transfer From: {this.props.location.from_acct}</h4>
                     <h4>Pay bill To: {this.props.location.to_acct}</h4>
                     <h4>Routing number: {this.props.location.routing_num}</h4>
                     <h4>Amount: {this.props.location.amount}</h4>
@@ -35,7 +36,7 @@ class BillPayConfirm extends React.Component {
                 <div className="buttons">
                     <Link to="/billpay">
                         <button type="button" class="btn btn-danger">
-                            Don't pay bill
+                            Go Back
                         </button>
                     </Link>
                     <Link

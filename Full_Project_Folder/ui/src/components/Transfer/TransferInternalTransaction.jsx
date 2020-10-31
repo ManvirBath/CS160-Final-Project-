@@ -22,6 +22,7 @@ class TransferInternalTransaction extends React.Component {
                         className="TransactionAlert"
                         class="alert alert-success"
                         role="alert"
+                        id="depositchecktransaction-ty"
                     >
                         <p>
                             Thank you for your transfer request! Please contact
@@ -44,6 +45,7 @@ class TransferInternalTransaction extends React.Component {
                             type="button"
                             class="btn btn-primary"
                             onClick={this.check}
+                            id="internal-transaction-backto-dash"
                         >
                             Back to Dashboard
                         </button>

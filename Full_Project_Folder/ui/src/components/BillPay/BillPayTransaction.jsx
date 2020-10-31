@@ -19,6 +19,7 @@ class BillPayTransaction extends React.Component {
                         className="TransactionAlert"
                         class="alert alert-success"
                         role="alert"
+                        id="billpaytransaction-ty"
                     >
                         <p>
                             Thank you for your transfer request! Please contact

@@ -7,7 +7,7 @@ class TransferExternalTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            amount: this.props.location.amount,
+            isAmountTransferrable: true,
         };
     }
 
@@ -22,6 +22,7 @@ class TransferExternalTransaction extends React.Component {
                         className="TransactionAlert"
                         class="alert alert-success"
                         role="alert"
+                        id="external-transaction-ty"
                     >
                         <p>
                             Thank you for your transfer request! Please contact
@@ -30,11 +31,9 @@ class TransferExternalTransaction extends React.Component {
                     </div>
                 </div>
                 <div className="transactionInfo">
-                    <h4>Transaction Number: [insert transaction number]</h4>
                     <h4>From: {this.props.location.from_acct}</h4>
                     <h6>New Balance: [insert new balance]</h6>
                     <h4>To: {this.props.location.to_acct}</h4>
-                    <h6>New Balance: [insert new balance]</h6>
                     <h4>Routing number: {this.props.location.routing_num}</h4>
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Memo: {this.props.location.memo}</h4>
@@ -44,6 +43,7 @@ class TransferExternalTransaction extends React.Component {
                         <button
                             type="button"
                             class="btn btn-primary"
+                            id="external-transaction-backto-dash"
                             onClick={this.check}
                         >
                             Back to Dashboard

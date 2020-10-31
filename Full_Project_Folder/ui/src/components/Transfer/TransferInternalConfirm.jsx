@@ -14,14 +14,21 @@ class TransferInternalConfirm extends React.Component {
             <div className="DepositCheckConfirm">
                 <UserNavigationBar />
                 <div className="headerDiv">
-                    <h1 className="PageHeader" class="jumbotron">
+                    <h1
+                        className="PageHeader"
+                        id="transfer-internal-confirmheader"
+                    >
                         Confirm transfer
                     </h1>
-                    <h6 className="PageHeader2" class="lead">
+                    <h6
+                        className="PageHeader2"
+                        class="lead"
+                        id="transfer-internal-confirm"
+                    >
                         Please confirm your details before submitting.
                     </h6>
                 </div>
-                <div className="details">
+                <div className="details2">
                     <h4>
                         Transfer From:
                         {this.props.location.from_acct}
@@ -32,7 +39,11 @@ class TransferInternalConfirm extends React.Component {
                 </div>
                 <div className="buttons">
                     <Link to="/transferinternal">
-                        <button type="button" class="btn btn-danger">
+                        <button
+                            type="button"
+                            class="btn btn-danger"
+                            id="transfer-internal-btn"
+                        >
                             Don't make transfer
                         </button>
                     </Link>
@@ -45,7 +56,11 @@ class TransferInternalConfirm extends React.Component {
                             memo: this.props.location.memo,
                         }}
                     >
-                        <button type="button" class="btn btn-primary">
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            id="transfer-internal-btn2"
+                        >
                             Submit
                         </button>
                     </Link>

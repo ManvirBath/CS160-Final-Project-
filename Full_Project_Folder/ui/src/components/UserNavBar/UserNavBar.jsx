@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import './UserNavBar.css';
+import Logo from '../Logo';
 
 class UserNavigationBar extends React.Component {
     constructor(props) {
@@ -12,18 +13,32 @@ class UserNavigationBar extends React.Component {
         return (
             <div className="usernavbar">
                 <div id="header-title">Deep Learning Bank</div>
+                <div id="navbar-logo">
+                    <Logo color="rgb(255,255,255)"></Logo>
+                </div>
+
                 <div id="header-logoff">
-                    <Button variant="light">Logout</Button>{' '}
+                    <Button variant="light">Logout</Button>
                 </div>
                 <div className="navlist">
                     <ul className="nav nav-pills nav-fill">
                         <li className="nav-item">
-                            <a className="nav-link" href="/userdashboard">
-                                Account
-                            </a>
+                            <Dropdown>
+                                <Dropdown.Toggle variant="" id="dropdown-basic">
+                                    Account
+                                </Dropdown.Toggle>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="/userdashboard">
+                                        View my Account
+                                    </Dropdown.Item>
+                                    <Dropdown.Item href="/OpenAccount">
+                                        Open an Account
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
+                            <a className="nav-link" href="/billpay">
                                 Pay Bill
                             </a>
                         </li>
@@ -41,13 +56,8 @@ class UserNavigationBar extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Withdraw/Deposit
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">
-                                Open Account
+                            <a className="nav-link" href="/depositcheck">
+                                Deposit
                             </a>
                         </li>
                     </ul>
