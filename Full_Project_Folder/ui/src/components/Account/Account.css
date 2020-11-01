@@ -1,51 +1,44 @@
+body {
+    background-color: #7b97ea;
+}
 .Account {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: white;
+    margin: auto;
+    height: 100vh;
+    background-position: center;
+    background-color: azure;
+    width: 75%;
 }
 
-.container {
-    position: absolute;
-    color: black;
-    left: 80px;
-    top: 20vh;
-}
-
-#dashboard-logo {
-    position: absolute;
-    top: 7vh;
-    left: 1vw;
-}
-
-.saving {
-    position: absolute;
-    top: 30vh;
+.acctTypeName {
+    top: 15vh;
     left: 2vw;
-    font-size: 2.8em;
-    word-spacing: 5.25em;
-    border-bottom: 3px dotted;
-    border-left: 3px dotted;
-    border-right: 3px dotted;
-    border-top: 3px dotted;
-    padding-top: 0.5em;
-    padding-left: 1em;
-    padding-right: 2em;
-    padding-bottom: 0.5em;
-    margin: 0 -1em;
+    color: black;
+}
+.acctBalance {
+    margin-top: 16vh;
+    margin-left: 32vw;
+    color: black;
 }
 
-#title {
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.title {
     position: absolute;
     font-size: 1.65em;
-    top: 20vh;
-}
-
-#AccountTable {
-    position: absolute;
-    top: 7vh;
-    left: 5vw;
-    font-size: 2em;
+    top: 30vh;
 }

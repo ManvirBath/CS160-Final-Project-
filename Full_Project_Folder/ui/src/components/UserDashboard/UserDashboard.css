@@ -12,23 +12,20 @@
 .container-userdash {
     position: absolute;
     color: black;
-    left: 325px;
+    left: 250px;
     top: 20vh;
-}
-#dashboard-logo {
-    position: absolute;
-    top: 10vh;
-    left: 1vw;
 }
 #greeting-userdash {
     position: absolute;
-    font-size: 1.65em;
+    font-size: 2em;
+    font-family: serif;
 }
 #greeting-userdash2 {
     position: absolute;
     top: 9vh;
     left: 1vw;
     font-size: 2em;
+    font-family: serif;
 }
 ​ .acctBox {
     position: relative;
@@ -41,29 +38,22 @@
     top: 16.5vh;
     left: 2vw;
     font-size: 2em;
+    font-family: sans-serif;
     word-spacing: 23em;
-    border-bottom: 3px solid;
     padding-top: 0.5em;
     padding-left: 1em;
     padding-right: 2.1em;
     padding-bottom: 0.5em;
     margin: 0 -1em;
-    background-color: #f0f8ff;
-}
-.checking-bal {
-    position: relative;
-    top: 23.5vh;
-    left: 2.5vw;
-    font-size: 1.3em;
-    word-spacing: 12.9em;
 }
 .savings {
     position: relative;
     top: 16.5vh;
     left: 2vw;
     font-size: 2em;
+    font-family: sans-serif;
     word-spacing: 23em;
-    border-bottom: 3px solid;
+    border-top: 0.05px solid;
     padding-top: 0.5em;
     padding-left: 1em;
     padding-right: 2em;
@@ -71,19 +61,14 @@
     margin: 0 -1em;
     background-color: #f0f8ff;
 }
-.savings-bal {
-    position: relative;
-    left: 2.1vw;
-    font-size: 1.3em;
-    word-spacing: 13.5em;
-}
 .saving2 {
     position: absolute;
     top: 45vh;
     left: 2vw;
     font-size: 2.8em;
+    font-family: cursive;
     word-spacing: 5.25em;
-    border-bottom: 3px dotted;
+    border-bottom: 0.025px dotted;
     border-left: 3px dotted;
     border-right: 3px dotted;
     border-top: 3px dotted;
@@ -129,4 +114,8 @@
     position: relative;
     font-size: 2.3em;
     word-spacing: 22.5em;
+}
+#acct-temp-link {
+    text-decoration: none;
+    color: black;
 }
