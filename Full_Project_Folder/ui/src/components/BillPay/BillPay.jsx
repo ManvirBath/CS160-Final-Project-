@@ -145,7 +145,7 @@ class BillPay extends React.Component {
         ));
         return (
             <div className="BillPay">
-                <UserNavigationBar />
+                <UserNavigationBar active={1} />
 
                 <h1 className="PageHeader">Bill Pay</h1>
                 <div id="billpay-header">Bill Payment</div>

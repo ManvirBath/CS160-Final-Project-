@@ -7,9 +7,9 @@
 .form1 {
     display: flex;
     flex-direction: column;
-    margin-top: 20vh;
+    margin-top: 25vh;
 }
-#logo1 {
+#logo {
     margin-bottom: 1.5em;
 }
 .Login input {

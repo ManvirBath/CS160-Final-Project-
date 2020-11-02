@@ -9,37 +9,57 @@ class UserDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            checkingAccount: '',
-            savingAccount: '',
-            checkingBalance: '',
-            savingBalance: '',
-            accts: [],
+            accts: [
+                {
+                    account_num: 12345,
+                    account_balance: 12345,
+                    account_type: 'Checkings',
+                },
+                {
+                    account_num: '00001',
+                    account_balance: '00001',
+                    account_type: 'Savings',
+                },
+                {
+                    account_num: 11111,
+                    account_balance: 11111,
+                    account_type: 'Checkings',
+                },
+            ],
+            name: 'Test',
         };
     }
-    firstName(e) {}
-    checkingAccount(e) {}
-    savingAccount(e) {}
-    checkingBalance(e) {}
-    savingBalance(e) {}
-
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
-            console.log(res.data);
-            const d = res.data;
-            this.setState({ accts: d });
-            //const d = res.data.response.items;
-            //console.log(d.account_num);
-        });
-
-        axiosInstance.get('/clients/').then((res2) => {
-            let userEmail = this.props.location.email;
-            let users = res2.data.results;
-            for (var index = 0; index < users.length; index++) {
-                if (users[index].email == userEmail) {
-                    this.setState({ firstName: users[index].first_name });
-                }
-            }
+    navigateToAccount(accountNumber) {
+        window.history.pushState(
+            { hello: 'world' },
+            'title',
+            `${accountNumber}`
+        );
+    }
+    getAccounts() {
+        return this.state.accts.map((v) => {
+            const {
+                account_balance: ab,
+                account_num: an,
+                account_type: at,
+            } = v;
+            return (
+                <div
+                    className="box flexbox"
+                    onClick={() => {
+                        this.navigateToAccount(an);
+                    }}
+                >
+                    <div class="AccountInfo flexbox-column">
+                        <div className="major">{at}</div>
+                        <div className="minor">{an}</div>
+                    </div>
+                    <div className="AccountBalance lastItem">
+                        <div className="major">${ab}</div>
+                        <div className="minor">Available Balance</div>
+                    </div>
+                </div>
+            );
         });
     }
     render() {
@@ -51,35 +71,32 @@ class UserDashboard extends React.Component {
                 </div>
             </div>
         ));
-        const { name, saving, checking } = this.state;
+    }
+    render() {
+        const acctTemplate = this.getAccounts();
+        const { name } = this.state;
         return (
             <div className="userdashboard">
-                <UserNavigationBar />
+                <UserNavigationBar active={0} />
                 <div className="container-userdash">
-                    <div id="greeting-userdash">
-                        Welcome to your dashboard, {this.state.firstName}!
+                    <div className="greeting-userdash">
+                        Welcome to your dashboard, {name}!
                     </div>
-                    <div id="greeting-userdash2">Personal Accounts</div>
-                    <div className="acct-temp">
-                        <Link to="/Account" id="acct-temp-link">
-                            {acctTemplate}
-                        </Link>
+                    <div className="flexbox-column">
+                        <div>Personal Accounts</div>
+                        <div className="accounts-container">{acctTemplate}</div>
                     </div>
                 </div>
-                <div className="navlist2">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/GMap">
-                                ATM Locator
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/contact">
-                                Contact Us
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <footer>
+                    <div className="flexbox">
+                        <a href="/contact">
+                            <span>contact us</span>
+                        </a>
+                        <a href="/GMap">
+                            <span>Find ATM</span>
+                        </a>
+                    </div>
+                </footer>
             </div>
         );
     }

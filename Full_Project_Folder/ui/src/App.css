@@ -1,4 +1,30 @@
 .App {
     background-color: #4169e1;
     min-height: 100vh;
+    font-family: sans-serif;
+}
+.flexbox {
+    display: flex;
+}
+.flexbox-center {
+    display: flex;
+    align-items: center;
+}
+.flexbox-column {
+    display: flex;
+    flex-direction: column;
+}
+.lastItem {
+    margin-left: auto;
+    margin-right: 15px;
+}
+.maxWidth {
+    width: 100vw;
+}
+.minor {
+    font-size: 0.8em;
+    color: #7b7b7b;
+}
+.major {
+    font-size: 1.5em;
 }
