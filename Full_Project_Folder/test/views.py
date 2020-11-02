@@ -95,6 +95,8 @@ def register(request):
     }
     """
     serializer = ClientSerializer(data=request.data)
+    print(serializer.initial_data)
+    return Response({'status': 'Register successful'})
     if serializer.is_valid():
         try:
             with transaction.atomic():
@@ -108,7 +110,6 @@ def register(request):
                 created_zipcode        = serializer.data['zipcode']
                 created_phone_num      = serializer.data['phone_num']
                 created_birthday       = serializer.data['birthday']
-                created_password       = serializer.data['password']
                 
                 client_entry = Client(
                     email = created_email,
