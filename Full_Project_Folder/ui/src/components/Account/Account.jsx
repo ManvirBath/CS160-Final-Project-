@@ -60,8 +60,8 @@ class Account extends React.Component {
                 <UserNavigationBar />
                 <h1 className="acctTypeName">Savings 1234</h1>
                 <h4 className="acctBalance">Account Balance: $100.00</h4>
-                <h2 id="title">Transactions</h2>
-                <table>
+                <h2 id="account-title">Transactions</h2>
+                <table id="account-table">
                     <tr>
                         <th>Transaction Number</th>
                         <th>Date</th>

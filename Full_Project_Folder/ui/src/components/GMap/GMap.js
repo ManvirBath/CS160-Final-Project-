@@ -1,4 +1,5 @@
 import React from 'react';
+import UserNavigationBar from '../UserNavBar/UserNavBar';
 import {
     GoogleMap,
     LoadScript,
