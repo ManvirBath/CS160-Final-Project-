@@ -10,14 +10,17 @@ body {
 }
 
 .acctTypeName {
+  position: relative;
   top: 15vh;
-  left: 2vw;
   color: black;
+  text-align: center;
 }
 .acctBalance {
-  margin-top: 16vh;
-  margin-left: 32vw;
+  position: relative;
+  margin-top: 18vh;
+  font-size: 1.75em;
   color: black;
+  text-align: center;
 }
 
 table {
@@ -37,8 +40,13 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
-.title {
-  position: absolute;
-  font-size: 1.65em;
-  top: 30vh;
+#account-title {
+  position: relative;
+  font-size: 1.75em;
+  top: 25px;
+  text-align: center;
+}
+#account-table {
+  position: relative;
+  top: 30px;
 }

@@ -4,28 +4,36 @@
     font-size: 3.5em;
     color: white;
 }
+
 h1 {
     position: relative;
     text-align: center;
-    bottom: 125px;
+    bottom: 150px;
     color: white;
+}
+#contact-container {
+    position: relative;
+    top: 25px;
+    text-align: center;
+    left: 15px;
+    width: 100%;
 }
 #line1 {
     position: relative;
     text-align: center;
-    bottom: 115px;
+    bottom: 150px;
     font-size: 1.7em;
 }
 #line2 {
     position: relative;
     text-align: center;
-    bottom: 115px;
+    bottom: 150px;
     font-size: 1.7em;
 }
 #line3 {
     position: relative;
     text-align: center;
-    bottom: 115px;
+    bottom: 150px;
     font-size: 1.7em;
 }
 #jumbotron {
@@ -38,7 +46,7 @@ h1 {
 #office-location-header {
     position: relative;
     text-align: center;
-    bottom: 100px;
+    bottom: 125px;
     right: 250px;
     font-size: 1.75em;
     font-family: cursive;
@@ -46,7 +54,7 @@ h1 {
 .office-location {
     position: relative;
     text-align: center;
-    bottom: 100px;
+    bottom: 125px;
     right: 250px;
     font-size: 1.25em;
     font-family: cursive;
@@ -54,7 +62,7 @@ h1 {
 #contact-number-header {
     position: relative;
     text-align: center;
-    bottom: 260px;
+    bottom: 285px;
     left: 250px;
     font-size: 1.75em;
     font-family: cursive;
@@ -62,7 +70,7 @@ h1 {
 #contact-number {
     position: relative;
     text-align: center;
-    bottom: 260px;
+    bottom: 285px;
     left: 250px;
     font-size: 1.25em;
     font-family: cursive;
@@ -70,7 +78,7 @@ h1 {
 #contact-email-header {
     position: relative;
     text-align: center;
-    bottom: 255px;
+    bottom: 285px;
     left: 250px;
     font-size: 1.75em;
     font-family: cursive;
@@ -78,7 +86,7 @@ h1 {
 #contact-email {
     position: relative;
     text-align: center;
-    bottom: 255px;
+    bottom: 285px;
     left: 250px;
     font-size: 1.25em;
     font-family: cursive;

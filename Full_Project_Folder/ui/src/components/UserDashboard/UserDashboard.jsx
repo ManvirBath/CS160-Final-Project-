@@ -60,7 +60,11 @@ class UserDashboard extends React.Component {
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
                     <div id="greeting-userdash2">Personal Accounts</div>
-                    <div className="acct-temp">{acctTemplate}</div>
+                    <div className="acct-temp">
+                        <Link to="/Account" id="acct-temp-link">
+                            {acctTemplate}
+                        </Link>
+                    </div>
                 </div>
                 <div className="navlist2">
                     <ul className="nav nav-pills nav-fill">
