@@ -15,7 +15,7 @@ class Recovery extends React.Component {
         const { email } = this.state;
         return (
             <div className="Recovery">
-                <div className="form">
+                <div className="recovery-form">
                     <Logo
                         color="rgb(255,255,255)"
                         text="Deep Learning Bank"
