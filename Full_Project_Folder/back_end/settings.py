@@ -25,7 +25,7 @@ with open(os.path.join(BASE_DIR, 'secret_key.txt')) as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '34.94.166.164']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '35.236.103.81']
 
 
 # Application definition
@@ -144,6 +144,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://35.236.103.81"
 ]
 
 SIMPLE_JWT = {
