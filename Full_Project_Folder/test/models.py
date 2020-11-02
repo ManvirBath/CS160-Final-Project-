@@ -14,18 +14,22 @@ from django.utils.translation import ugettext_lazy as _
 from .managers import ClientManager
 from random import randint
 
+from django.core.exceptions import ValidationError
+from .validators import validate_email, validate_names, validate_city, validate_state, validate_zipcode, validate_phone_num, \
+                        validate_birthday, validate_amount
+
 class Client(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), unique=True, null=False)
-    first_name = models.CharField(_('first name'), max_length=30, null=False)
-    last_name = models.CharField(_('last name'), max_length=30, null=False)
+    email = models.EmailField(_('email address'), unique=True, null=False, validators=[validate_email])
+    first_name = models.CharField(_('first name'), max_length=40, null=False, validators=[validate_names])
+    last_name = models.CharField(_('last name'), max_length=40, null=False, validators=[validate_names])
     is_active = models.BooleanField(_('active'), default=True)
 
     address        = models.CharField(max_length=100, null=False)
-    city           = models.CharField(max_length=36, null=False)
-    state          = models.CharField(max_length=2, null=False)
-    zipcode        = models.CharField(max_length=5, null=False)
-    phone_num      = models.CharField(max_length=13, null=False)
-    birthday       = models.DateField(null=True)
+    city           = models.CharField(max_length=36, null=False, validators=[validate_city])
+    state          = models.CharField(max_length=2, null=False, validators=[validate_state])
+    zipcode        = models.CharField(max_length=5, null=False, validators=[validate_zipcode])
+    phone_num      = models.CharField(max_length=13, null=False, validators=[validate_phone_num])
+    birthday       = models.DateField(null=True, validators=[validate_birthday])
 
     objects = ClientManager()
 
@@ -50,7 +54,7 @@ class Account(models.Model):
     )
     account_type = models.CharField(max_length=10, null=False, choices=TYPE)
     client      = models.ForeignKey(Client, on_delete=models.CASCADE)
-    balance     = models.FloatField(null=False, default=0.0)
+    balance     = models.FloatField(null=False, default=0.0, validators=[validate_amount])
     STATUS = (
         ('inactive', 'inactive'),
         ('active', 'active'),
@@ -59,7 +63,7 @@ class Account(models.Model):
 
 
 class Transaction(models.Model):
-    amount      = models.FloatField(null=False, default=0.0)
+    amount      = models.FloatField(null=False, default=0.0, validators=[validate_amount])
     date        = models.DateField(null=False, default=timezone.now)
     trans_type  = models.CharField(max_length=25, null=False)
 
@@ -69,17 +73,17 @@ class Transaction(models.Model):
     )
     location    = models.CharField(max_length=255, null=False, choices=LOCATION)
     check_path  = models.CharField(max_length=255, null=True)
-    memo        = models.CharField(max_length=255, null=False)
+    memo        = models.CharField(max_length=255, null=True) 
     account     = models.ForeignKey(Account, on_delete=models.CASCADE)
 
 class BillPayment(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     routing_num = models.CharField(max_length=10, null=False)
     to_account_num = models.CharField(max_length=10, null=False)
-    amount = models.FloatField(null=False, default=0.01)
+    amount = models.FloatField(null=False, default=0.00, validators=[validate_amount])
     date   = models.DateField(null=False, default=timezone.now)
     STATUS = (
-        ('active', 'active'), # background tasks look for ones that are active. Due for today. 
+        ('active', 'active'), # background tasks look for ones that are active. Due for like that day
         ('cancelled', 'cancelled'),
         ('processed', 'processed'),
     )

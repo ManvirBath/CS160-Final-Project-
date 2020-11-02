@@ -24,6 +24,11 @@ from background_task import background
 
 from django.utils import timezone
 import time
+import re
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+from .validators import validate_email, validate_names, validate_city, validate_state, validate_zipcode, validate_phone_num, \
+                        validate_birthday, validate_password
 
 """
 Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYMENT)
@@ -70,6 +75,7 @@ def automated_bill():
 
 
 # Create your views here.
+# 1
 @api_view(['POST'])
 def register(request):
     """
@@ -77,8 +83,8 @@ def register(request):
     Postman JSON example:
     {
         "email": "hola@hola.com",
-        "first_name": "91919191",
-        "last_name": "123456780",
+        "first_name": "Ralph",
+        "last_name": "Cruz",
         "password": "ohyeahhahahaha",
         "address": "666 Nobuena Drive",
         "city": "San Jose",
@@ -102,7 +108,7 @@ def register(request):
                 created_zipcode        = serializer.data['zipcode']
                 created_phone_num      = serializer.data['phone_num']
                 created_birthday       = serializer.data['birthday']
-                created_password = request.data['password']
+                created_password       = serializer.data['password']
                 
                 client_entry = Client(
                     email = created_email,
@@ -130,6 +136,7 @@ def register(request):
         return Response(serializer.errors,
                         status=status.HTTP_400_BAD_REQUEST)
 
+# 2
 @api_view(['POST'])
 def reset_password(request):
     """
@@ -143,19 +150,24 @@ def reset_password(request):
     try:
         client = Client.objects.get(email=request.data['email'])
     except Client.DoesNotExist:
-        return Response({'status': 'Client does not exist'})
+        return Response({'email': ['Client does not exist']})
 
-    try:
-        with transaction.atomic():
-            created_password = request.data['password']
-            client = Client.objects.get(email=request.data['email'])
-            client.set_password(created_password)
-            client.save()
-            print(client.password)
+    serializer = ClientSerializer(data= {'password': request.data['password']})
+    if serializer.is_valid():
+        try:
+            with transaction.atomic():
+                created_password = serializer.data['password'] # pass through serializer
+                
+                client = Client.objects.get(email=request.data['email'])
+                client.set_password(created_password)
+                client.save()
 
-    except IntegrityError as ex:
-        return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    return Response({'status': 'Reset Password successful'})
+        except IntegrityError as ex:
+            return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'status': 'Reset Password successful'})
+    else:
+        return Response(serializer.errors,
+                        status=status.HTTP_400_BAD_REQUEST)
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -166,7 +178,8 @@ class ClientViewSet(viewsets.ModelViewSet):
     account_queryset = Account.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [permissions.IsAuthenticated]
-
+        
+    # 3
     @action(detail=True, methods=['post'])
     def edit_client(self, request, pk=None):
         """
@@ -185,11 +198,22 @@ class ClientViewSet(viewsets.ModelViewSet):
         }
         """
         client_now = self.get_object()
-        serializer = ClientSerializer(data=request.data)
+        serializer = ClientSerializer(data={key:request.data[key] for key in ['first_name', 'last_name', 'address', \
+                                    'city', 'state', 'zipcode', 'phone_num', 'birthday']})
+        current_email = request.data['email']
+
+        condition = re.match(r'^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$', current_email)
+        print(bool(condition))
+        print(request.data['email'])
+        if len(current_email) < 2 or len(current_email) > 40:
+            return Response({'email': ['Email address has to be b/w 2 and 40 characters']})
+        elif not condition:  
+            return Response({'email': ['Not valid email']})
+
         if serializer.is_valid():
             try:
                 with transaction.atomic():
-                    client_now.email = serializer.data['email']
+                    client_now.email = current_email
                     client_now.first_name = serializer.data['first_name']
                     client_now.last_name = serializer.data['last_name']
 
@@ -208,6 +232,7 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    # 4
     @action(detail=True, methods=['post'])
     def create_account(self, request, pk=None):
         """
@@ -220,13 +245,23 @@ class ClientViewSet(viewsets.ModelViewSet):
         """
         client_now = self.get_object()
         serializer = AccountSerializer(data=request.data)
+        randomized_num = randint(10000000, 99999999)
+        while True:
+            if len( Account.objects.filter(account_num=randomized_num) ) > 0:
+                print('Duplicate')
+                randomized_num = randint(10000000, 99999999)
+                continue
+            else:
+                print('Hit')
+                break
+
         if serializer.is_valid():
             try:
                 with transaction.atomic():
                     submitted_type = serializer.data['account_type']
 
                     account_entry = Account(
-                            account_num = randint(10000000, 99999999), # doesn't check if they're the same one.
+                            account_num = randomized_num, # doesn't check if they're the same one.
                             account_type = submitted_type,
                             client = client_now,
                             status = 'active'
@@ -241,6 +276,7 @@ class ClientViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
     
+    # 5
     @action(detail=True, methods=['post'])
     def create_bill_payment(self, request, pk=None):
         """
@@ -254,13 +290,18 @@ class ClientViewSet(viewsets.ModelViewSet):
             "date": "2020-10-27"
         }
         """
+        client_now = self.get_object()
         serializer = BillPaymentSerializer(data=request.data)
+        
         if serializer.is_valid():
             try:
-                with transaction.atomic():
-                    acc_num = request.data["from_account_num"]
-                    from_account = self.account_queryset.filter(account_num=acc_num)[0]
+                client_accounts = client_now.account_set.all()
+                acc_num = serializer.data["from_account_num"] 
+                from_account = self.account_queryset.filter(account_num=acc_num)[0]
+                if from_account not in client_accounts: # If user uses somebody else's account
+                    return Response({'from_account_num': ['Not authorized account number']})
 
+                with transaction.atomic():
                     bill_payment_entry = BillPayment(
                             account = from_account,
                             routing_num = serializer.data['routing_num'],
@@ -277,8 +318,7 @@ class ClientViewSet(viewsets.ModelViewSet):
 
             return Response({'status': 'create bill payment successful'})
         else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, pk=None):
         client = self.queryset.get(pk=pk)
@@ -340,14 +380,15 @@ class AccountViewSet(viewsets.ModelViewSet):
         else:
             return Response({'error' : 'Expected account number'}, status=status.HTTP_400_BAD_REQUEST)
 
+    # 6
     @action(detail=True, methods=['post'])
     def close_account(self, request, pk=None):
         """
         POST url (example): http://127.0.0.1:8000/accounts/91882878/close_account/
         Postman Example JSON:
         {
-            "location": "Online",
-            "memo": "Closed - Client is mad"
+            "location": "Online", --> SUPPOSED TO BE DROPDOWN MENU FOR THIS. 
+            "memo": "Closed - Client is mad" --> ALREADY VALIDATOR FOR THIS. SO PUT A DEFAULT VALUE!!!
         }
         """
         account = self.get_object()
@@ -355,7 +396,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             try:
                 with transaction.atomic():
-                    amount_for_withdraw = account.balance # need to have this as part of posting in API --> tell front end!!!
+                    amount_for_withdraw = account.balance 
                     location_withdrawn = serializer.data['location']
                     memo_on_withdrawn = serializer.data['memo']
                     
@@ -379,14 +420,14 @@ class AccountViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
         
-
+    # 7
     @action(detail=True, methods=['post'])
     def transfer_internal(self, request, pk=None):
         """
         POST url (example): http://127.0.0.1:8000/accounts/91919191/transfer_internal/
         Postman Example JSON:
         {
-            "to_account_number": "149192",
+            "to_account_number": "149192", --> MAKE SURE IT'S CHARACTERS!!!
             "amount": 10.00,
             "location": "Online",
             "memo": "For you loser"
@@ -398,13 +439,14 @@ class AccountViewSet(viewsets.ModelViewSet):
             try:
                 transfer_to_acc_num = request.data["to_account_number"]
                 transfer_to_account = self.queryset.filter(account_num=transfer_to_acc_num)[0]
+                if transfer_to_account == account: # If user uses the same account, don't let them
+                    return Response({'from_account_num': ['This is the same account!']})
+                
+                if serializer.data['amount'] > account.balance: # If amount over account's balance, don't let them
+                    return Response({'amount': ['Amount for transfer cannot be over balance.']})
 
                 with transaction.atomic():
                     amount_for_transfer = serializer.data['amount'] # need to have this as part of posting in API --> tell front end!!!
-                    if amount_for_transfer > account.balance:
-                        return Response({'error': 'Transfer over the balance. '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-                    if amount_for_transfer < 0:
-                        return Response({'error': 'Transfer cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     location_deposited = serializer.data['location']
                     memo_on_deposit = serializer.data['memo'] # for memos, make sure to have default value from front end
                     
@@ -442,6 +484,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    # 8
     @action(detail=True, methods=['post'])
     def deposit(self, request, pk=None):
         """
@@ -458,9 +501,7 @@ class AccountViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             try:
                 with transaction.atomic():
-                    amount_for_deposit = serializer.data['amount'] # need to have this as part of posting in API --> tell front end!!!
-                    if amount_for_deposit < 0:
-                        return Response({'error': 'Deposit cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    amount_for_deposit = serializer.data['amount'] 
                     location_deposited = serializer.data['location']
                     memo_on_deposit = serializer.data['memo'] # for memos, make sure to have default value from front end
                     check_path_confirmed = serializer.data['check_path']
@@ -485,6 +526,7 @@ class AccountViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
+    # 9
     @action(detail=True, methods=['post'])
     def withdraw(self, request, pk=None):
         """
@@ -500,12 +542,10 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = TransactionSerializer(data=request.data)
         if serializer.is_valid():
             try:
+                if serializer.data['amount'] > account.balance: # If amount over account's balance, don't let them
+                    return Response({'amount': ['Amount for transfer cannot be over balance.']})
                 with transaction.atomic():
-                    amount_for_withdraw = serializer.data['amount'] # need to have this as part of posting in API --> tell front end!!!
-                    if amount_for_withdraw > account.balance:
-                        return Response({'error': 'withdraw over the balance. '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-                    elif amount_for_withdraw < 0:
-                        return Response({'error': 'withdraw cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                    amount_for_withdraw = serializer.data['amount'] 
                     location_withdrawn = serializer.data['location']
                     memo_on_withdrawn = serializer.data['memo']
 
@@ -526,7 +566,8 @@ class AccountViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
-        
+
+     # 10   
     @action(detail=True, methods=['post'])
     def transfer_external(self, request, pk=None):
         """
@@ -542,16 +583,14 @@ class AccountViewSet(viewsets.ModelViewSet):
         """
 
         account = self.get_object()
-        serializer = TransactionSerializer(data={key:request.data[key] for key in ['amount', 'location', 'memo']})
+        serializer = TransactionSerializer(data=request.data)
 
         if serializer.is_valid():
             try:
                 with transaction.atomic():
+                    if serializer.data['amount'] > account.balance:
+                        return Response({'amount': ['Amount for transfer cannot be over balance.']})
                     amount_for_transfer = serializer.data['amount'] # need to have this as part of posting in API --> tell front end!!!
-                    if amount_for_transfer > account.balance:
-                        return Response({'error': 'Transfer over the balance. '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-                    elif amount_for_transfer < 0:
-                        return Response({'error': 'Transfer cannot be negative '}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                     location_transfer = serializer.data['location']
                     memo_on_transfer = serializer.data['memo']
                     
@@ -594,6 +633,7 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
     serializer_class = BillPaymentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    # 11
     @action(detail=True, methods=['post'])
     def edit_bill_payment(self, request, pk=None):
         """
@@ -607,14 +647,18 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
             "date": "2020-10-25"
         }
         """
+        client_now = Client.objects.get(email=request.user)
         bill_payment = self.get_object()
         serializer = BillPaymentSerializer(data=request.data)
+
         if serializer.is_valid():
             try:
+                client_accounts = client_now.account_set.all()
+                acc_num = serializer.data["from_account_num"]
+                from_account = self.account_queryset.filter(account_num=acc_num)[0]
+                if from_account not in client_accounts: # If user uses somebody else's account
+                    return Response({'from_account_num': ['Not authorized account number']})
                 with transaction.atomic():
-                    acc_num = request.data["from_account_num"]
-                    from_account = self.account_queryset.filter(account_num=acc_num)[0]
-
                     bill_payment.account = from_account
                     bill_payment.routing_num = serializer.data['routing_num']
                     bill_payment.to_account_num = serializer.data['to_account_num']
