@@ -1,51 +1,52 @@
+body {
+    background-color: #7b97ea;
+}
 .Account {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: white;
+    margin: auto;
+    height: 100vh;
+    background-position: center;
+    background-color: azure;
+    width: 75%;
 }
 
-.container {
-    position: absolute;
+.acctTypeName {
+    position: relative;
+    top: 15vh;
     color: black;
-    left: 80px;
-    top: 20vh;
+    text-align: center;
+}
+.acctBalance {
+    position: relative;
+    margin-top: 18vh;
+    font-size: 1.75em;
+    color: black;
+    text-align: center;
 }
 
-#dashboard-logo {
-    position: absolute;
-    top: 7vh;
-    left: 1vw;
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.saving {
-    position: absolute;
-    top: 30vh;
-    left: 2vw;
-    font-size: 2.8em;
-    word-spacing: 5.25em;
-    border-bottom: 3px dotted;
-    border-left: 3px dotted;
-    border-right: 3px dotted;
-    border-top: 3px dotted;
-    padding-top: 0.5em;
-    padding-left: 1em;
-    padding-right: 2em;
-    padding-bottom: 0.5em;
-    margin: 0 -1em;
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
-#title {
-    position: absolute;
-    font-size: 1.65em;
-    top: 20vh;
+tr:nth-child(even) {
+    background-color: #dddddd;
 }
 
-#AccountTable {
-    position: absolute;
-    top: 7vh;
-    left: 5vw;
-    font-size: 2em;
+#account-title {
+    position: relative;
+    font-size: 1.75em;
+    top: 25px;
+    text-align: center;
+}
+#account-table {
+    position: relative;
+    top: 30px;
 }
