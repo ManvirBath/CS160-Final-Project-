@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     # url(r'', views.background_view, name="background_view"),
-    path('register/', views.register),
-    path('reset_password/', views.reset_password),
+    path('api/register/', views.register),
+    path('api/reset_password/', views.reset_password),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
