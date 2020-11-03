@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axiosInstance from '../../axios';
+import axiosInstance from '../../components/Axios/loginClient';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Logo from '../Logo';
