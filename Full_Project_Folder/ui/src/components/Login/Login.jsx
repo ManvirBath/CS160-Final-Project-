@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axiosInstance from '../../components/Axios/loginClient';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Logo from '../Logo';
@@ -27,18 +27,22 @@ export default function SignIn() {
 
         try {
             const response = await axiosInstance
-                .post('api/token/', {
+                .post('token/', {
                     email: formData.email,
                     password: formData.password,
                 })
-                axiosInstance.defaults.headers['Authorization'] =
-                'JWT ' + response.data.access;
-                localStorage.setItem('access_token', response.data.access);
-                localStorage.setItem('refresh_token', response.data.refresh);
-                console.log(history)
-                console.log(localStorage)
-                console.log("Header BEFORE: " + axiosInstance.defaults.headers['Authorization'])
-                history.push(`/userdashboard`)
+                .then( result => { 
+                    axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access; 
+                    localStorage.setItem('access_token', result.data.access); 
+                    localStorage.setItem('refresh_token', result.data.refresh); 
+                    localStorage.setItem('email', formData.email)
+                    history.push({
+                        pathname: '/userdashboard',
+                    });
+                    console.log("Header BEFORE: " + axiosInstance.defaults.headers['Authorization'])
+                } ).catch (error => { 
+                    throw error; 
+                })
                 return response
         }
         catch (err) {

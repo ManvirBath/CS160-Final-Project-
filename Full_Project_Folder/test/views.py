@@ -4,7 +4,7 @@ from django.core import serializers
 from django.shortcuts import render, HttpResponse
 from .forms import Form
 from .models import Client
-import hashlib 
+import hashlib
 
 
 from rest_framework import status, viewsets
@@ -165,6 +165,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     account_queryset = Account.objects.all()
     serializer_class = ClientSerializer
+    pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
@@ -295,6 +296,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
+    pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
 
     def list(self, request):
@@ -583,6 +585,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+    pagination_class = None
     # permission_classes = [permissions.IsAuthenticated]
 
 class BillPaymentViewSet(viewsets.ModelViewSet):
@@ -592,6 +595,7 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
     queryset = BillPayment.objects.all()
     account_queryset = Account.objects.all()
     serializer_class = BillPaymentSerializer
+    pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
 
     @action(detail=True, methods=['post'])
