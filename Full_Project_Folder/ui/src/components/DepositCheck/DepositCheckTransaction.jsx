@@ -11,11 +11,9 @@ class DepositCheckTransaction extends React.Component {
     }
 
     componentDidMount() {
-        axiosInstance.post('deposit/', {
-            account: this.props.location.account,
+        axiosInstance.post(`accounts/${this.props.location.account}/deposit/`, {
             amount: this.props.location.amount,
-            check_path: this.props.location.check_image,
-            location: 'internal',
+            location: 'Online',
             memo: this.props.location.memo,
         });
     }

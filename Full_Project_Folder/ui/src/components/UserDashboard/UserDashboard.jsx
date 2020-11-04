@@ -23,16 +23,23 @@ class UserDashboard extends React.Component {
     checkingBalance(e) {}
     savingBalance(e) {}
 
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
+    async getAccounts(){
+        try {
+            let res = await axiosInstance.get('/accounts');
             console.log(res.data);
             const d = res.data;
             this.setState({ accts: d });
-            //const d = res.data.response.items;
-            //console.log(d.account_num);
-        });
+            return d;
+        }catch(error){
+            console.log("Header AFTER: " + axiosInstance.defaults.headers['Authorization'])
+            console.log("Hello error: ", JSON.stringify(error, null, 4));
+            // throw error; todo
+        }
+    }
 
-        axiosInstance.get('/clients/').then((res2) => {
+    async getClients(){
+        try {
+            let res2 = await axiosInstance.get('/clients');
             let userEmail = this.props.location.email;
             let users = res2.data.results;
             for (var index = 0; index < users.length; index++) {
@@ -40,7 +47,16 @@ class UserDashboard extends React.Component {
                     this.setState({ firstName: users[index].first_name });
                 }
             }
-        });
+            return res2;
+        } catch(error){
+            console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
+            console.log("Hello Client error: ", JSON.stringify(error, null, 4));
+            // throw error; todo
+        }
+    }
+    componentDidMount() {
+        this.getAccounts()
+        this.getClients()
     }
     render() {
         let acctTemplate = this.state.accts.map((v) => (

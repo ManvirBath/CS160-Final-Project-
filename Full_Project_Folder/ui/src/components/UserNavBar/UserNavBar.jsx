@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
+// import Logout from '../Logout';
 import { Link } from 'react-router-dom';
 import './UserNavBar.css';
 import Logo from '../Logo';

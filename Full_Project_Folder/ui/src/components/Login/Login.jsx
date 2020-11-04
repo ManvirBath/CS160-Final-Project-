@@ -21,27 +21,29 @@ export default function SignIn() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
 
-        axiosInstance
-            .post('api/token/', {
-                email: formData.email,
-                password: formData.password,
-            })
-            .then((res) => {
-                localStorage.setItem('access_token', res.data.access);
-                localStorage.setItem('refresh_token', res.data.refresh);
-                axiosInstance.defaults.headers['Authorization'] =
-                    'JWT ' + localStorage.getItem('access_token');
-                history.push({
-                    pathname: '/userdashboard',
+        try {
+            const response = await axiosInstance
+                .post('api/token/', {
                     email: formData.email,
-                });
-                //console.log(res);
-                //console.log(res.data);
-            });
+                    password: formData.password,
+                })
+                axiosInstance.defaults.headers['Authorization'] =
+                'JWT ' + response.data.access;
+                localStorage.setItem('access_token', response.data.access);
+                localStorage.setItem('refresh_token', response.data.refresh);
+                console.log(history)
+                console.log(localStorage)
+                console.log("Header BEFORE: " + axiosInstance.defaults.headers['Authorization'])
+                history.push(`/userdashboard`)
+                return response
+        }
+        catch (err) {
+            throw err
+        }
     };
     return (
         <div className="Login">
