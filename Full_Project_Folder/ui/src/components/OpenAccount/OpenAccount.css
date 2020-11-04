@@ -1,0 +1,63 @@
+body {
+  background-color: #7b97ea;
+}
+
+.OpenAccount {
+  margin: auto;
+  height: 80vh;
+  background-position: center;
+  background-color: azure;
+  width: 75%;
+  background: azure;
+}
+
+.PageHeader {
+  background-color: #d0cece;
+  margin-top: 8%;
+  height: 10%;
+  text-align: center;
+}
+
+h2,
+h4 {
+  font-family: "Times New Roman", Times, serif;
+}
+
+.nextBtn {
+  margin-top: 25px;
+  margin-left: 50%;
+}
+
+.buttons {
+  position: absolute;
+  right: 25%;
+  margin-top: 2.5%;
+}
+.accounts {
+  position: relative;
+  bottom: 50px;
+}
+.error {
+  position: relative;
+  top: 5px;
+  color: red;
+}
+
+#btn-primary {
+  position: relative;
+  bottom: 20px;
+}
+
+#open-account-header {
+  position: relative;
+  text-align: center;
+  font-size: 2.25em;
+  font-family: sans-serif;
+}
+
+#openacctoption {
+  position: relative;
+  text-align: center;
+  font-size: 1.6em;
+  font-family: "Times New Roman", Times, serif;
+}
