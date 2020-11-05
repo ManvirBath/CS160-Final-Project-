@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import axiosInstance from '../../components/Axios/loginClient';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
 import './Login.css';
 import Logo from '../Logo';
@@ -21,27 +21,33 @@ export default function SignIn() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(formData);
 
-        axiosInstance
-            .post('api/token/', {
-                email: formData.email,
-                password: formData.password,
-            })
-            .then((res) => {
-                localStorage.setItem('access_token', res.data.access);
-                localStorage.setItem('refresh_token', res.data.refresh);
-                axiosInstance.defaults.headers['Authorization'] =
-                    'JWT ' + localStorage.getItem('access_token');
-                history.push({
-                    pathname: '/userdashboard',
+        try {
+            const response = await axiosInstance
+                .post('token/', {
                     email: formData.email,
-                });
-                //console.log(res);
-                //console.log(res.data);
-            });
+                    password: formData.password,
+                })
+                .then( result => { 
+                    axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access; 
+                    localStorage.setItem('access_token', result.data.access); 
+                    localStorage.setItem('refresh_token', result.data.refresh); 
+                    localStorage.setItem('email', formData.email)
+                    history.push({
+                        pathname: '/userdashboard',
+                    });
+                    console.log("Header BEFORE: " + axiosInstance.defaults.headers['Authorization'])
+                } ).catch (error => { 
+                    throw error; 
+                })
+                return response
+        }
+        catch (err) {
+            throw err
+        }
     };
     return (
         <div className="Login">

@@ -68,6 +68,10 @@ class App extends React.Component {
                             component={DepositCheckTransaction}
                         />
                         <Route
+                            path="/logout"
+                            component={Logout}
+                        />
+                        <Route
                             path="/transferinternal"
                             component={TransferInternal}
                         />

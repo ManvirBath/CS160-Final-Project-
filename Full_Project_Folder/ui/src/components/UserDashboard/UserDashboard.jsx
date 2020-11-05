@@ -15,6 +15,8 @@ class UserDashboard extends React.Component {
             checkingBalance: '',
             savingBalance: '',
             accts: [],
+            axiosInstance: null,
+            email: ''
         };
     }
     firstName(e) {}
@@ -23,24 +25,46 @@ class UserDashboard extends React.Component {
     checkingBalance(e) {}
     savingBalance(e) {}
 
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
+    async getAccounts(){
+        try {
+            const res = await this.state.axiosInstance.get('/accounts')
             console.log(res.data);
             const d = res.data;
             this.setState({ accts: d });
-            //const d = res.data.response.items;
-            //console.log(d.account_num);
-        });
+            console.log(d)
+            return res;
+        } catch(error){
+            // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+            console.log("Hello error: ", JSON.stringify(error, null, 4));
+            // throw error; todo
+        }
+    }
 
-        axiosInstance.get('/clients/').then((res2) => {
-            let userEmail = this.props.location.email;
-            let users = res2.data.results;
+    async getClients(){
+        try {
+            const res2 = await this.state.axiosInstance.get('/clients')
+            this.state.email = localStorage.getItem('email');
+            let users = res2.data;
+            console.log(res2.data)
             for (var index = 0; index < users.length; index++) {
-                if (users[index].email == userEmail) {
+                if (users[index].email == this.state.email) {
                     this.setState({ firstName: users[index].first_name });
                 }
             }
-        });
+            // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+
+            return res2
+        } catch(error){
+            // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
+            // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
+            throw error
+        }
+    }
+    componentDidMount() {
+        this.state.axiosInstance = axiosInstance
+        console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+        this.getAccounts()
+        this.getClients()
     }
     render() {
         let acctTemplate = this.state.accts.map((v) => (

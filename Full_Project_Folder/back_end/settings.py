@@ -148,6 +148,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://35.236.103.81"
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=10),

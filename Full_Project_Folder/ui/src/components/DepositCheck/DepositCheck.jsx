@@ -34,7 +34,8 @@ class DepositCheck extends React.Component {
     }
 
     to_account(e) {
-        this.setState({ to_account: e.target.selectedOptions[0].text });
+        // console.log(e.target.selectedOptions[0].value)
+        this.setState({ to_account: e.target.selectedOptions[0].value});
         this.setState({ errorAccount: '' });
     }
     amount(e) {
