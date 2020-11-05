@@ -9,20 +9,9 @@ class UserDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: '',
-            checkingAccount: '',
-            savingAccount: '',
-            checkingBalance: '',
-            savingBalance: '',
             accts: [],
         };
     }
-    firstName(e) {}
-    checkingAccount(e) {}
-    savingAccount(e) {}
-    checkingBalance(e) {}
-    savingBalance(e) {}
-
     componentDidMount() {
         axiosInstance.get('/accounts/').then((res) => {
             console.log(res.data);
@@ -54,31 +43,15 @@ class UserDashboard extends React.Component {
         const { name, saving, checking } = this.state;
         return (
             <div className="userdashboard">
-                <UserNavigationBar />
+                <UserNavigationBar active={0} />
                 <div className="container-userdash">
-                    <div id="greeting-userdash">
+                    <div className="greeting-userdash">
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
-                    <div id="greeting-userdash2">Personal Accounts</div>
-                    <div className="acct-temp">
-                        <Link to="/Account" id="acct-temp-link">
-                            {acctTemplate}
-                        </Link>
+                    <div className="flexbox-column">
+                        <div>Personal Accounts</div>
+                        <div className="accounts-container">{acctTemplate}</div>
                     </div>
-                </div>
-                <div className="navlist2">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/GMap">
-                                ATM Locator
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/contact">
-                                Contact Us
-                            </a>
-                        </li>
-                    </ul>
                 </div>
             </div>
         );

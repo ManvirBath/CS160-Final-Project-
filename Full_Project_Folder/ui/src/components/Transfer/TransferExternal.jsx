@@ -122,7 +122,7 @@ class TransferExternal extends React.Component {
         return (
             <div className="TransferExternal">
                 <div id="active-transfer-external">
-                    <UserNavigationBar />
+                    <UserNavigationBar active={2} />
                 </div>
 
                 <h1 className="PageHeader"></h1>

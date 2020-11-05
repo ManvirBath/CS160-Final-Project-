@@ -80,7 +80,7 @@ class DepositCheck extends React.Component {
         ));
         return (
             <div className="DepositCheck">
-                <UserNavigationBar />
+                <UserNavigationBar active={3} />
                 <h1 className="PageHeader"></h1>
                 <div id="deposit-header">Deposit Check </div>
                 <div className="leftHalf">

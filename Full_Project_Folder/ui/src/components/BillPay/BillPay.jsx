@@ -145,74 +145,74 @@ class BillPay extends React.Component {
         ));
         return (
             <div className="BillPay">
-                <UserNavigationBar />
-
-                <h1 className="PageHeader">Bill Pay</h1>
-                <div id="billpay-header">Bill Payment</div>
-                <div className="billpay">
-                    <h4 id="transfer-from">From</h4>
-                    <select
-                        className="accounts"
-                        id="accounts"
-                        class="btn btn-light dropdown-toggle"
-                        onChange={this.from_acct}
-                    >
-                        <option value="acctNumFrom" disabled selected>
-                            Transfer From
-                        </option>
-                        {userAccts}
-                    </select>
-                    <h6 className="error">{this.state.errorFromAcct}</h6>
-
-                    <div className="inputDiv">
-                        <h4 id="transfer-to">To</h4>
-                        <input
-                            type="text"
-                            className="toAccountExternal"
-                            placeholder="Account Number"
-                            onChange={this.to_acct}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorToAcct}</h6>
-
-                        <input
-                            type="text"
-                            className="routingNum"
-                            placeholder="Routing number"
-                            onChange={this.routing_num}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorRouting}</h6>
-
-                        <input
-                            type="text"
-                            className="amountInput"
-                            placeholder="Amount"
-                            onChange={this.amount}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorAmount}</h6>
-
-                        <h4 id="billpay-date">Bill Payment Date</h4>
-                        <input
-                            class="form-control"
-                            type="date"
-                            value={this.state.pay_date}
-                            id="pay-date-input"
-                            onChange={this.pay_date}
-                        />
-                        <h6 className="error">{this.state.errorDate}</h6>
-
-                        <h4 id="billpay-frequency">Frequency</h4>
+                <UserNavigationBar active={1} />
+                <div className="container-billpay">
+                    <div className="greeting-billpay">BillPay</div>
+                    <div className="flexbox-column-billpay">
+                        <h4 id="transfer-from">From</h4>
                         <select
-                            className="frequency"
+                            className="accounts"
+                            id="accounts"
                             class="btn btn-light dropdown-toggle"
-                            onChange={this.frequency}
+                            onChange={this.from_acct}
                         >
-                            <option value="onetime" disabled selected>
-                                One time
+                            <option value="acctNumFrom" disabled selected>
+                                Transfer From
                             </option>
+                            {userAccts}
                         </select>
+                        <h6 className="error">{this.state.errorFromAcct}</h6>
+
+                        <div className="inputDiv">
+                            <h4 id="transfer-to">To</h4>
+                            <input
+                                type="text"
+                                className="toAccountExternal"
+                                placeholder="Account Number"
+                                onChange={this.to_acct}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorToAcct}</h6>
+
+                            <input
+                                type="text"
+                                className="routingNum"
+                                placeholder="Routing number"
+                                onChange={this.routing_num}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorRouting}</h6>
+
+                            <input
+                                type="text"
+                                className="amountInput"
+                                placeholder="Amount"
+                                onChange={this.amount}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorAmount}</h6>
+
+                            <h4 id="billpay-date">Bill Payment Date</h4>
+                            <input
+                                class="form-control"
+                                type="date"
+                                value={this.state.pay_date}
+                                id="pay-date-input"
+                                onChange={this.pay_date}
+                            />
+                            <h6 className="error">{this.state.errorDate}</h6>
+
+                            <h4 id="billpay-frequency">Frequency</h4>
+                            <select
+                                className="frequency"
+                                class="btn btn-light dropdown-toggle"
+                                onChange={this.frequency}
+                            >
+                                <option value="onetime" disabled selected>
+                                    One time
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     <div className="nextBtn">
                         <Link

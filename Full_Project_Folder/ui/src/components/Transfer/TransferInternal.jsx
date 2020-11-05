@@ -88,7 +88,7 @@ class TransferInternal extends React.Component {
         ));
         return (
             <div className="TransferInternal">
-                <UserNavigationBar />
+                <UserNavigationBar active={2} />
                 <h1 className="PageHeader"></h1>
                 <div id="transfer-internal-header">Internal Transfer</div>
                 <div className="transfer">

@@ -1,117 +1,24 @@
 body {
     background-color: #7b97ea;
 }
-.contain-billpay {
-    width: 1900px;
-}
 .BillPay,
 .BillPayConfirm,
 .BillPayTransaction {
-    margin: auto;
-    height: 85vh;
-    background-position: center;
-    background-color: white;
-    width: 70%;
-    background: azure;
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
 }
-.headerDiv {
-    position: relative;
-    margin-top: 5%;
-    top: 190px;
+.container-billpay {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 55%;
 }
-
-.headerDivTransaction {
-    margin-top: 8%;
-}
-.PageHeader {
-    background-color: azure;
-    margin-top: 0%;
-    height: 10%;
-    text-align: center;
-}
-
-h2,
-h4 {
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.billpay {
-    position: relative;
-    margin-left: 20%;
-    top: 55px;
-}
-
-.inputDiv {
-    position: relative;
-    margin-right: 75%;
-    top: 2vh;
-}
-.inputDiv2 {
-    position: relative;
-    top: 4vh;
-}
-.inputDiv3 {
-    position: relative;
-    top: 6vh;
-}
-
-.nextBtn {
-    margin-top: 75px;
-    margin-left: 55%;
-}
-
-.buttons {
-    position: absolute;
-    right: 25%;
-    margin-top: 2.5%;
-}
-.details {
-    position: relative;
-    top: 3vh;
-}
-#billpay-header {
-    position: relative;
-    text-align: center;
-    top: 50px;
-    font-size: 2.25em;
-    font-family: sans-serif;
-}
-#billpay-next {
-    position: relative;
-    bottom: 70px;
-    right: 25px;
-}
-#transfer-from {
-    position: relative;
-    top: 1px;
-}
-#transfer-to {
-    position: relative;
-    bottom: 5px;
-}
-#billpay-date {
-    position: relative;
-    top: 5px;
-}
-#pay-date-input {
-    position: relative;
-    top: 2px;
-}
-#billpay-frequency {
-    position: relative;
-    top: 3px;
-}
-#confirm-trans {
-    position: relative;
-    color: black;
-    bottom: 115px;
-}
-#billpayconfirm-detail {
-    position: relative;
-    color: black;
-    bottom: 115px;
-}
-#billpaytransaction-ty {
-    position: relative;
-    top: 25px;
+.greeting-billpay {
+    display: flex;
+    height: 35%;
+    font-size: 3.5em;
+    font-family: monospace;
 }

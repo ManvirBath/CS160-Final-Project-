@@ -22,6 +22,8 @@ import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
 import Contact from './components/Contact';
 import Account from './components/Account';
+import OpenAccount from './components/OpenAccount';
+import CloseAccount from './components/CloseAccount';
 
 import {
     BrowserRouter as Router,
@@ -102,6 +104,8 @@ class App extends React.Component {
                         />
                         <Route path="/account" component={Account} />
                         <Route path="/contact" component={Contact} />
+                        <Route path="/openaccount" component={OpenAccount} />
+                        <Route path="/closeaccount" component={CloseAccount} />
                         <Redirect from="*" to="/login" />
                     </Switch>
                 </Router>
