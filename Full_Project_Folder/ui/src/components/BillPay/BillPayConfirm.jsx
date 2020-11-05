@@ -12,28 +12,26 @@ class BillPayConfirm extends React.Component {
     render() {
         return (
             <div className="BillPayConfirm">
-                <UserNavigationBar />
+                <UserNavigationBar active={1} />
                 <div className="headerDiv">
-                    <h1 className="PageHeader" id="confirm-trans">
-                        Confirm transfer
-                    </h1>
-                    <h6
+                    <div id="billpay-confirm-transfer">Confirm Transfer</div>
+                    <div
                         className="PageHeader2"
                         class="lead"
                         id="billpayconfirm-detail"
                     >
                         Please confirm your details before submitting.
-                    </h6>
+                    </div>
                 </div>
-                <div className="details">
+                <div className="billpay-confirm-details">
                     <h4>Transfer From: {this.props.location.from_acct}</h4>
-                    <h4>Pay bill To: {this.props.location.to_acct}</h4>
+                    <h4>Pay bill to: {this.props.location.to_acct}</h4>
                     <h4>Routing number: {this.props.location.routing_num}</h4>
-                    <h4>Amount: {this.props.location.amount}</h4>
+                    <h4>Amount: ${this.props.location.amount}</h4>
                     <h4>Bill payment date: {this.props.location.pay_date}</h4>
-                    <h4>Frequency: {this.props.location.frequency}</h4>
+                    <h4>Frequency: One Time</h4>
                 </div>
-                <div className="buttons">
+                <div className="billpay-buttons">
                     <Link to="/billpay">
                         <button type="button" class="btn btn-danger">
                             Go Back

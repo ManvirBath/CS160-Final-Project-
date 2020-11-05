@@ -88,8 +88,8 @@ class TransferInternal extends React.Component {
         ));
         return (
             <div className="TransferInternal">
-                <UserNavigationBar />
-                <h1 className="PageHeader"></h1>
+                <UserNavigationBar active={2} />
+                <div className="Transfer-InternalPage"></div>
                 <div id="transfer-internal-header">Internal Transfer</div>
                 <div className="transfer">
                     <h6 className="error" id="same-error">

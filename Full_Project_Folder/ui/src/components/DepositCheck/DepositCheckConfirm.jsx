@@ -12,7 +12,8 @@ class DepositCheckConfirm extends React.Component {
     render() {
         return (
             <div className="DepositCheckConfirm">
-                <UserNavigationBar />
+                <UserNavigationBar active={3} />
+
                 <h1 className="PageHeader" id="depositcheck-confirm">
                     Confirm check deposit
                 </h1>

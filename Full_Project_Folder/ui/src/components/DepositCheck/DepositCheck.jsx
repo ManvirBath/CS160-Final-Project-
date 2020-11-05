@@ -34,8 +34,7 @@ class DepositCheck extends React.Component {
     }
 
     to_account(e) {
-        // console.log(e.target.selectedOptions[0].value)
-        this.setState({ to_account: e.target.selectedOptions[0].value});
+        this.setState({ to_account: e.target.selectedOptions[0].text });
         this.setState({ errorAccount: '' });
     }
     amount(e) {
@@ -81,7 +80,7 @@ class DepositCheck extends React.Component {
         ));
         return (
             <div className="DepositCheck">
-                <UserNavigationBar />
+                <UserNavigationBar active={3} />
                 <h1 className="PageHeader"></h1>
                 <div id="deposit-header">Deposit Check </div>
                 <div className="leftHalf">

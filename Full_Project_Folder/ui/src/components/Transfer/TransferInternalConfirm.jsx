@@ -12,7 +12,7 @@ class TransferInternalConfirm extends React.Component {
     render() {
         return (
             <div className="DepositCheckConfirm">
-                <UserNavigationBar />
+                <UserNavigationBar active={2} />
                 <div className="headerDiv">
                     <h1
                         className="PageHeader"

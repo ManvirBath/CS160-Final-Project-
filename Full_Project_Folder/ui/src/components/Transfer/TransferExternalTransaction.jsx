@@ -16,7 +16,7 @@ class TransferExternalTransaction extends React.Component {
         const { amount } = this.state;
         return (
             <div className="DepositCheckTransaction">
-                <UserNavigationBar />
+                <UserNavigationBar active={2} />
                 <div className="headerDivTransaction">
                     <div
                         className="TransactionAlert"

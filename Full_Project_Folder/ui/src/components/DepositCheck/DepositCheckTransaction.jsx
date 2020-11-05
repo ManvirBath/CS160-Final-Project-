@@ -20,7 +20,7 @@ class DepositCheckTransaction extends React.Component {
     render() {
         return (
             <div className="DepositCheckTransaction">
-                <UserNavigationBar />
+                <UserNavigationBar active={3} />
                 <div
                     className="TransactionAlert"
                     class="alert alert-success"
