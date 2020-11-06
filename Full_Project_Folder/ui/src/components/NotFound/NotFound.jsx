@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './NotFound.css';
-import UserNavigationBar from '../UserNavBar/UserNavBar';
-import { Jumbotron, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class NotFound extends React.Component {
