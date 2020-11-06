@@ -52,12 +52,13 @@
 }
 #office-location-header {
     font-size: 1.25em;
-    padding-bottom: 5px;
     font-family: cursive;
 }
 #contact-number-header {
     font-size: 1.5em;
+    font-family: cursive;
 }
 #contact-email-header {
     font-size: 1.5em;
+    font-family: cursive;
 }
