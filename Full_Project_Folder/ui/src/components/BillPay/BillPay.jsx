@@ -43,7 +43,7 @@ class BillPay extends React.Component {
         this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
-        this.setState({ from_acct: e.target.selectedOptions[0].text });
+        this.setState({ from_acct: e.target.selectedOptions[0] });
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
@@ -143,6 +143,7 @@ class BillPay extends React.Component {
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
         ));
+        console.log(String(this.state.from_acct.value))
         return (
             <div className="BillPay">
                 <UserNavigationBar />
@@ -219,7 +220,7 @@ class BillPay extends React.Component {
                             to={{
                                 pathname: '/billpayconfirm',
                                 to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct,
+                                from_acct: this.state.from_acct.value,
                                 routing_num: this.state.routing_num,
                                 amount: this.state.amount,
                                 pay_date: this.state.pay_date,

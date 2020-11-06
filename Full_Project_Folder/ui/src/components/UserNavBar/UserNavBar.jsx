@@ -32,7 +32,7 @@ class UserNavigationBar extends React.Component {
                                     <Dropdown.Item href="/userdashboard">
                                         View my Account
                                     </Dropdown.Item>
-                                    <Dropdown.Item href="/OpenAccount">
+                                    <Dropdown.Item href="/open_account">
                                         Open an Account
                                     </Dropdown.Item>
                                 </Dropdown.Menu>

@@ -44,6 +44,7 @@ class BillPayConfirm extends React.Component {
                             pathname: '/billpaytransaction',
                             from_acct: this.props.location.from_acct,
                             to_acct: this.props.location.to_acct,
+                            routing_num: this.props.location.routing_num,
                             amount: this.props.location.amount,
                             pay_date: this.props.location.pay_date,
                             frequency: this.props.location.frequency,

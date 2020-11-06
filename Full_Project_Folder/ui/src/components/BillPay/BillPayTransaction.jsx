@@ -1,12 +1,30 @@
 import React from 'react';
 import './BillPay.css';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class BillPayTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+    }
+
+    componentDidMount() { 
+        const id = localStorage.getItem('user_id')
+        console.log(typeof this.props.location.from_acct)
+        console.log(typeof this.props.location.routing_num)
+        console.log(typeof this.props.location.to_acct)
+        console.log(typeof this.props.location.amount)
+        console.log(typeof this.props.location.pay_date)
+
+        axiosInstance.post(`clients/${id}/create_bill_payment/`, {
+            from_account_num: this.props.location.from_acct,
+            routing_num: this.props.location.routing_num,
+            to_account_num: this.props.location.to_acct,
+            amount: this.props.location.amount,
+            date: this.props.location.pay_date
+        });
     }
 
     check() {}
@@ -28,14 +46,11 @@ class BillPayTransaction extends React.Component {
                     </div>
                 </div>
                 <div className="transactionInfo">
-                    <h4>Transaction Number: [insert transaction number]</h4>
                     <h4>From: {this.props.location.from_acct}</h4>
-                    <h6>New Balance: [insert new balance]</h6>
                     <h4>To: {this.props.location.to_acct}</h4>
                     <h4>Routing number: {this.props.location.routing_num}</h4>
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Bill payment date: {this.props.location.pay_date}</h4>
-                    <h4>Frequency: {this.props.location.frequency}</h4>
                 </div>
                 <div className="buttons">
                     <Link to="/billpay">
