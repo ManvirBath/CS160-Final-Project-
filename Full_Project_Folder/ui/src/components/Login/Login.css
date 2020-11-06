@@ -9,9 +9,6 @@
     flex-direction: column;
     margin-top: 20vh;
 }
-#logo1 {
-    margin-bottom: 1.5em;
-}
 .Login input {
     color: black;
     margin-top: 10px;

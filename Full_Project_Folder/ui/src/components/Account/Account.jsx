@@ -61,35 +61,37 @@ class Account extends React.Component {
                 <h1 className="acctTypeName">Savings 1234</h1>
                 <h4 className="acctBalance">Account Balance: $100.00</h4>
                 <h2 id="account-title">Transactions</h2>
-                <table id="account-table">
-                    <tr>
-                        <th>Transaction Number</th>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Type</th>
-                        <th>Memo</th>
-                        <th>Location</th>
-                        <th>Check Path</th>
-                    </tr>
-                    <tr>
-                        <td>121212</td>
-                        <td>2020-10-31</td>
-                        <td>500.00</td>
-                        <td>Deposit</td>
-                        <td>1st paycheck</td>
-                        <td>Online</td>
-                        <td>C:fakepath\fakecheck.img</td>
-                    </tr>
-                    <tr>
-                        <td>634342</td>
-                        <td>2020-17-03</td>
-                        <td>200.00</td>
-                        <td>Withdraw</td>
-                        <td></td>
-                        <td>ATM</td>
-                        <td></td>
-                    </tr>
-                </table>
+                <div className="account-table">
+                    <table id="account-table">
+                        <tr>
+                            <th>Transaction Number</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Memo</th>
+                            <th>Location</th>
+                            <th>Check Path</th>
+                        </tr>
+                        <tr>
+                            <td>121212</td>
+                            <td>2020-10-31</td>
+                            <td>500.00</td>
+                            <td>Deposit</td>
+                            <td>1st paycheck</td>
+                            <td>Online</td>
+                            <td>C:fakepath\fakecheck.img</td>
+                        </tr>
+                        <tr>
+                            <td>634342</td>
+                            <td>2020-17-03</td>
+                            <td>200.00</td>
+                            <td>Withdraw</td>
+                            <td></td>
+                            <td>ATM</td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         );
     }

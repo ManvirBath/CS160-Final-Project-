@@ -7,23 +7,65 @@
 }
 .Transfer-InternalPage,
 .Transfer-ExternalPage {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
     justify-content: center;
+    margin-top: 50px;
+    font-size: 2.25em;
+    float: none;
+    margin: 0 auto;
 }
-
-.headerDiv {
-    margin-top: 5%;
-}
-
-.headerDivTransaction {
-    margin-top: 8%;
-}
-
-.PageHeader {
-    background-color: #d0cece;
-    margin-top: 8%;
-    height: 10%;
+.greeting-InternalTransfer,
+.greeting-ExternalTransfer {
+    height: 5%;
     text-align: center;
+    margin-top: 35px;
+    font-size: 3em;
+    height: 100px;
+}
+.transferinternal-inputDiv,
+.transferexternal-inputDiv {
+    justify-content: center;
+    flex-direction: column;
+}
+.transfer-external-confirm,
+.transfer-internal-confirm {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    text-align: center;
+    font-size: 3.5em;
+    margin-top: 35px;
+    height: 150px;
+}
+.details-external-confirm,
+.details-internal-confirm {
+    margin-top: 50px;
+}
+.buttons-transfer-internal-confirm,
+.buttons-transfer-external-confirm {
+    display: flex;
+    margin-left: 1100px;
+    margin-top: 50px;
+}
+.internal-transaction-headerDivTransaction,
+.external-transaction-headerDivTransaction {
+    font-size: 1.5em;
+}
+.transfer-internal-transactionInfo,
+.transfer-external-transactionInfo {
+    text-align: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.transfer-internal-transactionbuttons,
+.transfer-external-transactionbuttons {
+    justify-content: flex-end;
+    display: flex;
+    margin-right: 500px;
+    margin-top: 100px;
+}
+#transfer-external-greeting1 {
+    font-size: 0.6em;
+}
+#transfer-internal-greeting2 {
+    font-size: 0.6em;
 }

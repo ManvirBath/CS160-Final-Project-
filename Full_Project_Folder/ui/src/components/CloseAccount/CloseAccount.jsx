@@ -76,53 +76,41 @@ class CloseAccount extends React.Component {
             </option>
         ));
         return (
-            <div className="CloseAccount">
+            <div className="closeAccount">
                 <UserNavigationBar active={0} />
-                <h1 className="PageHeader"></h1>
-                <div id="close-account-header">Close Account</div>
-                <div className="transfer">
-                    <h2 id="close-account">Account to close</h2>
-                    <select
-                        className="accounts"
-                        id="accounts"
-                        class="btn btn-light dropdown-toggle"
-                        onChange={this.closeAcct}
-                    >
-                        <option value="default" disabled selected>
-                            Account to close
-                        </option>
-                        {userAccts}
-                    </select>
-                    <h6 className="error">{this.state.errorCloseAcct}</h6>
-                    <h2 id="transfer-account">Transfer money to</h2>
-                    <select
-                        className="accounts"
-                        id="accounts1"
-                        class="btn btn-light dropdown-toggle"
-                        onChange={this.to_acct}
-                    >
-                        <option value="default" disabled selected>
-                            Transfer Money To
-                        </option>
-                        {userAccts}
-                    </select>
-                    <h6 className="error" id="transferto-error">
-                        {this.state.errorToAcct}
-                    </h6>
-                    <div className="nextBtn">
-                        <Link
-                            to={{
-                                pathname: '/userdashboard',
-                            }}
+                <div id="closeacct-greeting">Close Account</div>
+                <div className="closeacct">
+                    <div id="closeacct-option">
+                        Which account do you want to close?
+                    </div>
+                    <div className="closeaccount-types">
+                        <select
+                            className="accounts"
+                            id="accounts"
+                            class="btn btn-light dropdown-toggle"
+                            onChange={this.closeAcct}
                         >
-                            <button
-                                type="button"
-                                class="btn btn-primary"
-                                onClick={this.handleSubmit}
+                            <option value="default" disabled selected>
+                                Account to close
+                            </option>
+                            {userAccts}
+                        </select>
+                        <h6 className="error">{this.state.errorCloseAcct}</h6>
+                        <div className="closeaccount-nextBtn">
+                            <Link
+                                to={{
+                                    pathname: '/userdashboard',
+                                }}
                             >
-                                Close Account
-                            </button>
-                        </Link>
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onClick={this.handleSubmit}
+                                >
+                                    Close Account
+                                </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

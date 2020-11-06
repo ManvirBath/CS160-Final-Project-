@@ -15,9 +15,8 @@
 }
 .greeting-billpay {
     display: flex;
-    height: 12.5%;
-    font-size: 3.5em;
-    font-family: sans-serif;
+    height: 15%;
+    font-size: 3em;
 }
 .billpay-confirm-details {
     display: flex;
@@ -44,25 +43,26 @@
     margin-left: 1250px;
     margin-top: 25px;
 }
+.billpay-headerDiv {
+    text-align: center;
+    margin-top: 100px;
+    font-size: 1.15em;
+}
 #transfer-from {
     display: flex;
-    font-family: Garamond;
     font-size: 2em;
 }
 #transfer-to {
     display: flex;
-    font-family: Garamond;
     font-size: 2em;
 }
 #billpay-date {
     display: flex;
-    font-family: Garamond;
     font-size: 2em;
     margin-top: 25px;
 }
 #billpay-frequency {
     display: flex;
-    font-family: Garamond;
     font-size: 2em;
     margin-top: 20px;
 }
@@ -74,13 +74,11 @@
     display: flex;
     justify-content: center;
     font-size: 3em;
-    font-family: sans-serif;
     margin-top: -65px;
 }
 #billpayconfirm-detail {
     text-align: center;
     font-size: 1.5em;
-    font-family: sans-serif;
     color: black;
     margin-top: 25px;
 }

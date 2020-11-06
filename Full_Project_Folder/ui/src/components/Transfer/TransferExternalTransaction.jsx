@@ -17,7 +17,7 @@ class TransferExternalTransaction extends React.Component {
         return (
             <div className="DepositCheckTransaction">
                 <UserNavigationBar active={2} />
-                <div className="headerDivTransaction">
+                <div className="external-transaction-headerDivTransaction">
                     <div
                         className="TransactionAlert"
                         class="alert alert-success"
@@ -30,15 +30,15 @@ class TransferExternalTransaction extends React.Component {
                         </p>
                     </div>
                 </div>
-                <div className="transactionInfo">
-                    <h4>From: {this.props.location.from_acct}</h4>
+                <div className="transfer-external-transactionInfo">
+                    <h3>From: {this.props.location.from_acct}</h3>
                     <h6>New Balance: [insert new balance]</h6>
-                    <h4>To: {this.props.location.to_acct}</h4>
-                    <h4>Routing number: {this.props.location.routing_num}</h4>
-                    <h4>Amount: {this.props.location.amount}</h4>
-                    <h4>Memo: {this.props.location.memo}</h4>
+                    <h3>To: {this.props.location.to_acct}</h3>
+                    <h3>Routing number: {this.props.location.routing_num}</h3>
+                    <h3>Amount: {this.props.location.amount}</h3>
+                    <h3>Memo: {this.props.location.memo}</h3>
                 </div>
-                <div className="buttons">
+                <div className="transfer-external-transactionbuttons">
                     <Link to="/userdashboard">
                         <button
                             type="button"

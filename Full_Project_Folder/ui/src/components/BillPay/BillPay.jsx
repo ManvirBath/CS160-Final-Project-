@@ -214,7 +214,7 @@ class BillPay extends React.Component {
                             </select>
                         </div>
                     </div>
-                    <div className="nextBtn">
+                    <div className="billpay-buttons">
                         <Link
                             to={{
                                 pathname: '/billpayconfirm',

@@ -4,21 +4,24 @@
 }
 .navlist {
     height: 2em;
-    font-size: 1.5em;
+    font-size: 1.25em;
     background-color: #dcdcdc;
 }
 .usernavbar.flexbox {
     flex-direction: column;
     align-items: center;
 }
-.Logo {
+.usernavbar .Logo {
     flex-direction: row;
     align-items: center;
+    margin: 0;
     margin-left: 30px;
-    margin-top: -5px;
-    margin-bottom: -5px;
-    font-size: 1.5em;
-    font-family: 'Times New Roman', Times, serif;
+    padding: 0;
+}
+.usernavbar .Logo_text {
+    padding: 0;
+    margin-left: 15px;
+    font-size: 2.5em;
 }
 
 #dropdown-basic {

@@ -13,15 +13,9 @@ class BillPayConfirm extends React.Component {
         return (
             <div className="BillPayConfirm">
                 <UserNavigationBar active={1} />
-                <div className="headerDiv">
+                <div className="billpay-headerDiv">
                     <div id="billpay-confirm-transfer">Confirm Transfer</div>
-                    <div
-                        className="PageHeader2"
-                        class="lead"
-                        id="billpayconfirm-detail"
-                    >
-                        Please confirm your details before submitting.
-                    </div>
+                    <div>Please confirm your details before submitting.</div>
                 </div>
                 <div className="billpay-confirm-details">
                     <h4>Transfer From: {this.props.location.from_acct}</h4>

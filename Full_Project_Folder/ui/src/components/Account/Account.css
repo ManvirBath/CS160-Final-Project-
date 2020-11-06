@@ -1,28 +1,24 @@
-body {
-    background-color: #7b97ea;
-}
 .Account {
-    margin: auto;
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
     height: 100vh;
-    background-position: center;
-    background-color: azure;
-    width: 75%;
 }
 
 .acctTypeName {
-    position: relative;
-    top: 15vh;
     color: black;
     text-align: center;
+    margin-top: 10px;
 }
 .acctBalance {
-    position: relative;
-    margin-top: 18vh;
-    font-size: 1.75em;
+    margin-top: 5vh;
     color: black;
     text-align: center;
 }
-
+.account-table {
+    display: flex;
+    margin-top: 10px;
+}
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -41,12 +37,7 @@ tr:nth-child(even) {
 }
 
 #account-title {
-    position: relative;
     font-size: 1.75em;
-    top: 25px;
+    margin-top: 25px;
     text-align: center;
-}
-#account-table {
-    position: relative;
-    top: 30px;
 }
