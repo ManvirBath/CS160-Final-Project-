@@ -1,0 +1,42 @@
+.NotFound {
+    display: flex;
+    color: #fff;
+    font-size: 100%;
+    line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
+}
+.Container-NotFound {
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+#NotFound-Greeting {
+    font-size: 15em;
+    font-weight: 100;
+    text-shadow: #4191e1 1px 1px, #4191e1 2px 2px, #4191e1 3px 3px,
+        #4191e1 8px 8px, #4191e1 9px 9px, #4191e1 10px 10px, #4191e1 11px 11px;
+}
+#NotFound-Greeting2 {
+    font-size: 3em;
+    text-align: center;
+    font-weight: 100;
+    margin-bottom: 100px;
+}
+#notfound-navigateback-button {
+    text-decoration: none;
+}
+.button-notfound {
+    justify-content: center;
+    color: #fff;
+    font-size: 1.2em;
+    border: 1px solid #efefef;
+    padding: 0.5em;
+    border-radius: 3px;
+    transition: all 0.3s linear;
+}
+
+.button-notfound:hover {
+    background-color: #007aff;
+    color: #fff;
+}

@@ -24,7 +24,7 @@ import Contact from './components/Contact';
 import Account from './components/Account';
 import OpenAccount from './components/OpenAccount';
 import CloseAccount from './components/CloseAccount';
-
+import NotFound from './components/NotFound';
 import {
     BrowserRouter as Router,
     Route,
@@ -46,9 +46,10 @@ class App extends React.Component {
                     <Switch>
                         <Route
                             exact
-                            path="/login"
+                            path="/"
                             render={(props) => <Login {...props} dark={dark} />}
                         />
+                        <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/recovery" component={Recovery} />
                         <Route path="/gmap" component={GMap} />
@@ -106,7 +107,8 @@ class App extends React.Component {
                         <Route path="/contact" component={Contact} />
                         <Route path="/openaccount" component={OpenAccount} />
                         <Route path="/closeaccount" component={CloseAccount} />
-                        <Redirect from="*" to="/login" />
+                        <Route path="/NotFound" component={NotFound} />
+                        <Redirect from="*" to="/NotFound" />
                     </Switch>
                 </Router>
             </div>
