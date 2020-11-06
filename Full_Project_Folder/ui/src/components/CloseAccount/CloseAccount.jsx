@@ -18,12 +18,12 @@ class CloseAccount extends React.Component {
     this.to_acct = this.to_acct.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  /*componentDidMount() {
+  componentDidMount() {
     axiosInstance.get("/accounts/").then((res) => {
       const d = res.data;
       this.setState({ accts: d });
     });
-  }*/
+  }
 
   closeAcct(e) {
     this.setState({ closeAcct: e.target.value });
