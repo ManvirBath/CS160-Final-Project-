@@ -121,14 +121,12 @@ class TransferExternal extends React.Component {
         ));
         return (
             <div className="TransferExternal">
-                <div id="active-transfer-external">
-                    <UserNavigationBar />
+                <UserNavigationBar active={2} />
+                <div className="greeting-ExternalTransfer">
+                    External Transfer
                 </div>
-
-                <h1 className="PageHeader"></h1>
-                <div id="transfer-external-header">External Transfer</div>
-                <div className="transfer">
-                    <h2 id="external-transferfrom">Transfer From</h2>
+                <div className="Transfer-ExternalPage">
+                    <div id="external-transferfrom">Transfer From</div>
                     <select
                         className="accounts"
                         id="accounts"
@@ -143,41 +141,46 @@ class TransferExternal extends React.Component {
                     <h6 className="error">{this.state.errorFromAcct}</h6>
 
                     <div className="inputDiv">
-                        <h2 id="external-transferto">Transfer To</h2>
-                        <input
-                            type="text"
-                            className="toAccountExternal"
-                            placeholder="Account Number"
-                            onChange={this.to_acct}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorToAcct}</h6>
-                        <input
-                            type="text"
-                            className="routingNum"
-                            placeholder="Routing Number"
-                            onChange={this.routing_num}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorRouting}</h6>
-                        <input
-                            type="text"
-                            className="amountInput"
-                            placeholder="Amount"
-                            onChange={this.amount}
-                            class="form-control"
-                        ></input>
-                        <h6 className="error">{this.state.errorAmount}</h6>
+                        <div id="external-transferto">Transfer To</div>
+                        <div className="transferinternal-inputDiv">
+                            <input
+                                type="text"
+                                className="toAccountExternal"
+                                id="external-accountNumber-div"
+                                placeholder="Account Number"
+                                onChange={this.to_acct}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorToAcct}</h6>
+                            <input
+                                type="text"
+                                className="routingNum"
+                                id="external-routingNumber-div"
+                                placeholder="Routing Number"
+                                onChange={this.routing_num}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorRouting}</h6>
+                            <input
+                                type="text"
+                                className="amountInput"
+                                id="external-amount-div"
+                                placeholder="Amount"
+                                onChange={this.amount}
+                                class="form-control"
+                            ></input>
+                            <h6 className="error">{this.state.errorAmount}</h6>
 
-                        <h2 id="external-memo">Memo(optional)</h2>
-                        <textarea
-                            type="text"
-                            className="memoInput"
-                            id="external-memoInput"
-                            placeholder="Memo"
-                            class="form-control"
-                            onChange={this.memo}
-                        />
+                            <div id="external-memo">Memo(optional)</div>
+                            <textarea
+                                type="text"
+                                className="memoInput"
+                                id="transfer-external-memoInput"
+                                placeholder="Memo"
+                                class="form-control"
+                                onChange={this.memo}
+                            />
+                        </div>
                     </div>
                     <div className="nextBtn">
                         <Link

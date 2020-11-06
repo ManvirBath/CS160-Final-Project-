@@ -1,137 +1,71 @@
-body {
-    background-color: #7b97ea;
-}
-
-.PageHeader {
-    background-color: #d0cece;
-    height: 15%;
-}
-.PageHeader2 {
-    background-color: #d0cece;
-}
-
-h2,
-h4 {
-    font-family: 'Times New Roman', Times, serif;
-}
 .DepositCheck,
 .DepositCheckConfirm,
 .DepositCheckTransaction {
-    margin: auto;
-    height: 70vh;
-    background-position: center;
-    background-color: azure;
-    width: 75%;
-}
-
-.leftHalf {
-    margin-left: 20%;
-    float: left;
-    margin-top: 5%;
-}
-.accounts {
-    align-items: relative;
-    flex-direction: column;
     display: flex;
-    width: 50vh;
-}
-
-.amountInput {
-    align-items: relative;
+    background-color: #f1f1f1;
     flex-direction: column;
-    display: flex;
-    width: 25vh;
+    height: 100vh;
 }
-
-.memoInput {
-    width: 35%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
-.rightHalf {
-    margin-right: 15%;
-    float: right;
-}
-
-.checkImg {
-    display: block;
-    max-width: 750px;
-    height: 250px;
-}
-
-.details,
-.transactionInfo {
-    margin-left: 25%;
-    flex-direction: column;
-    display: flex;
-    margin-top: 13%;
-}
-
-.buttons {
-    position: absolute;
-    right: 25%;
-    margin-top: 2.5%;
-}
-#deposit-header {
-    position: relative;
+.Deposit-Page {
+    justify-content: center;
     text-align: center;
-    top: 55px;
+    margin-top: 50px;
     font-size: 2.25em;
-    font-family: sans-serif;
+    float: none;
+    margin: 0 auto;
 }
-#upload-check {
-    position: relative;
-    top: 55px;
+.greeting-depositcheck {
+    height: 5%;
+    text-align: center;
+    margin-top: 35px;
+    font-size: 3em;
+    height: 100px;
 }
-#img {
-    position: relative;
-    top: 70px;
+.Deposit-Page-lefthalf {
+    flex-direction: column;
+    float: left;
+    margin-right: 50px;
+    margin-top: 25px;
 }
-#deposit-to {
-    position: relative;
-    bottom: 5px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.Deposit-Page-righthalf {
+    flex-direction: column;
+    overflow: hidden;
+    float: right;
+    margin-top: 50px;
+    margin-left: 100px;
 }
-#deposit-amount {
-    position: relative;
-    top: 12.5px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.depositcheck-confirm-details {
+    text-align: center;
+    margin-top: 50px;
 }
-#deposit-memo {
-    position: relative;
-    top: 20px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.depositchecktransaction-info {
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
 }
-#accounts {
-    position: relative;
+.deposit-check-transactions-buttons {
+    display: flex;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 1050px;
 }
-#amount-input {
-    position: relative;
-    top: 10px;
+#button-depositcheck {
+    display: flex;
+    float: inherit;
+    margin-top: 100px;
+    margin-left: 100px;
 }
-#memo-input {
-    position: relative;
-    top: 20px;
+#deposit-check-confirm {
+    display: flex;
+    justify-content: center;
+    font-size: 3em;
+    margin-top: 25px;
 }
-#depositcheck-confirm {
-    position: relative;
-    top: 160px;
-    color: black;
+#deposit-check-confirmdetails {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
 }
 #depositchecktransaction-ty {
-    position: relative;
-    top: 131px;
-}
-#btn-depcheck {
-    position: relative;
-    right: 150px;
-}
-#btn-depcheck2 {
-    position: relative;
-    right: 150px;
+    font-size: 1.5em;
 }

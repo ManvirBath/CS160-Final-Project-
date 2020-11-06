@@ -1,210 +1,71 @@
-body {
-    background-color: #7b97ea;
-}
-
 .TransferInternal,
 .TransferExternal {
-    margin: auto;
-    height: 80vh;
-    background-position: center;
-    background-color: azure;
-    width: 75%;
-    background: azure;
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
 }
-
-.headerDiv {
-    margin-top: 5%;
-}
-
-.headerDivTransaction {
-    margin-top: 8%;
-}
-
-.PageHeader {
-    background-color: #d0cece;
-    margin-top: 8%;
-    height: 10%;
-    text-align: center;
-}
-
-h2,
-h4 {
-    font-family: 'Times New Roman', Times, serif;
-}
-
-.transfer {
-    position: relative;
-    margin-left: 20%;
-    top: 60px;
-}
-
-.inputDiv {
-    margin-right: 75%;
-}
-
-.nextBtn {
-    margin-top: 25px;
-    margin-left: 50%;
-}
-
-.buttons {
-    position: absolute;
-    right: 25%;
-    margin-top: 2.5%;
-}
-.accounts {
-    position: relative;
-    bottom: 50px;
-}
-.error {
-    position: relative;
-    top: 5px;
-    color: red;
-}
-.details2 {
-    position: relative;
-    top: 150px;
-    left: 350px;
-}
-.transactionInfo {
-    position: relative;
-    bottom: 125px;
-    left: 0px;
-}
-.details-external-confirm {
-    position: relative;
-    top: 150px;
-    left: 350px;
-}
-#btn-primary {
-    position: relative;
-    bottom: 20px;
-}
-#transfer-internal-header {
-    position: relative;
-    text-align: center;
-    top: 55px;
+.Transfer-InternalPage,
+.Transfer-ExternalPage {
+    justify-content: center;
+    margin-top: 50px;
     font-size: 2.25em;
-    font-family: sans-serif;
+    float: none;
+    margin: 0 auto;
 }
-#transfer-external-header {
-    position: relative;
+.greeting-InternalTransfer,
+.greeting-ExternalTransfer {
+    height: 5%;
     text-align: center;
-    top: 60px;
-    font-size: 2.25em;
-    font-family: sans-serif;
+    margin-top: 35px;
+    font-size: 3em;
+    height: 100px;
 }
-
-#internal-transerfrom {
-    position: relative;
-    top: 2.5px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.transferinternal-inputDiv,
+.transferexternal-inputDiv {
+    justify-content: center;
+    flex-direction: column;
 }
-#internal-amount {
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.transfer-external-confirm,
+.transfer-internal-confirm {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    text-align: center;
+    font-size: 3.5em;
+    margin-top: 35px;
+    height: 150px;
 }
-#transfer-internal-transerto {
-    position: relative;
-    top: 10px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.details-external-confirm,
+.details-internal-confirm {
+    margin-top: 50px;
 }
-#external-transferto {
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.buttons-transfer-internal-confirm,
+.buttons-transfer-external-confirm {
+    display: flex;
+    margin-left: 1100px;
+    margin-top: 50px;
 }
-#external-transferfrom {
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.internal-transaction-headerDivTransaction,
+.external-transaction-headerDivTransaction {
+    font-size: 1.5em;
 }
-#accounts1 {
-    position: relative;
-    top: 10px;
+.transfer-internal-transactionInfo,
+.transfer-external-transactionInfo {
+    text-align: center;
+    flex-direction: column;
+    margin-top: 50px;
 }
-#transfer-internal-memo {
-    position: relative;
-    top: 15px;
-    font-size: 1.6em;
-    font-family: 'Times New Roman', Times, serif;
+.transfer-internal-transactionbuttons,
+.transfer-external-transactionbuttons {
+    justify-content: flex-end;
+    display: flex;
+    margin-right: 500px;
+    margin-top: 100px;
 }
-#memoInput {
-    position: relative;
-    top: 15px;
+#transfer-external-greeting1 {
+    font-size: 0.6em;
 }
-#external-memo {
-    position: relative;
-    top: 12.5px;
-    font-size: 1.6em;
-}
-#external-memoInput {
-    position: relative;
-    top: 12.5px;
-}
-#same-error {
-    position: relative;
-    top: 4px;
-}
-#transferto-error {
-    position: relative;
-    top: 15px;
-}
-#transfer-internal-confirmheader {
-    position: relative;
-    bottom: 110px;
-    color: black;
-}
-#transfer-internal-confirm {
-    position: relative;
-    bottom: 110px;
-    color: black;
-}
-#transfer-internal-btn {
-    position: relative;
-    right: 300px;
-    top: 150px;
-}
-#transfer-internal-btn2 {
-    position: relative;
-    right: 300px;
-    top: 150px;
-}
-#depositchecktransaction-ty {
-    position: relative;
-    top: 18px;
-}
-#external-transaction-ty {
-    position: relative;
-    top: 18px;
-}
-#internal-transaction-backto-dash {
-    position: relative;
-    right: 200px;
-    bottom: 100px;
-}
-#external-transaction-backto-dash {
-    position: relative;
-    right: 200px;
-    bottom: 100px;
-}
-#external-transfer-confirmheader {
-    position: relative;
-    color: black;
-    bottom: 110px;
-}
-#external-transfer-confirmheader2 {
-    position: relative;
-    color: black;
-    bottom: 110px;
-}
-#transfer-external-btn {
-    position: relative;
-    right: 200px;
-    top: 125px;
-}
-#transfer-external-btn2 {
-    position: relative;
-    right: 200px;
-    top: 125px;
+#transfer-internal-greeting2 {
+    font-size: 0.6em;
 }

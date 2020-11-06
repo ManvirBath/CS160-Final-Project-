@@ -1,29 +1,29 @@
-.OpenAccount {
+.closeAccount {
     display: flex;
     background-color: #f1f1f1;
     flex-direction: column;
     height: 100vh;
 }
-.openacct {
+.closeacct {
     text-align: center;
     flex-direction: column;
     float: inherit;
     margin-top: 15px;
     margin: auto;
 }
-.openaccount-nextBtn {
+.closeaccount-nextBtn {
     text-align: center;
     margin-top: 25px;
 }
-.openaccount-types {
+.closeaccount-types {
     margin-bottom: 250px;
 }
-#openacct-greeting {
+#closeacct-greeting {
     font-size: 3em;
     margin: 10px;
     text-align: center;
 }
-#openacct-option {
+#closeacct-option {
     font-size: 1.5em;
     margin-bottom: 25px;
 }

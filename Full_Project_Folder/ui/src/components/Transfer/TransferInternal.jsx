@@ -88,14 +88,15 @@ class TransferInternal extends React.Component {
         ));
         return (
             <div className="TransferInternal">
-                <UserNavigationBar />
-                <h1 className="PageHeader"></h1>
-                <div id="transfer-internal-header">Internal Transfer</div>
-                <div className="transfer">
+                <UserNavigationBar active={2} />
+                <div className="greeting-InternalTransfer">
+                    Internal Transfer
+                </div>
+                <div className="Transfer-InternalPage">
                     <h6 className="error" id="same-error">
                         {this.state.errorIsSameAcct}
                     </h6>
-                    <h2 id="internal-transerfrom">Transfer From</h2>
+                    <div id="internal-transerfrom">Transfer From</div>
                     <select
                         className="accounts"
                         id="accounts"
@@ -109,7 +110,7 @@ class TransferInternal extends React.Component {
                     </select>
                     <h6 className="error">{this.state.errorFromAcct}</h6>
 
-                    <h2 id="transfer-internal-transerto">Transfer To</h2>
+                    <div id="transfer-internal-transerto">Transfer To</div>
                     <select
                         className="accounts"
                         id="accounts1"
@@ -125,22 +126,23 @@ class TransferInternal extends React.Component {
                         {this.state.errorToAcct}
                     </h6>
 
-                    <div className="inputDiv">
-                        <h2 id="internal-amount">Amount</h2>
+                    <div className="transferinternal-inputDiv">
+                        <div id="internal-amount">Amount</div>
                         <input
                             type="text"
                             className="amountInput"
                             placeholder="$"
+                            id="internal-amount-div"
                             onChange={this.amount}
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
 
-                        <h2 id="transfer-internal-memo">Memo(optional)</h2>
+                        <div id="transfer-internal-memo">Memo(optional)</div>
                         <textarea
                             type="text"
                             className="memoInput"
-                            id="memoInput"
+                            id="transfer-internal-memoInput"
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}
