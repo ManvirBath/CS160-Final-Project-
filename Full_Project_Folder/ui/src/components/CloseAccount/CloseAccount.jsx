@@ -18,12 +18,14 @@ class CloseAccount extends React.Component {
         this.to_acct = this.to_acct.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    /*componentDidMount() {
-    axiosInstance.get("/accounts/").then((res) => {
-      const d = res.data;
-      this.setState({ accts: d });
-    });
-  }*/
+
+    componentDidMount() {
+        axiosInstance.get('/accounts/').then((res) => {
+            const d = res.data;
+            this.setState({ accts: d });
+        });
+    }
+
 
     closeAcct(e) {
         this.setState({ closeAcct: e.target.value });
@@ -44,28 +46,15 @@ class CloseAccount extends React.Component {
                 errorCloseAcct: 'Select an account to close',
             });
         }
-        //validates to account
-        if (this.state.to_acct === '') {
-            e.preventDefault();
-            this.setState({
-                errorToAcct: 'Select an account to transfer from',
-            });
-        }
-        //checks if from and to account are the same
-        if (this.state.to_acct === this.state.closeAcct) {
-            e.preventDefault();
-            this.setState({
-                errorIsSameAcct: 'Accounts cannot be the same!',
-            });
-        }
         if (
-            (this.state.errorCloseAcct === '') &
-            (this.state.errorToAcct === '') &
-            (this.state.errorIsSameAcct === '')
+            (this.state.errorCloseAcct === '') 
         ) {
             axiosInstance
-                .post('accounts/' + this.state.closeAccount + '/close_account/')
-                .then((res) => {});
+                .post(`accounts/${this.state.closeAcct}/close_account/`, {
+                    location: 'Online',
+                    memo: 'ACCOUNT CLOSED: ' + this.state.closeAcct,
+                });
+                console.log(this.state.closeAcct)
         }
     }
 
