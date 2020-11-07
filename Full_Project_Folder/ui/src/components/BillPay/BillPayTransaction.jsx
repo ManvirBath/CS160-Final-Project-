@@ -31,8 +31,8 @@ class BillPayTransaction extends React.Component {
     render() {
         return (
             <div className="BillPayTransaction">
-                <UserNavigationBar />
-                <div className="headerDivTransaction">
+                <UserNavigationBar active={1} />
+                <div className="billpay-headerDivTransaction">
                     <div
                         className="TransactionAlert"
                         class="alert alert-success"
@@ -45,14 +45,15 @@ class BillPayTransaction extends React.Component {
                         </p>
                     </div>
                 </div>
-                <div className="transactionInfo">
+                <div className="billpay-transactionInfo">
                     <h4>From: {this.props.location.from_acct}</h4>
                     <h4>To: {this.props.location.to_acct}</h4>
                     <h4>Routing number: {this.props.location.routing_num}</h4>
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Bill payment date: {this.props.location.pay_date}</h4>
+                    <h4>Frequency: One Time</h4>
                 </div>
-                <div className="buttons">
+                <div className="billpay-transaction-buttons">
                     <Link to="/billpay">
                         <button type="button" class="btn btn-success">
                             Pay another bill

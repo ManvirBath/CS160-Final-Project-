@@ -22,30 +22,24 @@ class UserDashboard extends React.Component {
             loading: true
         };
     }
-    firstName(e) {}
-    checkingAccount(e) {}
-    savingAccount(e) {}
-    checkingBalance(e) {}
-    savingBalance(e) {}
-
-    async getAccounts(){
+    async getAccounts() {
         try {
-            const res = await this.state.axiosInstance.get('/accounts')
+            const res = await this.state.axiosInstance.get('/accounts');
             console.log(res.data);
             const d = res.data;
             this.setState({ accts: d });
-            console.log(d)
+            console.log(d);
             return res;
-        } catch(error){
+        } catch (error) {
             // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
-            console.log("Hello error: ", JSON.stringify(error, null, 4));
+            console.log('Hello error: ', JSON.stringify(error, null, 4));
             // throw error; todo
         }
     }
 
-    async getClients(){
+    async getClients() {
         try {
-            const res2 = await this.state.axiosInstance.get('/clients')
+            const res2 = await this.state.axiosInstance.get('/clients');
             this.state.email = localStorage.getItem('email');
             let users = res2.data;
             this.setState({ firstName: users.first_name });
@@ -54,11 +48,11 @@ class UserDashboard extends React.Component {
             // }
             // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
 
-            return res2
-        } catch(error){
+            return res2;
+        } catch (error) {
             // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
             // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
-            throw error
+            throw error;
         }
     }
 
@@ -115,31 +109,15 @@ class UserDashboard extends React.Component {
 
         return (
             <div className="userdashboard">
-                <UserNavigationBar />
+                <UserNavigationBar active={0} />
                 <div className="container-userdash">
                     <div id="greeting-userdash">
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
                     <div id="greeting-userdash2">Personal Accounts</div>
-                    <div className="acct-temp">
-                        <Link to="/Account" id="acct-temp-link">
-                            {acctTemplate}
-                        </Link>
-                    </div>
-                </div>
-                <div className="navlist2">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <a className="nav-link" href="/GMap">
-                                ATM Locator
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/contact">
-                                Contact Us
-                            </a>
-                        </li>
-                    </ul>
+                    <Link to="/Account" id="acct-temp-link">
+                        {acctTemplate}
+                    </Link>
                 </div>
             </div>
         );

@@ -9,6 +9,10 @@
     flex-direction: column;
     margin-top: 7.5vh;
 }
+.form-control {
+    display: flex;
+    justify-content: center;
+}
 .Logo {
     margin-bottom: 1.5em;
 }

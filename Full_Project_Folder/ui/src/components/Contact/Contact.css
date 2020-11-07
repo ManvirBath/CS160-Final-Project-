@@ -1,103 +1,64 @@
-#greeting {
-    position: relative;
-    text-align: center;
-    font-size: 3.5em;
-    color: white;
+.contact {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 0;
 }
-
-h1 {
-    position: relative;
+.contactpage {
+    flex-direction: column;
     text-align: center;
-    bottom: 150px;
-    color: white;
+    margin-top: 100px;
 }
-#contact-container {
-    position: relative;
-    top: 25px;
+.contact-jumbotron {
     text-align: center;
-    left: 15px;
+    margin-top: 25px;
+    line-height: normal;
+}
+.contact-upper {
     width: 100%;
-}
-#line1 {
-    position: relative;
-    text-align: center;
-    bottom: 150px;
-    font-size: 1.7em;
-}
-#line2 {
-    position: relative;
-    text-align: center;
-    bottom: 150px;
-    font-size: 1.7em;
-}
-#line3 {
-    position: relative;
-    text-align: center;
-    bottom: 150px;
-    font-size: 1.7em;
-}
-#jumbotron {
-    position: absolute;
-    top: 250px;
-    bottom: 360px;
-    text-align: center;
-    width: 100%;
-}
-#office-location-header {
-    position: relative;
-    text-align: center;
-    bottom: 125px;
-    right: 250px;
-    font-size: 1.75em;
+    height: 120px;
+    margin-top: -50px;
+    font-size: 1.5em;
     font-family: cursive;
 }
-.office-location {
+.contact-office-location {
+    display: inline-block;
+    font-size: 1.5em;
+    font-family: cursive;
+}
+.contact-phone {
     position: relative;
+    bottom: 100px;
+    left: 255px;
+    font-size: 1.5em;
+    display: inline-block;
+    font-family: cursive;
+    margin: 0;
+    clear: inherit;
+}
+.contact-email {
+    position: relative;
+    bottom: 10px;
+    right: 0px;
+    font-size: 1.5em;
+    display: inline-block;
+    font-family: cursive;
+}
+#contactus-greeting {
     text-align: center;
-    bottom: 125px;
-    right: 250px;
+    color: white;
+    margin-top: 50px;
+    font-size: 3em;
+}
+#office-location-header {
     font-size: 1.25em;
     font-family: cursive;
 }
 #contact-number-header {
-    position: relative;
-    text-align: center;
-    bottom: 285px;
-    left: 250px;
-    font-size: 1.75em;
-    font-family: cursive;
-}
-#contact-number {
-    position: relative;
-    text-align: center;
-    bottom: 285px;
-    left: 250px;
-    font-size: 1.25em;
+    font-size: 1.5em;
     font-family: cursive;
 }
 #contact-email-header {
-    position: relative;
-    text-align: center;
-    bottom: 285px;
-    left: 250px;
-    font-size: 1.75em;
+    font-size: 1.5em;
     font-family: cursive;
-}
-#contact-email {
-    position: relative;
-    text-align: center;
-    bottom: 285px;
-    left: 250px;
-    font-size: 1.25em;
-    font-family: cursive;
-}
-#backto-accounts {
-    position: absolute;
-    top: 350px;
-    left: 862.5px;
-    color: red;
-}
-#link-back {
-    color: #fff;
-    font-size: 1.23em;
 }

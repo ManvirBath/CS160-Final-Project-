@@ -18,7 +18,7 @@ class TransferInternal extends React.Component {
             errorAmount: '',
             errorIsSameAcct: '',
             accts: [],
-            others_accts: [],
+            // others_accts: [],
             axiosInstance: null,
             loading: true
         };
@@ -34,24 +34,7 @@ class TransferInternal extends React.Component {
             const res = await axiosInstance.get('/accounts/')
             const d = res.data;
             this.setState({ accts: d });
-            // for (var index = 0; index < localStorage.getItem('user'); index++) {
-            //     console.log(localStorage.getItem('user').email)
-            // }
-            // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
             return res
-        } catch(error){
-            // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
-            // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
-            throw error
-        }
-    }
-
-    async getOtherAccounts(){
-        try {
-            const res2 = await axiosInstance.get('/all_accounts/')
-            const d = res2.data;
-            this.setState({ others_accts: d });
-            return res2
         } catch(error){
             throw error
         }
@@ -59,7 +42,6 @@ class TransferInternal extends React.Component {
 
     async componentDidMount() {
         const clients = await this.getClientAccounts()
-        const accounts = await this.getOtherAccounts()
         this.setState({ loading: false }) 
     }
 
@@ -104,14 +86,6 @@ class TransferInternal extends React.Component {
                 errorIsSameAcct: 'Accounts cannot be the same!',
             });
         }
-
-        if (!this.state.others_accts.some(v => (v.account_num === this.state.to_acct))) {
-            /* vendors contains the element we're looking for */
-            e.preventDefault();
-            this.setState({
-                errorToAcct: 'Account unavailable',
-            });
-          }
         
         //validates amount
         if (this.state.amount <= 0) {
@@ -119,10 +93,13 @@ class TransferInternal extends React.Component {
             this.setState({ errorAmount: 'Amount must be greater than 0' });
         }
 
+        console.log(this.state.to_acct)
+        console.log(this.state.from_acct.value)
+        console.log(this.state.amount)
+        console.log(this.state.memo)
     }
 
     render() {
-        
         if (this.state.loading) {
             return (
                 <div>
@@ -136,8 +113,7 @@ class TransferInternal extends React.Component {
             )
         }
 
-        
-        const userAccts = this.state.accts.map((v) => (
+        let userAccts = this.state.accts.map((v) => (
             <option value={v.account_num}>
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
@@ -145,14 +121,15 @@ class TransferInternal extends React.Component {
 
         return (
             <div className="TransferInternal">
-                <UserNavigationBar />
-                <h1 className="PageHeader"></h1>
-                <div id="transfer-internal-header">Internal Transfer</div>
-                <div className="transfer">
+                <UserNavigationBar active={2} />
+                <div className="greeting-InternalTransfer">
+                    Internal Transfer
+                </div>
+                <div className="Transfer-InternalPage">
                     <h6 className="error" id="same-error">
                         {this.state.errorIsSameAcct}
                     </h6>
-                    <h2 id="internal-transerfrom">Transfer From</h2>
+                    <div id="internal-transerfrom">Transfer From</div>
                     <select
                         className="accounts"
                         id="accounts"
@@ -166,34 +143,39 @@ class TransferInternal extends React.Component {
                     </select>
                     <h6 className="error">{this.state.errorFromAcct}</h6>
 
-                    <h2 id="transfer-internal-transerto">Transfer To</h2>
-                    <input
-                        type="text"
+                    <div id="transfer-internal-transerto">Transfer To</div>
+                    <select
                         className="accounts"
-                        placeholder="#"
+                        id="accounts1"
+                        class="btn btn-light dropdown-toggle"
                         onChange={this.to_acct}
-                        class="form-control"
-                    ></input>
+                    >
+                        <option value="acctNumTo" disabled selected>
+                            Transfer Money To
+                        </option>
+                        {userAccts}
+                    </select>
                     <h6 className="error" id="transferto-error">
                         {this.state.errorToAcct}
                     </h6>
 
-                    <div className="inputDiv">
-                        <h2 id="internal-amount">Amount</h2>
+                    <div className="transferinternal-inputDiv">
+                        <div id="internal-amount">Amount</div>
                         <input
                             type="text"
                             className="amountInput"
                             placeholder="$"
+                            id="internal-amount-div"
                             onChange={this.amount}
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
 
-                        <h2 id="transfer-internal-memo">Memo(optional)</h2>
+                        <div id="transfer-internal-memo">Memo(optional)</div>
                         <textarea
                             type="text"
                             className="memoInput"
-                            id="memoInput"
+                            id="transfer-internal-memoInput"
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}

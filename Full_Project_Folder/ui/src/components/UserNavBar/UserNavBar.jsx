@@ -1,71 +1,130 @@
 import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
-// import Logout from '../Logout';
 import { Link } from 'react-router-dom';
 import './UserNavBar.css';
 import Logo from '../Logo';
-
+const dropDown = [
+    {
+        name: 'Account',
+        href: '',
+        children: [
+            {
+                name: 'View my Account',
+                href: '/userdashboard',
+            },
+            {
+                name: 'Open an Account',
+                href: '/openaccount',
+            },
+            {
+                name: 'Close an Account',
+                href: '/closeaccount',
+            },
+        ],
+    },
+    {
+        name: 'Pay Bill',
+        href: '/billpay',
+    },
+    {
+        name: 'Transfer',
+        href: '/billpay',
+        children: [
+            {
+                name: 'Between my accounts',
+                href: '/transferinternal',
+            },
+            {
+                name: 'Between external accounts',
+                href: '/transferexternal',
+            },
+        ],
+    },
+    {
+        name: 'Deposit',
+        href: '/depositcheck',
+    },
+    {
+        name: 'Services',
+        href: '',
+        children: [
+            {
+                name: 'ATM Locator',
+                href: '/GMap',
+            },
+            {
+                name: 'Contact Us',
+                href: '/contact',
+            },
+        ],
+    },
+];
 class UserNavigationBar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { active: 0 };
+    }
+    getListItem(data, pos) {
+        const { name, href, children } = data;
+        const active = pos === this.props.active;
+        return (
+            <li key={href} className={`nav-item ${active ? 'selected' : ''}`}>
+                {children ? (
+                    this.getSubCat(name, children)
+                ) : (
+                    <a className="nav-link" href={href}>
+                        {name}
+                    </a>
+                )}
+            </li>
+        );
+    }
+    getSubCat(name, children) {
+        return (
+            <Dropdown>
+                <Dropdown.Toggle variant="" id="dropdown-basic">
+                    {name}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {children.map((child) => {
+                        return (
+                            <Dropdown.Item key={child.href} href={child.href}>
+                                {child.name}
+                            </Dropdown.Item>
+                        );
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+        );
+    }
+    getNavList() {
+        const dropDownComponent = dropDown.map((item, index) => {
+            return this.getListItem(item, index);
+        });
+        return (
+            <div className="navlist maxWidth">
+                <ul className="nav nav-pills nav-fill">{dropDownComponent}</ul>
+            </div>
+        );
     }
     render() {
+        const navList = this.getNavList();
         return (
-            <div className="usernavbar">
-                <div id="header-title">Deep Learning Bank</div>
-                <div id="navbar-logo">
-                    <Logo color="rgb(255,255,255)"></Logo>
+            <div className="usernavbar flexbox">
+                <div className="flexbox-center maxWidth">
+                    <Logo
+                        color="rgb(255,255,255)"
+                        text="Deep Learning Bank"
+                    ></Logo>
+                    <div className="header-logoff lastItem">
+                        <Button variant="light" id="logout-usernavbar">
+                            Logout
+                        </Button>
+                    </div>
                 </div>
-
-                <div id="header-logoff">
-                    <Button variant="light">Logout</Button>
-                </div>
-                <div className="navlist">
-                    <ul className="nav nav-pills nav-fill">
-                        <li className="nav-item">
-                            <Dropdown>
-                                <Dropdown.Toggle variant="" id="dropdown-basic">
-                                    Account
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu>
-                                    <Dropdown.Item href="/userdashboard">
-                                        View my Account
-                                    </Dropdown.Item>
-                                    <Dropdown.Item href="/open_account">
-                                        Open an Account
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/billpay">
-                                Pay Bill
-                            </a>
-                        </li>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="" id="dropdown-basic">
-                                Transfer
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item href="/transferinternal">
-                                    Between my accounts
-                                </Dropdown.Item>
-                                <Dropdown.Item href="/transferexternal">
-                                    Between external accounts
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                        <li className="nav-item">
-                            <a className="nav-link" href="/depositcheck">
-                                Deposit
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                {navList}
             </div>
         );
     }
 }
-
 export default UserNavigationBar;

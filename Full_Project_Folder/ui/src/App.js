@@ -22,8 +22,9 @@ import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
 import Contact from './components/Contact';
 import Account from './components/Account';
-import OpenAccount from './components/OpenAccount'
-
+import OpenAccount from './components/OpenAccount';
+import CloseAccount from './components/CloseAccount';
+import NotFound from './components/NotFound';
 import {
     BrowserRouter as Router,
     Route,
@@ -45,9 +46,10 @@ class App extends React.Component {
                     <Switch>
                         <Route
                             exact
-                            path="/login"
+                            path="/"
                             render={(props) => <Login {...props} dark={dark} />}
                         />
+                        <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/recovery" component={Recovery} />
                         <Route path="/gmap" component={GMap} />
@@ -67,10 +69,6 @@ class App extends React.Component {
                         <Route
                             path="/depositchecktransaction"
                             component={DepositCheckTransaction}
-                        />
-                        <Route
-                            path="/logout"
-                            component={Logout}
                         />
                         <Route
                             path="/transferinternal"
@@ -108,7 +106,11 @@ class App extends React.Component {
                         <Route path="/account" component={Account} />
                         <Route path="/open_account" component={OpenAccount} />
                         <Route path="/contact" component={Contact} />
-                        <Redirect from="*" to="/login" />
+                        <Route path="/openaccount" component={OpenAccount} />
+                        <Route path="/closeaccount" component={CloseAccount} />
+                        <Route path="/logout" component={Logout} />
+                        <Route path="/NotFound" component={NotFound} />
+                        <Redirect from="*" to="/NotFound" />
                     </Switch>
                 </Router>
             </div>

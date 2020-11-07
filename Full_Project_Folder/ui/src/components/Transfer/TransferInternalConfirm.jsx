@@ -12,23 +12,16 @@ class TransferInternalConfirm extends React.Component {
     render() {
         return (
             <div className="DepositCheckConfirm">
-                <UserNavigationBar />
-                <div className="headerDiv">
-                    <h1
-                        className="PageHeader"
-                        id="transfer-internal-confirmheader"
-                    >
+                <UserNavigationBar active={2} />
+                <div className="transfer-internal-confirm">
+                    <div className="transfer-internal-headerDiv">
                         Confirm transfer
-                    </h1>
-                    <h6
-                        className="PageHeader2"
-                        class="lead"
-                        id="transfer-internal-confirm"
-                    >
+                    </div>
+                    <div id="transfer-internal-greeting2">
                         Please confirm your details before submitting.
-                    </h6>
+                    </div>
                 </div>
-                <div className="details2">
+                <div className="transfer-internal-confirm">
                     <h4>
                         Transfer From:
                         {this.props.location.from_acct}
@@ -37,7 +30,7 @@ class TransferInternalConfirm extends React.Component {
                     <h4>Amount: {this.props.location.amount}</h4>
                     <h4>Memo: {this.props.location.memo}</h4>
                 </div>
-                <div className="buttons">
+                <div className="buttons-transfer-internal-confirm">
                     <Link to="/transferinternal">
                         <button
                             type="button"

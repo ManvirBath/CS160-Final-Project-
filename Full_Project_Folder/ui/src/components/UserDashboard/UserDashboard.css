@@ -1,19 +1,20 @@
 .userdashboard {
-    position: absolute;
     display: flex;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: #f0f8ff;
+    background-color: #f1f1f1;
     flex-direction: column;
-    width: 1919.5px;
+    height: 100vh;
+}
+.userdashboard {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
 }
 .container-userdash {
     position: absolute;
     color: black;
-    left: 250px;
-    top: 20vh;
+    left: 300px;
+    top: 25vh;
 }
 #greeting-userdash {
     position: absolute;

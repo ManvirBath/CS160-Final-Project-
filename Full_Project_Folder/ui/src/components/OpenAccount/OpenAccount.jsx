@@ -39,54 +39,50 @@ class OpenAccount extends React.Component {
         console.log(error);
     }
   }
-
-  render() {
-    return (
-      <div className="OpenAccount">
-        <div id="active-open-account">
-          <UserNavigationBar />
-        </div>
-
-        <h1 className="PageHeader"></h1>
-        <div id="open-account-header">Open Account</div>
-        <div className="openacct">
-          <h2 id="openacctoption">
-            Which type of account would you like to open?
-          </h2>
-        </div>
-        <div className="types">
-          <select
-            className="accttype"
-            id="accounts"
-            class="btn btn-light dropdown-toggle"
-            onChange={this.acctType}
-          >
-            <option value="default" disabled selected>
-              Account Type
-            </option>
-            <option value="checking">Checking Account</option>
-            <option value="savings">Savings Account</option>
-          </select>
-        </div>
-        <h6 className="error">{this.state.errorAcctOption}</h6>
-        <div className="nextBtn">
-          <Link
-            to={{
-              pathname: "/userdashboard",
-            }}
-          >
-            <button
-              type="button"
-              class="btn btn-primary"
-              onClick={this.handleSubmit}
-            >
-              Open Account
-            </button>
-          </Link>
-        </div>
-      </div>
-    );
-  }
+  
+    render() {
+        return (
+            <div className="OpenAccount">
+                <UserNavigationBar active={0} />
+                <div id="openacct-greeting">Open Account</div>
+                <div className="openacct">
+                    <div id="openacct-option">
+                        Which type of account would you like to open?
+                    </div>
+                    <div className="openaccount-types">
+                        <select
+                            className="accttype"
+                            id="accounts"
+                            class="btn btn-light dropdown-toggle"
+                            onChange={this.acctType}
+                        >
+                            <option value="default" disabled selected>
+                                Account Type
+                            </option>
+                            <option value="checking">Checking Account</option>
+                            <option value="savings">Savings Account</option>
+                        </select>
+                        <h6 className="error">{this.state.errorAcctOption}</h6>
+                        <div className="openaccount-nextBtn">
+                            <Link
+                                to={{
+                                    pathname: '/userdashboard',
+                                }}
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    onClick={this.handleSubmit}
+                                >
+                                    Open Account
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
 export default OpenAccount;
