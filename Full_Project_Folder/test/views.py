@@ -323,11 +323,12 @@ class AccountViewSet(viewsets.ModelViewSet):
     pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
 
+    # WILL ONLY GET ACTIVE ACCOUNTS. 
     def list(self, request):
         """
         Gets all of the accounts that belong to the authenticated user making this API call
         """
-        accounts = list(self.queryset.filter(client=request.user))
+        accounts = list(self.queryset.filter(client=request.user).filter(status='active'))
         serializer = self.serializer_class(accounts, many=True, context={'request' : request})
         return Response(serializer.data)
 
