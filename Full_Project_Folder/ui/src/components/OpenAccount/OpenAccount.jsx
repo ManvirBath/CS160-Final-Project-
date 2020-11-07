@@ -1,35 +1,45 @@
-import React from 'react';
-import './OpenAccount.css';
-import { Link, useHistory } from 'react-router-dom';
-import Logo from '../Logo';
-import UserNavigationBar from '../UserNavBar/UserNavBar';
-import axiosInstance from '../../axios';
+import React from "react";
+import "./OpenAccount.css";
+import { Link, useHistory } from "react-router-dom";
+import Logo from "../Logo";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
+import axiosInstance from "../../axios";
 
 class OpenAccount extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            acctType: '',
-            errorAcctOption: '',
-        };
-        this.acctType = this.acctType.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    acctType(e) {
-        this.setState({ acctType: e.target.value });
-        this.setState({ errorAcctOption: '' });
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      acctType: "",
+      errorAcctOption: "",
+    };
+    this.acctType = this.acctType.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  acctType(e) {
+    this.setState({ acctType: e.target.value });
+    this.setState({ errorAcctOption: "" });
+  }
 
-    handleSubmit(e) {
-        if (this.state.acctType === '') {
-            e.preventDefault();
-            this.setState({ errorAcctOption: 'Select an option' });
+  async handleSubmit(e) {
+    try {
+        if (this.state.acctType === "") {
+        e.preventDefault();
+        this.setState({ errorAcctOption: "Select an option" });
+        const option = await this.state.errorAcctOption
+        return option
+
         } else {
-            /*axiosInstance.post("create_account/", {
-        account_type: this.state.acctType,
-      });*/
+            const id = localStorage.getItem('user_id')
+            const response = await axiosInstance.post(`clients/${id}/create_account/`, {
+                account_type: this.state.acctType
+            });
+            return response
         }
+    } catch (error) {
+        console.log(error);
     }
+  }
+  
     render() {
         return (
             <div className="OpenAccount">

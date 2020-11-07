@@ -3,6 +3,7 @@ import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import axiosInstance from '../../axios';
+import Loader from "react-loader-spinner";
 
 class TransferExternal extends React.Component {
     constructor(props) {
@@ -18,7 +19,10 @@ class TransferExternal extends React.Component {
             errorRouting: '',
             errorAmount: '',
             accts: [],
+            others_accts: [],
+            loading: true
         };
+
         this.to_acct = this.to_acct.bind(this);
         this.from_acct = this.from_acct.bind(this);
         this.routing_num = this.routing_num.bind(this);
@@ -26,11 +30,36 @@ class TransferExternal extends React.Component {
         this.memo = this.memo.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
+
+    async getClientAccounts(){
+        try {
+            const res = await axiosInstance.get('/accounts/')
             const d = res.data;
             this.setState({ accts: d });
-        });
+            // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+            return res
+        } catch(error){
+            // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
+            // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
+            throw error
+        }
+    }
+
+    async getOtherAccounts(){
+        try {
+            const res2 = await axiosInstance.get('/all_accounts/')
+            const d = res2.data;
+            this.setState({ others_accts: d });
+            return res2
+        } catch(error){
+            throw error
+        }
+    }
+
+    async componentDidMount() {
+        const client_accounts = await this.getClientAccounts()
+        const other_accounts = await this.getOtherAccounts()
+        this.setState({ loading: false }) 
     }
 
     to_acct(e) {
@@ -38,7 +67,7 @@ class TransferExternal extends React.Component {
         this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
-        this.setState({ from_acct: e.target.selectedOptions[0].text });
+        this.setState({ from_acct: e.target.selectedOptions[0] });
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
@@ -61,8 +90,8 @@ class TransferExternal extends React.Component {
                 errorToAcct: 'Account number cannot be empty',
             });
         } else if (
-            (this.state.to_acct.length > 9) |
-            (this.state.to_acct.length < 9)
+            (this.state.to_acct.length > 8) |
+            (this.state.to_acct.length < 8)
         ) {
             e.preventDefault();
             this.setState({
@@ -92,6 +121,7 @@ class TransferExternal extends React.Component {
                 errorRouting: 'Routing number must be 9 digits',
             });
         }
+
         if (this.state.routing_num.match(/^[0-9]*$/gm) == null) {
             e.preventDefault();
             this.setState({
@@ -106,6 +136,7 @@ class TransferExternal extends React.Component {
                 errorFromAcct: 'Select an account to transfer from',
             });
         }
+        
         //validates amount
         if (this.state.amount <= 0) {
             e.preventDefault();
@@ -114,11 +145,25 @@ class TransferExternal extends React.Component {
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            )
+        }
+
         let userAccts = this.state.accts.map((v) => (
             <option value={v.account_num}>
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
         ));
+        
         return (
             <div className="TransferExternal">
                 <UserNavigationBar active={2} />
@@ -187,7 +232,7 @@ class TransferExternal extends React.Component {
                             to={{
                                 pathname: '/transferexternalconfirm',
                                 to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct,
+                                from_acct: this.state.from_acct.value,
                                 routing_num: this.state.routing_num,
                                 amount: this.state.amount,
                                 memo: this.state.memo,

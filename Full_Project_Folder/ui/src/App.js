@@ -104,9 +104,11 @@ class App extends React.Component {
                             component={BillPayTransaction}
                         />
                         <Route path="/account" component={Account} />
+                        <Route path="/open_account" component={OpenAccount} />
                         <Route path="/contact" component={Contact} />
                         <Route path="/openaccount" component={OpenAccount} />
                         <Route path="/closeaccount" component={CloseAccount} />
+                        <Route path="/logout" component={Logout} />
                         <Route path="/NotFound" component={NotFound} />
                         <Redirect from="*" to="/NotFound" />
                     </Switch>

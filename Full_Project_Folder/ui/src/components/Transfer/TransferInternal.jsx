@@ -3,6 +3,7 @@ import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import axiosInstance from '../../axios';
+import Loader from "react-loader-spinner";
 
 class TransferInternal extends React.Component {
     constructor(props) {
@@ -17,6 +18,9 @@ class TransferInternal extends React.Component {
             errorAmount: '',
             errorIsSameAcct: '',
             accts: [],
+            // others_accts: [],
+            axiosInstance: null,
+            loading: true
         };
         this.to_acct = this.to_acct.bind(this);
         this.from_acct = this.from_acct.bind(this);
@@ -25,20 +29,29 @@ class TransferInternal extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
+    async getClientAccounts(){
+        try {
+            const res = await axiosInstance.get('/accounts/')
             const d = res.data;
             this.setState({ accts: d });
-        });
+            return res
+        } catch(error){
+            throw error
+        }
+    }
+
+    async componentDidMount() {
+        const clients = await this.getClientAccounts()
+        this.setState({ loading: false }) 
     }
 
     to_acct(e) {
-        this.setState({ to_acct: e.target.selectedOptions[0].text });
+        this.setState({ to_acct: e.target.value });
         this.setState({ errorToAcct: '' });
         this.setState({ errorIsSameAcct: '' });
     }
     from_acct(e) {
-        this.setState({ from_acct: e.target.selectedOptions[0].text });
+        this.setState({ from_acct: e.target.selectedOptions[0] });
         this.setState({ errorFromAcct: '' });
         this.setState({ errorIsSameAcct: '' });
     }
@@ -65,27 +78,47 @@ class TransferInternal extends React.Component {
                 errorToAcct: 'Select an account to transfer from',
             });
         }
+
+        //checks if from and to account are the same
+        if (this.state.to_acct === this.state.from_acct.value) {
+            e.preventDefault();
+            this.setState({
+                errorIsSameAcct: 'Accounts cannot be the same!',
+            });
+        }
+        
         //validates amount
         if (this.state.amount <= 0) {
             e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0' });
         }
 
-        //checks if from and to account are the same
-        if (this.state.to_acct === this.state.from_acct) {
-            e.preventDefault();
-            this.setState({
-                errorIsSameAcct: 'Accounts cannot be the same!',
-            });
-        }
+        console.log(this.state.to_acct)
+        console.log(this.state.from_acct.value)
+        console.log(this.state.amount)
+        console.log(this.state.memo)
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            )
+        }
+
         let userAccts = this.state.accts.map((v) => (
             <option value={v.account_num}>
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
         ));
+
         return (
             <div className="TransferInternal">
                 <UserNavigationBar active={2} />
@@ -153,7 +186,7 @@ class TransferInternal extends React.Component {
                             to={{
                                 pathname: '/transferinternalconfirm',
                                 to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct,
+                                from_acct: this.state.from_acct.value,
                                 amount: this.state.amount,
                                 memo: this.state.memo,
                             }}

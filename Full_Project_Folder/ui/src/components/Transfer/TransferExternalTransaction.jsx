@@ -2,6 +2,7 @@ import React from 'react';
 import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import axiosInstance from '../../axios';
 
 class TransferExternalTransaction extends React.Component {
     constructor(props) {
@@ -11,8 +12,33 @@ class TransferExternalTransaction extends React.Component {
         };
     }
 
+    componentDidMount() {
+        console.log(this.props.location.from_acct)
+        console.log(this.props.location.to_acct)
+        console.log(this.props.location.amount)
+        console.log(this.props.location.memo)
+        console.log(typeof parseInt(this.props.location.routing_num))
+
+        if (parseInt(this.props.location.routing_num) == parseInt("123456789")) {
+            axiosInstance.post(`accounts/${this.props.location.from_acct}/transfer_internal/`, {
+                to_account_number: this.props.location.to_acct,
+                amount: this.props.location.amount,
+                location: "Online",
+                memo: this.props.location.memo
+            });
+        } else {
+            axiosInstance.post(`accounts/${this.props.location.from_acct}/transfer_external/`, {
+                amount: this.props.location.amount,
+                location: "Online",
+                routing_num: this.props.location.routing_num,
+                to_account_num: this.props.location.to_acct,
+                memo: this.props.location.memo
+            });
+        }
+    }
     check() {}
     render() {
+        
         const { amount } = this.state;
         return (
             <div className="DepositCheckTransaction">

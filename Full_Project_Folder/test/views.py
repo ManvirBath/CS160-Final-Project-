@@ -21,9 +21,10 @@ from rest_framework.decorators import action, api_view
 from rest_framework.views import APIView
 from random import randint
 from background_task import background
-
+from django.db.models import Q
 from django.utils import timezone
 import time
+import json
 
 """
 Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYMENT)
@@ -70,6 +71,18 @@ def automated_bill():
 
 
 # Create your views here.
+@api_view(['GET'])
+def all_accounts(request):  # not including user's accounts
+    account_queryset = Account.objects.all()
+    try:
+        accounts = account_queryset.filter(~Q(client=request.user))
+        # data = serializers.serialize('json', list(client))
+        serialized_accounts = AccountSerializer(accounts, many=True, context={'request' : request})
+        # print(list(client))
+        return Response(serialized_accounts.data)
+    except IntegrityError as ex:
+        return HttpResponse('Unauthorized', status=403)
+        
 @api_view(['POST'])
 def register(request):
     """
@@ -156,7 +169,6 @@ def reset_password(request):
     except IntegrityError as ex:
         return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     return Response({'status': 'Reset Password successful'})
-
 
 class ClientViewSet(viewsets.ModelViewSet):
     """
@@ -280,6 +292,18 @@ class ClientViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request, pk=None):
+        """
+        Gets client that belongs to the authenticated user making this API call
+        """
+
+        try:
+            client = list(self.queryset.filter(email=request.user.email))
+            serializer = self.serializer_class(client, many=True, context={'request' : request})
+            return Response(serializer.data[0])
+        except IntegrityError as ex:
+            return HttpResponse('Unauthorized', status=403)
 
     def retrieve(self, request, pk=None):
         client = self.queryset.get(pk=pk)

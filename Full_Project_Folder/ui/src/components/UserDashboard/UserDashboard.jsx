@@ -4,11 +4,13 @@ import Logo from '../Logo';
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import Loader from "react-loader-spinner";
 
 class UserDashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: 0,
             firstName: '',
             checkingAccount: '',
             savingAccount: '',
@@ -17,6 +19,7 @@ class UserDashboard extends React.Component {
             accts: [],
             axiosInstance: null,
             email: '',
+            loading: true
         };
     }
     async getAccounts() {
@@ -39,12 +42,10 @@ class UserDashboard extends React.Component {
             const res2 = await this.state.axiosInstance.get('/clients');
             this.state.email = localStorage.getItem('email');
             let users = res2.data;
-            console.log(res2.data);
-            for (var index = 0; index < users.length; index++) {
-                if (users[index].email == this.state.email) {
-                    this.setState({ firstName: users[index].first_name });
-                }
-            }
+            this.setState({ firstName: users.first_name });
+            // for (var index = 0; index < localStorage.getItem('user'); index++) {
+            //     console.log(localStorage.getItem('user').email)
+            // }
             // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
 
             return res2;
@@ -54,16 +55,34 @@ class UserDashboard extends React.Component {
             throw error;
         }
     }
-    componentDidMount() {
-        this.state.axiosInstance = axiosInstance;
-        console.log(
-            'Header AFTER: ' +
-                this.state.axiosInstance.defaults.headers['Authorization']
-        );
-        this.getAccounts();
-        this.getClients();
+
+    async setID(){
+        try {
+            const res2 = await this.state.axiosInstance.get('/clients')
+            this.setState({ id: res2.data.id });
+            // for (var index = 0; index < localStorage.getItem('user'); index++) {
+            //     console.log(localStorage.getItem('user').email)
+            // }
+            // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+            return res2
+        } catch(error){
+            // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
+            // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
+            throw error
+        }
     }
+    async componentDidMount() {
+        this.state.axiosInstance = axiosInstance
+        console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+        const clients = await this.getClients()
+        const accounts = await this.getAccounts()
+        const iD = await this.setID()
+        this.setState({ loading: false }) 
+    }
+    
     render() {
+        localStorage.setItem('user_id', this.state.id);
+        
         let acctTemplate = this.state.accts.map((v) => (
             <div key={v.account_num} className="acctBox">
                 <div className={v.account_type} id="acct-info">
@@ -73,6 +92,21 @@ class UserDashboard extends React.Component {
             </div>
         ));
         const { name, saving, checking } = this.state;
+        // console.log(localStorage)
+
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            )
+        }
+
         return (
             <div className="userdashboard">
                 <UserNavigationBar active={0} />

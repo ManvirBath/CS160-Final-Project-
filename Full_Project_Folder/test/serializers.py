@@ -7,7 +7,7 @@ from .models import Client, Account, Transaction, BillPayment
 class ClientSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Client
-        fields = ('email', 'first_name', 'last_name', 'is_active', 'address', \
+        fields = ('id','email', 'first_name', 'last_name', 'is_active', 'address', \
                   'city', 'state', 'zipcode', 'phone_num', 'birthday','is_staff', 'is_superuser')
         extra_kwargs =  {'first_name': {'required': False},
                         'last_name': {'required': False},
