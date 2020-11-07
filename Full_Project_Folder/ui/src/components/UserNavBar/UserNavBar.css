@@ -31,6 +31,7 @@
 .selected {
     background-color: #4e75ec;
     color: white;
+    height: 40px;
 }
 .selected #dropdown-basic,
 .selected .nav-link {
