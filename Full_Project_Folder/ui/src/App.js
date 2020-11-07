@@ -18,6 +18,8 @@ import TransferExternal from './components/Transfer/TransferExternal';
 import TransferExternalConfirm from './components/Transfer/TransferExternalConfirm';
 import TransferExternalTransaction from './components/Transfer/TransferExternalTransaction';
 import BillPay from './components/BillPay/BillPay';
+import BillPayEdit from './components/BillPayEdit/BillPayEdit';
+import BillPayShow from './components/BillPayShow/BillPayShow';
 import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
 import Contact from './components/Contact';
@@ -95,6 +97,8 @@ class App extends React.Component {
                             component={TransferExternalTransaction}
                         />
                         <Route path="/billpay" component={BillPay} />
+                        <Route path="/billpayedit/:id" component={BillPayEdit} />
+                        <Route path="/billpayshow" component={BillPayShow} />
                         <Route
                             path="/billpayconfirm"
                             component={BillPayConfirm}
