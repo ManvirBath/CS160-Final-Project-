@@ -10,6 +10,12 @@ class BillPayShow extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            to_acct: '',
+            from_acct: '',
+            routing_num: '',
+            amount: '',
+            frequency: '',
+            pay_date: '',
             bill_payments: [],
             loading: true
         };
@@ -31,21 +37,33 @@ class BillPayShow extends React.Component {
     async componentDidMount() {
         const bills = await this.getBillPayments()
         this.setState({ loading: false }) 
+        // console.log(this.state.bill_payments[0].account.split( '/' )[5])
     }
     
     render() {
 
         let paymentTemplate = this.state.bill_payments.map((v) => (
-            <div key={v.id} className="acctBox">
-                <div className={v.to_account_num} id="acct-info">
-                    {v.to_account_num} ${v.amount}
-                    <div id="bal">{v.date} Balance</div>
+            <div className="box-userdb">
+                <div key={v.id} className="accounts-container">
+                    <div className={v.to_account_num} id="accounts-info">
+                        <div id="userdb-account-type">To Account Number: {v.to_account_num}</div>
+
+                        <div id="userdb-account-balance">${v.amount}</div>
+                        <div id="userdb-account-number">{v.date}</div>
+
+                        <div id="userdb-bal">Amount</div>
+                    </div>
                 </div>
 
-                
                 <Link
                         to={{
-                            pathname: `/billpayedit/${v.id}`
+                            pathname: `/billpayedit/${v.id}`,
+                            to_acct: v.to_account_num,
+                            from_acct: v.account.split( '/' )[5],
+                            routing_num: v.routing_num,
+                            amount: v.amount,
+                            pay_date: v.date,
+                            frequency: this.state.frequency,
                         }}
                     >
                         <button type="button" class="btn btn-primary">
@@ -58,7 +76,6 @@ class BillPayShow extends React.Component {
                 </button>
             </div>
         ));
-        const { name, saving, checking } = this.state;
 
         if (this.state.loading) {
             return (
@@ -77,8 +94,14 @@ class BillPayShow extends React.Component {
             <div className="userdashboard">
                 <UserNavigationBar active={1} />
                 <div className="container-userdash">
-                    <div id="greeting-userdash2">Personal Bills</div>
-                        {paymentTemplate}
+                    <div className="flexbox-column-userdb">
+                        <div id="personalaccount-userdb">Bill Payments</div>
+                        <div className="scrollbox-userdb">
+                            <div className="accounts-container">
+                                {paymentTemplate}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

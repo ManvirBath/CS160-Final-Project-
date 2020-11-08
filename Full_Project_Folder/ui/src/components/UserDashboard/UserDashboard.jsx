@@ -4,7 +4,7 @@ import Logo from '../Logo';
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
-import Loader from "react-loader-spinner";
+import Loader from 'react-loader-spinner';
 
 class UserDashboard extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class UserDashboard extends React.Component {
             accts: [],
             axiosInstance: null,
             email: '',
-            loading: true
+            loading: true,
         };
     }
     async getAccounts() {
@@ -56,38 +56,47 @@ class UserDashboard extends React.Component {
         }
     }
 
-    async setID(){
+    async setID() {
         try {
-            const res2 = await this.state.axiosInstance.get('/clients')
+            const res2 = await this.state.axiosInstance.get('/clients');
             this.setState({ id: res2.data.id });
             // for (var index = 0; index < localStorage.getItem('user'); index++) {
             //     console.log(localStorage.getItem('user').email)
             // }
             // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
-            return res2
-        } catch(error){
+            return res2;
+        } catch (error) {
             // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
             // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
-            throw error
+            throw error;
         }
     }
     async componentDidMount() {
-        this.state.axiosInstance = axiosInstance
-        console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
-        const clients = await this.getClients()
-        const accounts = await this.getAccounts()
-        const iD = await this.setID()
-        this.setState({ loading: false }) 
+        this.state.axiosInstance = axiosInstance;
+        console.log(
+            'Header AFTER: ' +
+                this.state.axiosInstance.defaults.headers['Authorization']
+        );
+        const clients = await this.getClients();
+        const accounts = await this.getAccounts();
+        const iD = await this.setID();
+        this.setState({ loading: false });
     }
-    
+
     render() {
         localStorage.setItem('user_id', this.state.id);
-        
+
         let acctTemplate = this.state.accts.map((v) => (
-            <div key={v.account_num} className="acctBox">
-                <div className={v.account_type} id="acct-info">
-                    {v.account_type} ${v.balance}
-                    <div id="bal">{v.account_num} Balance</div>
+            <div className="box-userdb">
+                <div key={v.account_num} className="accounts-container">
+                    <div className={v.account_type} id="accounts-info">
+                        <div id="userdb-account-type">{v.account_type}</div>
+
+                        <div id="userdb-account-balance">${v.balance}</div>
+                        <div id="userdb-account-number">{v.account_num}</div>
+
+                        <div id="userdb-bal">Available Balance</div>
+                    </div>
                 </div>
             </div>
         ));
@@ -104,20 +113,24 @@ class UserDashboard extends React.Component {
                         width={100}
                     />
                 </div>
-            )
+            );
         }
 
         return (
             <div className="userdashboard">
                 <UserNavigationBar active={0} />
                 <div className="container-userdash">
-                    <div id="greeting-userdash">
+                    <div className="greeting-userdash">
                         Welcome to your dashboard, {this.state.firstName}!
                     </div>
-                    <div id="greeting-userdash2">Personal Accounts</div>
-                    <Link to="/Account" id="acct-temp-link">
-                        {acctTemplate}
-                    </Link>
+                    <div className="flexbox-column-userdb">
+                        <div id="personalaccount-userdb">Personal Accounts</div>
+                        <div className="scrollbox-userdb">
+                            <div className="accounts-container">
+                                {acctTemplate}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

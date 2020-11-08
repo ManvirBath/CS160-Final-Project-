@@ -13,12 +13,12 @@ class BillPayEdit extends React.Component {
             id: -1,
             bill_payment: [],
 
-            to_acct: '',
-            from_acct: '',
-            routing_num: '',
-            amount: '',
+            to_acct: this.props.location.to_acct || '',
+            from_acct: this.props.location.from_acct || '',
+            routing_num: this.props.location.routing_num || '',
+            amount: this.props.location.amount || '',
             frequency: '',
-            pay_date: '',
+            pay_date: this.props.location.pay_date || '',
             accts: [],
             errorToAcct: '',
             errorFromAcct: '',
@@ -50,29 +50,32 @@ class BillPayEdit extends React.Component {
     //     }
     // }
 
+    // getDerivedStateFromProps() {
+    //     const { to_acct, routing_num, amount,   } = this.props.location
+    //     this.setState({ to_acct }) 
+    //     this.setState({ routing_num })
+    //     this.setState({ amount  })
+    // }
     async componentDidMount() {
         // const bills = await this.getBillPayments()
-        const param = await window.location.pathname.split( '/' )[2]
-        this.setState({ id: param })
-
-        const info = await axiosInstance.get(`/bill_payments/${param}`);
+        // const param = await window.location.pathname.split( '/' )[2]
+        // this.setState({ id: param })
         const accounts = await axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
             this.setState({ accts: d });
         });
-        const bill_info = info.data
+
+        console.log("Before: " + typeof to_acct)
+        // console.log(this.state.routing_num)
+        // console.log(this.state.amount)
+        // console.log(this.state.pay_date)
+        // console.log(this.state.frequency)
         this.setState({ loading: false }) 
-        // this.setState({ to_acct: bill_info.data })
-        // this.setState({ from_acct: info.data })
-        this.setState({ routing_num: bill_info.routing_num })
-        this.setState({ amount: bill_info.amount })
-        // this.setState({ accts: bill_info.data })
-        // this.setState({ bill_payment: info.data })
-        console.log(bill_info)
     }
     
     to_acct(e) {
         this.setState({ to_acct: e.target.value });
+        console.log(typeof this.state.to_acct)
         this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
@@ -177,19 +180,32 @@ class BillPayEdit extends React.Component {
             </option>
         ));
 
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            )
+        }
+
         // console.log(String(this.state.from_acct.value))
         return (
             <div className="BillPay">
                 <UserNavigationBar active={1} />
-                Hello
                 <div className="container-billpay">
-                    <div className="greeting-billpay">BillPay</div>
+                    <div className="greeting-billpay">Edit BillPay</div>
                     <div className="flexbox-column-billpay">
                         <div id="transfer-from">From</div>
                         <select
                             className="accounts"
                             id="accounts"
                             class="btn btn-light dropdown-toggle"
+                            value={this.state.from_acct}
                             onChange={this.from_acct}
                         >
                             <option value="acctNumFrom" disabled selected>
@@ -206,6 +222,7 @@ class BillPayEdit extends React.Component {
                                 className="toAccountExternal"
                                 placeholder="Account Number"
                                 onChange={this.to_acct}
+                                value={this.state.to_acct}
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorToAcct}</h6>
@@ -215,6 +232,7 @@ class BillPayEdit extends React.Component {
                                 className="routingNum"
                                 placeholder="Routing number"
                                 onChange={this.routing_num}
+                                value={this.state.routing_num}
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorRouting}</h6>
@@ -224,6 +242,7 @@ class BillPayEdit extends React.Component {
                                 className="amountInput"
                                 placeholder="Amount"
                                 onChange={this.amount}
+                                value={this.state.amount}
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorAmount}</h6>
