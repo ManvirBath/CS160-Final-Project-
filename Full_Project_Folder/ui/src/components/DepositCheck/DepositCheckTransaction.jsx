@@ -17,6 +17,7 @@ class DepositCheckTransaction extends React.Component {
         amount: this.props.location.amount,
         location: "Online",
         memo: this.props.location.memo,
+        check_path: this.props.location.check_image,
       }
     );
     console.log(`helloaccounts/${this.props.location.to_account_num}/deposit/`);

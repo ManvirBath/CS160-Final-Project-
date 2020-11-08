@@ -24,7 +24,17 @@ const dropDown = [
     },
     {
         name: 'Pay Bill',
-        href: '/billpay',
+        href: '',
+        children: [
+            {
+                name: 'Create Bill Payment',
+                href: '/billpay',
+            },
+            {
+                name: 'Show Bill Payments',
+                href: '/billpayshow',
+            },
+        ],
     },
     {
         name: 'Transfer',

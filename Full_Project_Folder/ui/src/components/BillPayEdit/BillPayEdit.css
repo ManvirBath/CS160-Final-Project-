@@ -1,0 +1,122 @@
+.userdashboard {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
+}
+.userdashboard {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
+}
+.container-userdash {
+    position: absolute;
+    color: black;
+    left: 300px;
+    top: 25vh;
+}
+#greeting-userdash {
+    position: absolute;
+    font-size: 2em;
+    font-family: serif;
+}
+#greeting-userdash2 {
+    position: absolute;
+    top: 9vh;
+    left: 1vw;
+    font-size: 2em;
+    font-family: serif;
+}
+​ .acctBox {
+    position: relative;
+}
+.acct-temp {
+    font-size: 1em;
+}
+.checking {
+    position: relative;
+    top: 16.5vh;
+    left: 2vw;
+    font-size: 2em;
+    font-family: sans-serif;
+    word-spacing: 23em;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2.1em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+.savings {
+    position: relative;
+    top: 16.5vh;
+    left: 2vw;
+    font-size: 2em;
+    font-family: sans-serif;
+    word-spacing: 23em;
+    border-top: 0.05px solid;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+    background-color: #f0f8ff;
+}
+.saving2 {
+    position: absolute;
+    top: 45vh;
+    left: 2vw;
+    font-size: 2.8em;
+    font-family: cursive;
+    word-spacing: 5.25em;
+    border-bottom: 0.025px dotted;
+    border-left: 3px dotted;
+    border-right: 3px dotted;
+    border-top: 3px dotted;
+    padding-top: 0.5em;
+    padding-left: 1em;
+    padding-right: 2em;
+    padding-bottom: 0.5em;
+    margin: 0 -1em;
+}
+.saving2-bal {
+    position: absolute;
+    top: 38.5vh;
+    left: 2.2vw;
+    font-size: 1.3em;
+    word-spacing: 13.3em;
+}
+​ .services-list {
+    position: absolute;
+    color: black;
+    top: -1vh;
+    left: 68vw;
+    font-size: 2em;
+    padding-top: 12em;
+    padding-left: 3em;
+    padding-right: 12em;
+    padding-bottom: 0;
+    margin: 0 -2em;
+}
+.navlist2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    font-size: 1.5em;
+    background-color: #dcdcdc;
+}
+#bal {
+    position: relative;
+    font-size: 0.5em;
+    word-spacing: 48em;
+}
+#acct-info {
+    position: relative;
+    font-size: 2.3em;
+    word-spacing: 22.5em;
+}
+#acct-temp-link {
+    text-decoration: none;
+    color: black;
+}

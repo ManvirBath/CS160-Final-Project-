@@ -11,7 +11,7 @@ class DepositCheck extends React.Component {
       to_account: "",
       to_account_num: "",
       amount: "",
-      memo: "",
+      memo: "n/a",
       check_image: "",
       file: null,
       errorAmount: "",

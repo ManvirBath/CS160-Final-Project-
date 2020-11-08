@@ -45,7 +45,7 @@ class BillPaymentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = BillPayment
 
-        fields = ('account', 'routing_num', 'to_account_num', 'amount', 'date', 'status')
+        fields = ('id','account', 'routing_num', 'to_account_num', 'amount', 'date', 'status')
 
         extra_kwargs = { 'account': {'required': False},
                         'status': {'required': False} }

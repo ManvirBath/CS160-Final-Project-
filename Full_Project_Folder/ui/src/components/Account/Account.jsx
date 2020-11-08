@@ -1,100 +1,76 @@
-import React from 'react';
-import './Account.css';
-import { Link } from 'react-router-dom';
-import Logo from '../Logo';
-import UserNavigationBar from '../UserNavBar/UserNavBar';
-import axiosInstance from '../../axios';
+import React from "react";
+import "./Account.css";
+import { Link } from "react-router-dom";
+import Logo from "../Logo";
+import UserNavigationBar from "../UserNavBar/UserNavBar";
+import axiosInstance from "../../axios";
 
 class Account extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            transaction_number: '',
-            amount: '',
-            date: '',
-            trans_type: '',
-            check_path: '',
-            location: '',
-            memo: '',
-        };
-
-        let savings = {
-            1244221: [
-                {
-                    transaction_number: '121212',
-                    amount: '500.00',
-                    date: '2020-10-31',
-                    trans_type: 'Deposit',
-                    check_path: 'C:fakepath\fakecheck.img',
-                    location: 'Online',
-                    memo: '1st paycheck',
-                },
-            ],
-
-            5355228: [
-                {
-                    transaction_number: '634342',
-                    amount: '200.00',
-                    date: '2020-17-03',
-                    trans_type: 'Withdraw',
-                    check_path: '',
-                    location: 'ATM',
-                    memo: '',
-                },
-            ],
-        };
+    this.state = {
+      transaction_arr: [],
+    };
+  }
+  async getTransactions() {
+    try {
+      const res = await this.state.axiosInstance.get(
+        `accounts/${this.props.location.account_num}/transactions/`
+      );
+      const d = res.data;
+      this.setState({ transaction_arr: d });
+      return res;
+    } catch (error) {
+      // console.log("Header AFTER: " + this.state.axiosInstance.defaults.headers['Authorization'])
+      console.log("Hello error: ", JSON.stringify(error, null, 4));
+      // throw error; todo
     }
+  }
+  async componentDidMount() {
+    this.state.axiosInstance = axiosInstance;
+    const transactions = await this.getTransactions();
+  }
 
-    transaction_number(e) {}
-    amount(e) {}
-    date(e) {}
-    check_path(e) {}
-    trans_type(e) {}
-    location(e) {}
-    memo(e) {}
-
-    render() {
-        return (
-            <div className="Account">
-                <UserNavigationBar />
-                <h1 className="acctTypeName">Savings 1234</h1>
-                <h4 className="acctBalance">Account Balance: $100.00</h4>
-                <h2 id="account-title">Transactions</h2>
-                <div className="account-table">
-                    <table id="account-table">
-                        <tr>
-                            <th>Transaction Number</th>
-                            <th>Date</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Memo</th>
-                            <th>Location</th>
-                            <th>Check Path</th>
-                        </tr>
-                        <tr>
-                            <td>121212</td>
-                            <td>2020-10-31</td>
-                            <td>500.00</td>
-                            <td>Deposit</td>
-                            <td>1st paycheck</td>
-                            <td>Online</td>
-                            <td>C:fakepath\fakecheck.img</td>
-                        </tr>
-                        <tr>
-                            <td>634342</td>
-                            <td>2020-17-03</td>
-                            <td>200.00</td>
-                            <td>Withdraw</td>
-                            <td></td>
-                            <td>ATM</td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        );
-    }
+  render() {
+    let acctTransaction = this.state.transaction_arr.map((v, index) => (
+      <tr>
+        <th>{index + 1}</th>
+        <th>{v.date}</th>
+        <th>{v.amount}</th>
+        <th>{v.trans_type}</th>
+        <th>{v.memo}</th>
+        <th>{v.location}</th>
+        <th>{v.check_path}</th>
+      </tr>
+    ));
+    return (
+      <div className="Account">
+        <UserNavigationBar />
+        <h1 className="acctTypeName">
+          {this.props.location.acct_type}: {this.props.location.account_num}
+        </h1>
+        <h4 className="acctBalance">
+          Account Balance: ${this.props.location.balance}
+        </h4>
+        <h2 id="account-title">Transactions</h2>
+        <div className="account-table">
+          <table id="account-table">
+            <tr>
+              <th>Transaction Number</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Memo</th>
+              <th>Location</th>
+              <th>Check Path</th>
+            </tr>
+            {acctTransaction}
+          </table>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Account;
