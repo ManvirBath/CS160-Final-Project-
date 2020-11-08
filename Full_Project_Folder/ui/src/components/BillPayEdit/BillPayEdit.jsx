@@ -14,7 +14,7 @@ class BillPayEdit extends React.Component {
             bill_payment: [],
 
             to_acct: this.props.location.to_acct || '',
-            from_acct: this.props.location.from_acct || '',
+            from_acct: this.props.location.to_acct || '',
             routing_num: this.props.location.routing_num || '',
             amount: this.props.location.amount || '',
             frequency: '',
@@ -24,8 +24,7 @@ class BillPayEdit extends React.Component {
             errorFromAcct: '',
             errorRouting: '',
             errorAmount: '',
-            errorDate: '',
-            loading: true
+            errorDate: ''
         };
 
         this.to_acct = this.to_acct.bind(this);
@@ -58,24 +57,22 @@ class BillPayEdit extends React.Component {
     // }
     async componentDidMount() {
         // const bills = await this.getBillPayments()
-        // const param = await window.location.pathname.split( '/' )[2]
-        // this.setState({ id: param })
+        const param = await window.location.pathname.split( '/' )[2]
+        this.setState({ id: param })
         const accounts = await axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
             this.setState({ accts: d });
         });
+        this.setState({ from_acct: this.props.location.from_acct })
 
-        console.log("Before: " + typeof to_acct)
         // console.log(this.state.routing_num)
         // console.log(this.state.amount)
         // console.log(this.state.pay_date)
         // console.log(this.state.frequency)
-        this.setState({ loading: false }) 
     }
     
     to_acct(e) {
         this.setState({ to_acct: e.target.value });
-        console.log(typeof this.state.to_acct)
         this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
@@ -174,24 +171,18 @@ class BillPayEdit extends React.Component {
     }
 
     render() {
-        let userAccts = this.state.accts.map((v) => (
-            <option value={v.account_num}>
-                {v.account_type} {v.account_num}: {v.balance}
-            </option>
-        ));
-
-        if (this.state.loading) {
-            return (
-                <div>
-                    <Loader
-                        type="Puff"
-                        color="#00BFFF"
-                        height={100}
-                        width={100}
-                    />
-                </div>
+        let userAccts = this.state.accts.map((v) => (v.account_num == this.state.from_acct) ? 
+            (
+                <option value={v.account_num} selected>
+                    {v.account_type} {v.account_num}: {v.balance}
+                </option>
+            ) :
+            (
+                <option value={v.account_num}>
+                    {v.account_type} {v.account_num}: {v.balance}
+                </option>
             )
-        }
+        );
 
         // console.log(String(this.state.from_acct.value))
         return (
@@ -205,7 +196,6 @@ class BillPayEdit extends React.Component {
                             className="accounts"
                             id="accounts"
                             class="btn btn-light dropdown-toggle"
-                            value={this.state.from_acct}
                             onChange={this.from_acct}
                         >
                             <option value="acctNumFrom" disabled selected>
@@ -272,13 +262,13 @@ class BillPayEdit extends React.Component {
                     <div className="billpay-buttons">
                         <Link
                             to={{
-                                pathname: '/billpayshow',
-                                // to_acct: this.state.to_acct,
-                                // from_acct: this.state.from_acct.value,
-                                // routing_num: this.state.routing_num,
-                                // amount: this.state.amount,
-                                // pay_date: this.state.pay_date,
-                                // frequency: this.state.frequency,
+                                pathname: `/billpayedit_confirm/${this.state.id}`,
+                                to_acct: this.state.to_acct,
+                                from_acct: this.state.from_acct.value,
+                                routing_num: this.state.routing_num,
+                                amount: this.state.amount,
+                                pay_date: this.state.pay_date,
+                                frequency: this.state.frequency,
                             }}
                         >
                             <button

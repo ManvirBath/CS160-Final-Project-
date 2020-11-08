@@ -37,7 +37,6 @@ class BillPayShow extends React.Component {
     async componentDidMount() {
         const bills = await this.getBillPayments()
         this.setState({ loading: false }) 
-        // console.log(this.state.bill_payments[0].account.split( '/' )[5])
     }
     
     render() {
@@ -49,6 +48,7 @@ class BillPayShow extends React.Component {
                         <div id="userdb-account-type">To Account Number: {v.to_account_num}</div>
 
                         <div id="userdb-account-balance">${v.amount}</div>
+                        <div id="userdb-account-number">{v.account.split( '/' )[5]}</div>
                         <div id="userdb-account-number">{v.date}</div>
 
                         <div id="userdb-bal">Amount</div>
@@ -71,9 +71,21 @@ class BillPayShow extends React.Component {
                         </button>
                     </Link>
                 
-                <button type="button" class="btn btn-danger">
-                    Cancel
-                </button>
+                    <Link
+                        to={{
+                            pathname: `/billpaycancel_confirm/${v.id}`,
+                            to_acct: v.to_account_num,
+                            from_acct: v.account.split( '/' )[5],
+                            routing_num: v.routing_num,
+                            amount: v.amount,
+                            pay_date: v.date,
+                            frequency: this.state.frequency,
+                        }}
+                    >
+                        <button type="button" class="btn btn-danger">
+                            Cancel
+                        </button>
+                    </Link>
             </div>
         ));
 
