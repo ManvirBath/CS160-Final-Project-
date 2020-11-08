@@ -623,6 +623,16 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
     pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
 
+    # WILL ONLY GET ACTIVE BILL PAYMENTS FOR AUTHENTICATED USER
+    def list(self, request):
+        """
+        Gets all of the accounts that belong to the authenticated user making this API call
+        """
+        our_list = [item.pk for item in self.account_queryset.filter(client=request.user)]        
+        payments = list(self.queryset.filter(account__in=our_list).filter((~Q(status='processed'))).filter((~Q(status='cancelled'))))
+        serializer = self.serializer_class(payments, many=True, context={'request' : request})
+        return Response(serializer.data)
+
     @action(detail=True, methods=['post'])
     def edit_bill_payment(self, request, pk=None):
         """

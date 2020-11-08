@@ -18,6 +18,14 @@ import TransferExternal from './components/Transfer/TransferExternal';
 import TransferExternalConfirm from './components/Transfer/TransferExternalConfirm';
 import TransferExternalTransaction from './components/Transfer/TransferExternalTransaction';
 import BillPay from './components/BillPay/BillPay';
+import BillPayEdit from './components/BillPayEdit/BillPayEdit';
+import BillPayEditConfirm from './components/BillPayEdit/BillPayEditConfirm';
+import BillPayEditTransaction from './components/BillPayEdit/BillPayEditTransaction';
+
+import BillPayCancelConfirm from './components/BillPayCancel/BillPayCancelConfirm';
+import BillPayCancelTransaction from './components/BillPayCancel/BillPayCancelTransaction';
+
+import BillPayShow from './components/BillPayShow/BillPayShow';
 import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
 import Contact from './components/Contact';
@@ -95,6 +103,15 @@ class App extends React.Component {
                             component={TransferExternalTransaction}
                         />
                         <Route path="/billpay" component={BillPay} />
+                        <Route path="/billpayedit/:id" component={BillPayEdit} />
+                        <Route path="/billpayedit_confirm/:id" component={BillPayEditConfirm} />
+                        <Route path="/billpayedit_transaction/:id" component={BillPayEditTransaction} />
+
+                        <Route path="/billpaycancel_confirm/:id" component={BillPayCancelConfirm} />
+                        <Route path="/billpaycancel_transaction/:id" component={BillPayCancelTransaction} />
+
+
+                        <Route path="/billpayshow" component={BillPayShow} />
                         <Route
                             path="/billpayconfirm"
                             component={BillPayConfirm}
