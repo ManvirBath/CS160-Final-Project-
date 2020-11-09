@@ -31,32 +31,42 @@ class ManagerDashboard extends React.Component {
     return (
       <div className="managerdashboard">
         <ManagerNavigationBar />
-        <div className="Statistics">
-          <h5>
-            <label for="client-stats">Clients</label>
-          </h5>
-          <h1>
-            <span id="client-stats" class="badge badge-secondary">
-              [insert # of clients]
-            </span>
-          </h1>
-          <h5>
-            <label for="account-stats">Accounts</label>
-          </h5>
-          <h1>
-            <span id="account-stats" class="badge badge-secondary">
-              [insert # of accounts]
-            </span>
-          </h1>
-          <h5>
-            <label for="transaction-stats">Transactions</label>
-          </h5>
-          <h1>
-            <span id="transaction-stats" class="badge badge-secondary">
-              [insert # of transactions]
-            </span>
-          </h1>
+        <div className="statistics">
+          <label for="client-stats">Clients</label>
+
+          <span id="client-stats" class="badge badge-secondary">
+            [insert # of clients]
+          </span>
+
+          <label for="account-stats">Accounts</label>
+
+          <span id="account-stats" class="badge badge-secondary">
+            [insert # of accounts]
+          </span>
+
+          <label for="transaction-stats">Transactions</label>
+
+          <span id="transaction-stats" class="badge badge-secondary">
+            [insert # of transactions]
+          </span>
         </div>
+        <div className="search-area">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">
+                Query
+              </span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter keyword here"
+              aria-label="query-search"
+              aria-describedby="basic-addon1"
+            />
+          </div>
+        </div>
+        <div className="query-results"></div>
       </div>
     );
   }
