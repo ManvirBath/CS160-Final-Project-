@@ -11,7 +11,7 @@ class DepositCheck extends React.Component {
       to_account: "",
       to_account_num: "",
       amount: "",
-      memo: "",
+      memo: "n/a",
       check_image: "",
       file: null,
       errorAmount: "",
@@ -68,9 +68,11 @@ class DepositCheck extends React.Component {
       });
     }
     //validates amount
-    if (this.state.amount <= 0) {
+    if (this.state.amount <= 0 || this.state.amount > 5000) {
       e.preventDefault();
-      this.setState({ errorAmount: "Amount must be greater than 0.00!" });
+      this.setState({
+        errorAmount: "Amount must be between 0.01 and 5000.00!",
+      });
     }
   }
   render() {

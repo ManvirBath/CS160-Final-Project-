@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import axiosInstance from '../../axios';
+import { Link, useHistory } from 'react-router-dom';
 import './UserNavBar.css';
 import Logo from '../Logo';
 const dropDown = [
@@ -59,14 +60,6 @@ const dropDown = [
         href: '',
         children: [
             {
-                name: 'ATM Locator',
-                href: '/GMap',
-            },
-            {
-                name: 'Contact Us',
-                href: '/contact',
-            },
-            {
                 name: 'Edit Profile',
                 href: '/edit_profile',
             },
@@ -77,6 +70,17 @@ class UserNavigationBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = { active: 0 };
+        this.handleLogout = this.handleLogout.bind(this);
+    }
+
+    handleLogout(e) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        localStorage.removeItem('usertoken');
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('email');
+        axiosInstance.defaults.headers['Authorization'] = null;
+        console.log(localStorage);
     }
     getListItem(data, pos) {
         const { name, href, children } = data;
@@ -131,9 +135,15 @@ class UserNavigationBar extends React.Component {
                         text="Deep Learning Bank"
                     ></Logo>
                     <div className="header-logoff lastItem">
-                        <Button variant="light" id="logout-usernavbar">
-                            Logout
-                        </Button>
+                        <Link to="/main">
+                            <Button
+                                variant="light"
+                                id="logout-usernavbar"
+                                onClick={this.handleLogout}
+                            >
+                                Logout
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 {navList}

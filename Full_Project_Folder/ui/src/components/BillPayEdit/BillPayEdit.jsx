@@ -4,7 +4,7 @@ import Logo from '../Logo';
 import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
-import Loader from "react-loader-spinner";
+import Loader from 'react-loader-spinner';
 
 class BillPayEdit extends React.Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class BillPayEdit extends React.Component {
             errorFromAcct: '',
             errorRouting: '',
             errorAmount: '',
-            errorDate: ''
+            errorDate: '',
         };
 
         this.to_acct = this.to_acct.bind(this);
@@ -51,26 +51,26 @@ class BillPayEdit extends React.Component {
 
     // getDerivedStateFromProps() {
     //     const { to_acct, routing_num, amount,   } = this.props.location
-    //     this.setState({ to_acct }) 
+    //     this.setState({ to_acct })
     //     this.setState({ routing_num })
     //     this.setState({ amount  })
     // }
     async componentDidMount() {
         // const bills = await this.getBillPayments()
-        const param = await window.location.pathname.split( '/' )[2]
-        this.setState({ id: param })
+        const param = await window.location.pathname.split('/')[2];
+        this.setState({ id: param });
         const accounts = await axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
             this.setState({ accts: d });
         });
-        this.setState({ from_acct: this.props.location.from_acct })
+        this.setState({ from_acct: this.props.location.from_acct });
 
         // console.log(this.state.routing_num)
         // console.log(this.state.amount)
         // console.log(this.state.pay_date)
         // console.log(this.state.frequency)
     }
-    
+
     to_acct(e) {
         this.setState({ to_acct: e.target.value });
         this.setState({ errorToAcct: '' });
@@ -171,13 +171,12 @@ class BillPayEdit extends React.Component {
     }
 
     render() {
-        let userAccts = this.state.accts.map((v) => (v.account_num == this.state.from_acct) ? 
-            (
+        let userAccts = this.state.accts.map((v) =>
+            v.account_num == this.state.from_acct ? (
                 <option value={v.account_num} selected>
                     {v.account_type} {v.account_num}: {v.balance}
                 </option>
-            ) :
-            (
+            ) : (
                 <option value={v.account_num}>
                     {v.account_type} {v.account_num}: {v.balance}
                 </option>

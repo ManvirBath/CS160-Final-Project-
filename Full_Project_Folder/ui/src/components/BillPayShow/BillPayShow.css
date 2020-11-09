@@ -1,69 +1,14 @@
-.userdashboard {
+.BillPayShow {
     display: flex;
     background-color: #f1f1f1;
     flex-direction: column;
     height: 100vh;
 }
-.container-userdash {
+.container-billpayshow {
     color: black;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
     height: 100%;
-}
-.accounts-container {
-}
-.box-userdb {
-    margin: 8px;
-    padding: 8px;
-    width: 70vw;
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1),
-        -3px -3px 3px rgba(255, 255, 255, 0.5);
-    transition: background-color 0.5s;
-}
-.box-userdb:hover {
-    background-color: rgb(0, 255, 255);
-    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.1),
-        inset -3px -3px 3px rgba(255, 255, 255, 0.5);
-    cursor: pointer;
-}
-.greeting-userdash {
-    margin: 15px;
-    font-size: 1.85em;
-}
-
-.scrollbox-userdb {
-    overflow-y: auto;
-}
-#accounts-info {
-    display: flex;
-    border-collapse: collapse;
-    flex-direction: column;
-    align-items: baseline;
-}
-
-#personalaccount-userdb {
-    background-color: #f1f1f1;
-    font-size: 1.5em;
-}
-#userdb-account-type {
-    text-transform: capitalize;
-    font-size: 1.4em;
-    margin-bottom: -7.5px;
-}
-#userdb-account-balance {
-    margin-left: auto;
-    margin-top: -25px;
-    font-size: 1.4em;
-}
-#userdb-account-number {
-    font-size: 0.8em;
-}
-#userdb-bal {
-    text-decoration: none;
-    margin-left: auto;
-    font-size: 0.8em;
-    margin-top: -20px;
 }

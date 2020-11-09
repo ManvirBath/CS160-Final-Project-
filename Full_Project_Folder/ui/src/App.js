@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 import axiosInstance from './axios';
+import Main from './components/Main';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Recovery from './components/Recovery';
 import Register from './components/Register/Register';
-import EditProfile from './components/EditProfile/EditProfile'
-
+import EditProfile from './components/EditProfile/EditProfile';
 import GMap from './components/GMap';
 import UserDashboard from './components/UserDashboard';
 import ManagerDashboard from './components/ManagerDashboard';
@@ -23,10 +23,8 @@ import BillPay from './components/BillPay/BillPay';
 import BillPayEdit from './components/BillPayEdit/BillPayEdit';
 import BillPayEditConfirm from './components/BillPayEdit/BillPayEditConfirm';
 import BillPayEditTransaction from './components/BillPayEdit/BillPayEditTransaction';
-
 import BillPayCancelConfirm from './components/BillPayCancel/BillPayCancelConfirm';
 import BillPayCancelTransaction from './components/BillPayCancel/BillPayCancelTransaction';
-
 import BillPayShow from './components/BillPayShow/BillPayShow';
 import BillPayConfirm from './components/BillPay/BillPayConfirm';
 import BillPayTransaction from './components/BillPay/BillPayTransaction';
@@ -59,6 +57,7 @@ class App extends React.Component {
                             path="/"
                             render={(props) => <Login {...props} dark={dark} />}
                         />
+                        <Route path="/main" component={Main} />
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
                         <Route path="/edit_profile" component={EditProfile} />
@@ -69,10 +68,12 @@ class App extends React.Component {
                             path="/userdashboard"
                             component={UserDashboard}
                         />
-                        {/* <Route
-                            path="/managerdashboard"
-                            component={ManagerDashboard}
-                        /> */}
+                        {
+                            <Route
+                                path="/managerdashboard"
+                                component={ManagerDashboard}
+                            />
+                        }
                         <Route path="/depositcheck" component={DepositCheck} />
                         <Route
                             path="/depositcheckconfirm"
@@ -107,13 +108,27 @@ class App extends React.Component {
                             component={TransferExternalTransaction}
                         />
                         <Route path="/billpay" component={BillPay} />
-                        <Route path="/billpayedit/:id" component={BillPayEdit} />
-                        <Route path="/billpayedit_confirm/:id" component={BillPayEditConfirm} />
-                        <Route path="/billpayedit_transaction/:id" component={BillPayEditTransaction} />
+                        <Route
+                            path="/billpayedit/:id"
+                            component={BillPayEdit}
+                        />
+                        <Route
+                            path="/billpayedit_confirm/:id"
+                            component={BillPayEditConfirm}
+                        />
+                        <Route
+                            path="/billpayedit_transaction/:id"
+                            component={BillPayEditTransaction}
+                        />
 
-                        <Route path="/billpaycancel_confirm/:id" component={BillPayCancelConfirm} />
-                        <Route path="/billpaycancel_transaction/:id" component={BillPayCancelTransaction} />
-
+                        <Route
+                            path="/billpaycancel_confirm/:id"
+                            component={BillPayCancelConfirm}
+                        />
+                        <Route
+                            path="/billpaycancel_transaction/:id"
+                            component={BillPayCancelTransaction}
+                        />
 
                         <Route path="/billpayshow" component={BillPayShow} />
                         <Route
