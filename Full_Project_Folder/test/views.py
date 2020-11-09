@@ -82,6 +82,18 @@ def all_accounts(request):  # not including user's accounts
         return Response(serialized_accounts.data)
     except IntegrityError as ex:
         return HttpResponse('Unauthorized', status=403)
+
+@api_view(['GET'])
+def all_clients(request):  # not including user itself
+    client_queryset = Client.objects.all()
+    try:
+        clients = client_queryset.filter(~Q(email=request.user.email))
+        # data = serializers.serialize('json', list(client))
+        serialized_clients = ClientSerializer(clients, many=True, context={'request' : request})
+        # print(list(client))
+        return Response(serialized_clients.data)
+    except IntegrityError as ex:
+        return HttpResponse('Unauthorized', status=403)
         
 @api_view(['POST'])
 def register(request):
@@ -198,11 +210,14 @@ class ClientViewSet(viewsets.ModelViewSet):
         }
         """
         client_now = self.get_object()
-        serializer = ClientSerializer(data=request.data)
+        serializer = ClientSerializer(data={key:request.data[key] for key in ['first_name', 'last_name', 'address', \
+                                    'city', 'state', 'zipcode', 'phone_num', 'birthday']})
+        current_email = request.data['email']
+
         if serializer.is_valid():
             try:
                 with transaction.atomic():
-                    client_now.email = serializer.data['email']
+                    client_now.email = current_email
                     client_now.first_name = serializer.data['first_name']
                     client_now.last_name = serializer.data['last_name']
 
