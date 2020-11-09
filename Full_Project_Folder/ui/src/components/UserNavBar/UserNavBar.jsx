@@ -66,6 +66,10 @@ const dropDown = [
                 name: 'Contact Us',
                 href: '/contact',
             },
+            {
+                name: 'Edit Profile',
+                href: '/edit_profile',
+            },
         ],
     },
 ];
