@@ -17,7 +17,7 @@ from .serializers import ClientSerializer, AccountSerializer, TransactionSeriali
 from .models import Client, Account, Transaction, BillPayment
 from .managers import ClientManager
 from django.db import IntegrityError, transaction
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.views import APIView
 from random import randint
 from background_task import background
@@ -68,7 +68,92 @@ def automated_bill():
     
 
 
+@api_view(['GET'])
+def bank_statistics(request):
+    """
+    Used by bank staff to get the total number of clients, accounts, and transactions in the bank
+    Expected External Transfer JSON API:
+    {
+        "num_clients" : the total number of clients in the bank,
+        "num_accounts" : the total number of accounts in the bank
+        "num_transactions" : the total number of transactions in the bank
+    }
+    """
+    if request.user.is_staff:
+        num_clients = Client.objects.count()
+        num_accounts = Account.objects.count()
+        num_transactions = Transaction.objects.count()
+        return Response({'num_clients' : num_clients,
+                         'num_accounts' : num_accounts,
+                         'num_transactions' : num_transactions},
+                         status=status.HTTP_200_OK)
+    else:
+        return HttpResponse('Unauthorized', status=403)
 
+@api_view(['GET'])
+def client_account_statistics(request):
+    """
+    Used by bank staff to view all of the clients, their account balances, and their transactions
+    Expected External Transfer JSON API:
+    [
+        {
+            "email" : client's email
+            "accounts" :
+                [
+                    {
+                        "account_id" : id of the account
+                        "account_balance" : balance of the account
+                        "account_type" : type of the account (either checking or savings)
+                        "transactions" :
+                            [
+                                {
+                                    "transaction_amount" : (string) amount for this transaction
+                                    "transaction_date" : when the transaction took place
+                                    "transaction_type" : the type of the transaction
+                                },
+                                ...
+                            ]
+                    },
+                    ...
+                ]
+        },
+        ...
+    ]
+    """
+    if request.user.is_staff:
+        bank_data = []
+        for client in Client.objects.all():
+            client_data = {}
+            bank_data.append(client_data)
+
+            client_data['email'] = client.email
+
+            client_accounts = []
+            client_data['accounts'] = client_accounts
+
+            for account in Account.objects.all():
+                account_data = {}
+                client_accounts.append(account_data)
+
+                account_data['account_id'] = account.account_num
+                account_data['account_balance'] = account.balance
+                account_data['account_type'] = account.account_type
+
+                account_transactions = []
+                account_data['transactions'] = account_transactions
+
+                for transaction in Transaction.objects.all():
+                    transaction_data = {}
+                    account_transactions.append(transaction_data)
+
+                    transaction_data['transaction_amount'] = transaction.amount
+                    transaction_data['transaction_date'] = transaction.date
+                    transaction_data['transaction_type'] = transaction.trans_type
+
+        return Response(bank_data, status=status.HTTP_200_OK)
+
+    else:
+        HttpResponse('Unauthorized', status=403)
 
 # Create your views here.
 @api_view(['GET'])
