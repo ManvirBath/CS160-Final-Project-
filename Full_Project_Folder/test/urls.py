@@ -8,6 +8,7 @@ urlpatterns = [
     path('api/register/', views.register),
     path('api/reset_password/', views.reset_password),
     path('api/all_accounts/', views.all_accounts),
+    path('api/all_clients/', views.all_clients),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
