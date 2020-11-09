@@ -44,14 +44,16 @@
     display: inline-block;
     font-family: cursive;
 }
-.Contact .footer {
-    margin: 5px;
+.contact .footer a {
+    display: flex;
     color: white;
+    font-size: 1.25em;
+    justify-content: center;
 }
 #contactus-greeting {
     text-align: center;
     color: white;
-    margin-top: 25px;
+    margin-top: 10px;
     font-size: 3em;
 }
 #office-location-header {

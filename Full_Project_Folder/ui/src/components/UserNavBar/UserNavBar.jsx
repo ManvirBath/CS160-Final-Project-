@@ -60,14 +60,6 @@ const dropDown = [
         href: '',
         children: [
             {
-                name: 'ATM Locator',
-                href: '/GMap',
-            },
-            {
-                name: 'Contact Us',
-                href: '/contact',
-            },
-            {
                 name: 'Edit Profile',
                 href: '/edit_profile',
             },
@@ -143,7 +135,7 @@ class UserNavigationBar extends React.Component {
                         text="Deep Learning Bank"
                     ></Logo>
                     <div className="header-logoff lastItem">
-                        <Link to="/login">
+                        <Link to="/main">
                             <Button
                                 variant="light"
                                 id="logout-usernavbar"
