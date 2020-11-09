@@ -1,0 +1,41 @@
+.EditProfile {
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 7.5vh;
+}
+.form-control {
+    display: flex;
+    justify-content: center;
+}
+.Logo {
+    margin-bottom: 1.5em;
+}
+.EditProfile input {
+    color: black;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+}
+.EditProfile .header {
+    font-size: 1.5em;
+}
+.EditProfile .footer {
+    margin: 5px;
+    color: #d3d3d3;
+}
+.EditProfile .footer a {
+    color: white;
+}
+.EditProfile button {
+    background: #7b97ea;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.EditProfile button:hover {
+    background: #1c41b0;
+}

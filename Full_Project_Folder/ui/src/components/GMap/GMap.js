@@ -1,5 +1,6 @@
 import React from 'react';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import { Link } from 'react-router-dom';
 import {
     GoogleMap,
     LoadScript,
@@ -181,7 +182,9 @@ class MapContainer extends React.Component {
         const { searchedLocation, atms, infoWindow } = this.state;
         return (
             <div className="MapContainer">
-                <UserNavigationBar active={4} />
+                <div style={{ background: 'white' }} className="gmap-header">
+                    <Link to="/main">Back to home page</Link>
+                </div>
                 <div className="googleMap">
                     <LoadScript
                         googleMapsApiKey={API_KEY}

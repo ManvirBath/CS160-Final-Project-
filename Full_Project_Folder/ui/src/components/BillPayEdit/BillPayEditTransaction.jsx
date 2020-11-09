@@ -10,20 +10,20 @@ class BillPayTransaction extends React.Component {
         this.state = {};
     }
 
-    componentDidMount() { 
-        const id = window.location.pathname.split( '/' )[2]
-        console.log(typeof this.props.location.from_acct)
-        console.log(typeof this.props.location.routing_num)
-        console.log(typeof this.props.location.to_acct)
-        console.log(typeof this.props.location.amount)
-        console.log(typeof this.props.location.pay_date)
+    componentDidMount() {
+        const id = window.location.pathname.split('/')[2];
+        console.log(typeof this.props.location.from_acct);
+        console.log(typeof this.props.location.routing_num);
+        console.log(typeof this.props.location.to_acct);
+        console.log(typeof this.props.location.amount);
+        console.log(typeof this.props.location.pay_date);
 
         axiosInstance.post(`bill_payments/${id}/edit_bill_payment/`, {
             from_account_num: this.props.location.from_acct,
             routing_num: this.props.location.routing_num,
             to_account_num: this.props.location.to_acct,
             amount: this.props.location.amount,
-            date: this.props.location.pay_date
+            date: this.props.location.pay_date,
         });
     }
 

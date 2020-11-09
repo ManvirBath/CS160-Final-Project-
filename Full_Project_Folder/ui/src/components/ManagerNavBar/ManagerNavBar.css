@@ -37,3 +37,7 @@
 .selected .nav-link {
     color: white;
 }
+#logout-usernavbar {
+    display: flex;
+    margin-right: 25px;
+}

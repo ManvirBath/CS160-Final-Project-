@@ -31,22 +31,32 @@ export default function SignIn() {
                     email: formData.email,
                     password: formData.password,
                 })
-                .then( result => { 
-                    axiosInstance.defaults.headers['Authorization'] = "JWT " + result.data.access; 
-                    localStorage.setItem('access_token', result.data.access); 
-                    localStorage.setItem('refresh_token', result.data.refresh); 
-                    localStorage.setItem('email', formData.email)
-                    history.push({
-                        pathname: '/userdashboard',
-                    });
-                    console.log("Header BEFORE: " + axiosInstance.defaults.headers['Authorization'])
-                } ).catch (error => { 
-                    throw error; 
+                .then((result) => {
+                    axiosInstance.defaults.headers['Authorization'] =
+                        'JWT ' + result.data.access;
+                    localStorage.setItem('access_token', result.data.access);
+                    localStorage.setItem('refresh_token', result.data.refresh);
+                    localStorage.setItem('email', formData.email);
+                    if (formData.email === 'dlb.admin@dlb.com') {
+                        history.push({
+                            pathname: '/managerdashboard',
+                        });
+                    } else {
+                        history.push({
+                            pathname: '/userdashboard',
+                        });
+                    }
+                    console.log(
+                        'Header BEFORE: ' +
+                            axiosInstance.defaults.headers['Authorization']
+                    );
                 })
-                return response
-        }
-        catch (err) {
-            throw err
+                .catch((error) => {
+                    throw error;
+                });
+            return response;
+        } catch (err) {
+            throw err;
         }
     };
     return (
@@ -80,6 +90,9 @@ export default function SignIn() {
             <div className="footer">
                 Forgot your password?{' '}
                 <Link to="/recovery">Recover Password</Link>
+            </div>
+            <div className="footer">
+                <Link to="/main">Back to home page</Link>
             </div>
         </div>
     );

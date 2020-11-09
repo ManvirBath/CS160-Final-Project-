@@ -10,14 +10,14 @@ class BillPayCancelTransaction extends React.Component {
         this.state = {};
     }
 
-    componentDidMount() { 
-        const id = window.location.pathname.split( '/' )[2]
-        console.log(id)
-        console.log(this.props.location.from_acct)
-        console.log(this.props.location.routing_num)
-        console.log(this.props.location.to_acct)
-        console.log(this.props.location.amount)
-        console.log(this.props.location.pay_date)
+    componentDidMount() {
+        const id = window.location.pathname.split('/')[2];
+        console.log(id);
+        console.log(this.props.location.from_acct);
+        console.log(this.props.location.routing_num);
+        console.log(this.props.location.to_acct);
+        console.log(this.props.location.amount);
+        console.log(this.props.location.pay_date);
 
         axiosInstance.post(`bill_payments/${id}/cancel_bill_payment/`);
     }
@@ -25,7 +25,7 @@ class BillPayCancelTransaction extends React.Component {
     check() {}
     render() {
         return (
-            <div className="BillPayTransaction">
+            <div className="BillPayCancelTransaction">
                 <UserNavigationBar active={1} />
                 <div className="billpay-headerDivTransaction">
                     <div
@@ -35,8 +35,9 @@ class BillPayCancelTransaction extends React.Component {
                         id="billpaytransaction-ty"
                     >
                         <p>
-                            Thank you for your cancellation of this bill payment! Please contact
-                            us if you have any questions or concerns.
+                            Thank you for your cancellation of this bill
+                            payment! Please contact us if you have any questions
+                            or concerns.
                         </p>
                     </div>
                 </div>

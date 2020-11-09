@@ -40,6 +40,7 @@ urlpatterns = [
     path('api/register/', views.register),
     path('api/reset_password/', views.reset_password),
     path('api/all_accounts/', views.all_accounts),
+    path('api/all_clients/', views.all_clients),
     path('api/bank_statistics/', views.bank_statistics),
     path('api/client_account_statistics/', views.client_account_statistics),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
