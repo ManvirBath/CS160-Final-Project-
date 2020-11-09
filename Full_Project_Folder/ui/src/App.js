@@ -5,6 +5,8 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import Recovery from './components/Recovery';
 import Register from './components/Register/Register';
+import EditProfile from './components/EditProfile/EditProfile'
+
 import GMap from './components/GMap';
 import UserDashboard from './components/UserDashboard';
 import ManagerDashboard from './components/ManagerDashboard';
@@ -59,16 +61,18 @@ class App extends React.Component {
                         />
                         <Route path="/login" component={Login} />
                         <Route path="/register" component={Register} />
+                        <Route path="/edit_profile" component={EditProfile} />
+
                         <Route path="/recovery" component={Recovery} />
                         <Route path="/gmap" component={GMap} />
                         <Route
                             path="/userdashboard"
                             component={UserDashboard}
                         />
-                        <Route
+                        {/* <Route
                             path="/managerdashboard"
                             component={ManagerDashboard}
-                        />
+                        /> */}
                         <Route path="/depositcheck" component={DepositCheck} />
                         <Route
                             path="/depositcheckconfirm"

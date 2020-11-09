@@ -1,4 +1,4 @@
-.Register {
+.EditProfile {
     align-items: center;
     flex-direction: column;
     display: flex;
@@ -16,26 +16,26 @@
 .Logo {
     margin-bottom: 1.5em;
 }
-.Register input {
+.EditProfile input {
     color: black;
     margin-top: 7.5px;
     margin-bottom: 7.5px;
 }
-.Register .header {
+.EditProfile .header {
     font-size: 1.5em;
 }
-.Register .footer {
+.EditProfile .footer {
     margin: 5px;
     color: #d3d3d3;
 }
-.Register .footer a {
+.EditProfile .footer a {
     color: white;
 }
-.Register button {
+.EditProfile button {
     background: #7b97ea;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.Register button:hover {
+.EditProfile button:hover {
     background: #1c41b0;
 }
