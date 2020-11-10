@@ -47,6 +47,9 @@ class Contact extends React.Component {
                 <div className="footer">
                     <Link to="/main">Back to home page</Link>
                 </div>
+                <div className="footer">
+                    <Link to="/userdashboard">Back to dashboard</Link>
+                </div>
             </div>
         );
     }

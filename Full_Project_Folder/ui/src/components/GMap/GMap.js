@@ -183,7 +183,8 @@ class MapContainer extends React.Component {
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
-                    <Link to="/main">Back to home page</Link>
+                    <Link to="/main">Back to home page </Link>
+                    <Link to="/userdashboard">Back to dashboard</Link>
                 </div>
                 <div className="googleMap">
                     <LoadScript

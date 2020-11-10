@@ -1,32 +1,33 @@
-@import url("https://fonts.googleapis.com/css?family=Baumans");
-@import url("https://fonts.googleapis.com/css?family=Abel");
+@import url('https://fonts.googleapis.com/css?family=Baumans');
+@import url('https://fonts.googleapis.com/css?family=Abel');
 
 .MainPage {
-  align-items: center;
-  flex-direction: column;
-  display: flex;
-  height: 100vh;
-  background-image: url("./dlb.svg");
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+    background-image: url('./dlb.svg');
 }
 
-.introHeader {
-  font-family: "Baumans";
-  font-size: 150px;
-  font-weight: bold;
-  text-align: center;
-  color: #d2e3f3;
+.MainPage .introHeader {
+    font-family: 'Baumans';
+    font-size: 150px;
+    font-weight: bold;
+    text-align: center;
+    color: #d2e3f3;
 }
 
-.introFooter {
-  font-family: "Abel";
-  font-size: 25px;
-  text-align: center;
-  color: #d2e3f3;
+.MainPage .introFooter {
+    font-family: 'Abel';
+    font-size: 25px;
+    text-align: center;
+    color: #d2e3f3;
 }
-.btn {
-  margin-left: 10px;
-  margin-right: 10px;
+.MainPage .btn {
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
-.background {
-  color: white;
+.MainPage .background {
+    color: white;
 }

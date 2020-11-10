@@ -24,7 +24,7 @@ class ManagerNavigationBar extends React.Component {
 
     render() {
         return (
-            <div className="usernavbar flexbox">
+            <div className="managernavbar flexbox">
                 <div className="flexbox-center maxWidth">
                     <Logo
                         color="rgb(255,255,255)"
@@ -34,7 +34,7 @@ class ManagerNavigationBar extends React.Component {
                         <Link to="/login">
                             <Button
                                 variant="light"
-                                id="logout-usernavbar"
+                                id="logout-managernavbar "
                                 onClick={this.handleLogout}
                             >
                                 Logout

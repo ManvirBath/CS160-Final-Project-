@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './EditProfile.css';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import Logo from '../Logo';
-import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import Loader from 'react-loader-spinner';
 
@@ -246,8 +245,10 @@ class EditProfile extends React.Component {
         }
     }
 
-    onSubmit = async (e) => {
+    onSubmit = (e) => {
         e.preventDefault();
+        console.log(this.props.history);
+        this.props.history.push('/userdashboard/');
         if (
             this.state.err_address == '' &&
             this.state.err_birthday == '' &&
@@ -269,21 +270,17 @@ class EditProfile extends React.Component {
             console.log(this.state.zipcode);
             console.log(this.state.phone_number);
             console.log(this.state.birthday);
-            const response = await axiosInstance.post(
-                `clients/${id}/edit_client/`,
-                {
-                    first_name: this.state.firstname,
-                    last_name: this.state.lastname,
-                    email: this.state.email,
-                    address: this.state.address,
-                    city: this.state.city,
-                    state: this.state.region,
-                    zipcode: this.state.zipcode,
-                    phone_num: this.state.phone_number,
-                    birthday: this.state.birthday,
-                }
-            );
-            this.props.history.push('/userdashboard');
+            const response = axiosInstance.post(`clients/${id}/edit_client/`, {
+                first_name: this.state.firstname,
+                last_name: this.state.lastname,
+                email: this.state.email,
+                address: this.state.address,
+                city: this.state.city,
+                state: this.state.region,
+                zipcode: this.state.zipcode,
+                phone_num: this.state.phone_number,
+                birthday: this.state.birthday,
+            });
         }
     };
 
@@ -306,129 +303,114 @@ class EditProfile extends React.Component {
 
         return (
             <div className="EditProfile">
-                <div className="form">
-                    <form onSubmit={this.onSubmit}>
-                        <Logo
-                            color="rgb(255,255,255)"
-                            text="Deep Learning Bank"
-                        ></Logo>
-                        <input
-                            className="form-control"
-                            name="firstname"
-                            label="Firstname"
-                            id="firstname"
-                            placeholder="First Name"
-                            value={this.state.firstname}
-                            onChange={this.firstname}
-                        />
-                        <h6 className="error">{this.state.err_firstname}</h6>
-                        <input
-                            className="form-control"
-                            name="lastname"
-                            id="lastname"
-                            label="Lastname"
-                            placeholder="Last Name"
-                            value={this.state.lastname}
-                            onChange={this.lastname}
-                        />
-                        <h6 className="error">{this.state.err_lastname}</h6>
-                        <input
-                            className="form-control"
-                            name="email"
-                            id="email"
-                            label="email"
-                            placeholder="Email Address"
-                            value={this.state.email}
-                            onChange={this.email}
-                        />
-                        <h6 className="error">{this.state.err_email}</h6>
-                        <input
-                            className="form-control"
-                            type="address"
-                            name="address"
-                            id="address"
-                            label="address"
-                            placeholder="Address"
-                            value={this.state.address}
-                            onChange={this.address}
-                        />
-                        <h6 className="error">{this.state.err_address}</h6>
-                        <input
-                            className="form-control"
-                            type="city"
-                            name="city"
-                            id="city"
-                            label="city"
-                            placeholder="City"
-                            value={this.state.city}
-                            onChange={this.city}
-                        />
-                        <h6 className="error">{this.state.err_city}</h6>
-                        <input
-                            className="form-control"
-                            type="region"
-                            name="region"
-                            id="region"
-                            label="region"
-                            placeholder="Region"
-                            value={this.state.region}
-                            onChange={this.region}
-                        />
-                        <h6 className="error">{this.state.err_region}</h6>
-                        <input
-                            className="form-control"
-                            type="zipcode"
-                            name="zipcode"
-                            id="zipcode"
-                            label="zipcode"
-                            placeholder="Zipcode"
-                            value={this.state.zipcode}
-                            onChange={this.zipcode}
-                        />
-                        <h6 className="error">{this.state.err_zipcode}</h6>
-                        <input
-                            className="form-control"
-                            type="phone_number"
-                            name="phone_number"
-                            id="phone_number"
-                            label="phone_number"
-                            placeholder="Phone Number"
-                            value={this.state.phone_number}
-                            onChange={this.phone_number}
-                        />
-                        <h6 className="error">{this.state.err_phone_number}</h6>
-                        <input
-                            className="form-control"
-                            type="date"
-                            name="birthday"
-                            id="birthday"
-                            label="birthday"
-                            placeholder="Birthday"
-                            value={this.state.birthday}
-                            onChange={this.birthday}
-                        />
-                        <h6 className="error">{this.state.err_birthday}</h6>
-                        <button
-                            className="btn"
-                            type="submit"
-                            onSubmit={this.onSubmit}
-                            onClick={this.handleSubmit}
-                        >
-                            Edit Profile
-                        </button>
-                    </form>
-                </div>
-                <div className="footer">
-                    <Link to="/userdashboard">
-                        <button
-                            className="btn"
-                            type="submit"
-                            onClick={this.handleSubmit}
-                        >
-                            Back to Dashboard
-                        </button>
-                    </Link>
-                </div>
+                <UserNavigationBar active={4} />
+                <div className="header-editprofile">Edit Profile</div>
+                <form className="form" onSubmit={this.onSubmit}>
+                    <input
+                        className="form-control"
+                        name="firstname"
+                        label="Firstname"
+                        id="firstname"
+                        placeholder="First Name"
+                        value={this.state.firstname}
+                        onChange={this.firstname}
+                    />
+                    <h6 className="error">{this.state.err_firstname}</h6>
+                    <input
+                        className="form-control"
+                        name="lastname"
+                        id="lastname"
+                        label="Lastname"
+                        placeholder="Last Name"
+                        value={this.state.lastname}
+                        onChange={this.lastname}
+                    />
+                    <h6 className="error">{this.state.err_lastname}</h6>
+                    <input
+                        className="form-control"
+                        name="email"
+                        id="email"
+                        label="email"
+                        placeholder="Email Address"
+                        value={this.state.email}
+                        onChange={this.email}
+                    />
+                    <h6 className="error">{this.state.err_email}</h6>
+                    <input
+                        className="form-control"
+                        type="address"
+                        name="address"
+                        id="address"
+                        label="address"
+                        placeholder="Address"
+                        value={this.state.address}
+                        onChange={this.address}
+                    />
+                    <h6 className="error">{this.state.err_address}</h6>
+                    <input
+                        className="form-control"
+                        type="city"
+                        name="city"
+                        id="city"
+                        label="city"
+                        placeholder="City"
+                        value={this.state.city}
+                        onChange={this.city}
+                    />
+                    <h6 className="error">{this.state.err_city}</h6>
+                    <input
+                        className="form-control"
+                        type="region"
+                        name="region"
+                        id="region"
+                        label="region"
+                        placeholder="Region"
+                        value={this.state.region}
+                        onChange={this.region}
+                    />
+                    <h6 className="error">{this.state.err_region}</h6>
+                    <input
+                        className="form-control"
+                        type="zipcode"
+                        name="zipcode"
+                        id="zipcode"
+                        label="zipcode"
+                        placeholder="Zipcode"
+                        value={this.state.zipcode}
+                        onChange={this.zipcode}
+                    />
+                    <h6 className="error">{this.state.err_zipcode}</h6>
+                    <input
+                        className="form-control"
+                        type="phone_number"
+                        name="phone_number"
+                        id="phone_number"
+                        label="phone_number"
+                        placeholder="Phone Number"
+                        value={this.state.phone_number}
+                        onChange={this.phone_number}
+                    />
+                    <h6 className="error">{this.state.err_phone_number}</h6>
+                    <input
+                        className="form-control"
+                        type="date"
+                        name="birthday"
+                        id="birthday"
+                        label="birthday"
+                        placeholder="Birthday"
+                        value={this.state.birthday}
+                        onChange={this.birthday}
+                    />
+                    <h6 className="error">{this.state.err_birthday}</h6>
+                    <button
+                        className="editprofile-btn btn"
+                        type="submit"
+                        onSubmit={this.onSubmit}
+                        onClick={this.handleSubmit}
+                    >
+                        Submit
+                    </button>
+                </form>
             </div>
         );
     }

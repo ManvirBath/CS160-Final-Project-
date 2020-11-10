@@ -71,15 +71,15 @@ class UserDashboard extends React.Component {
             throw error;
         }
     }
-    async componentDidMount() {
+    componentDidMount() {
         this.state.axiosInstance = axiosInstance;
         console.log(
             'Header AFTER: ' +
                 this.state.axiosInstance.defaults.headers['Authorization']
         );
-        const clients = await this.getClients();
-        const accounts = await this.getAccounts();
-        const iD = await this.setID();
+        const clients = this.getClients();
+        const accounts = this.getAccounts();
+        const iD = this.setID();
         this.setState({ loading: false });
     }
 
@@ -89,14 +89,25 @@ class UserDashboard extends React.Component {
         let acctTemplate = this.state.accts.map((v) => (
             <div className="box-userdb">
                 <div key={v.account_num} className="accounts-container">
-                    <div className={v.account_type} id="accounts-info">
-                        <div id="userdb-account-type">{v.account_type}</div>
+                    <Link
+                        to={{
+                            pathname: '/account',
+                            account_num: v.account_num,
+                            acct_type: v.account_type,
+                            balance: v.balance,
+                        }}
+                    >
+                        <div className={v.account_type} id="accounts-info">
+                            <div id="userdb-account-type">{v.account_type}</div>
 
-                        <div id="userdb-account-balance">${v.balance}</div>
-                        <div id="userdb-account-number">{v.account_num}</div>
+                            <div id="userdb-account-balance">${v.balance}</div>
+                            <div id="userdb-account-number">
+                                {v.account_num}
+                            </div>
 
-                        <div id="userdb-bal">Available Balance</div>
-                    </div>
+                            <div id="userdb-bal">Available Balance</div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         ));

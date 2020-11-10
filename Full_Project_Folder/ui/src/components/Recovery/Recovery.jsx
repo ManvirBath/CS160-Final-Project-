@@ -26,7 +26,7 @@ class Recovery extends React.Component {
                         placeholder="Email Address"
                     />
                     <button
-                        className="btn"
+                        className="Recovery-btn btn"
                         onClick={() => {
                             this.props.Recovery({ email });
                         }}

@@ -5,38 +5,38 @@
     height: 100vh;
 }
 
-.acctTypeName {
+.Account .acctTypeName {
     color: black;
     text-align: center;
     margin-top: 10px;
 }
-.acctBalance {
+.Account .acctBalance {
     margin-top: 5vh;
     color: black;
     text-align: center;
 }
-.account-table {
+.Account .account-table {
     display: flex;
     margin-top: 10px;
 }
-table {
+.Account table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-td,
-th {
+.Account td,
+.Account th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
 
-tr:nth-child(even) {
+.Account tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-#account-title {
+.Account #account-title {
     font-size: 1.75em;
     margin-top: 25px;
     text-align: center;

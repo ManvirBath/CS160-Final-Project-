@@ -55,7 +55,7 @@ class App extends React.Component {
                         <Route
                             exact
                             path="/"
-                            render={(props) => <Login {...props} dark={dark} />}
+                            render={(props) => <Main {...props} dark={dark} />}
                         />
                         <Route path="/main" component={Main} />
                         <Route path="/login" component={Login} />
