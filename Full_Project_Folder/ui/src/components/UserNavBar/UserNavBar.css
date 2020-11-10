@@ -1,8 +1,9 @@
 .usernavbar {
+    display: flex;
     background-color: #4169e1;
     width: 100vw;
 }
-.navlist {
+.usernavbar .navlist {
     height: 2em;
     font-size: 1.25em;
     background-color: #dcdcdc;
@@ -24,16 +25,22 @@
     font-size: 2.5em;
 }
 
-#dropdown-basic {
+.usernavbar .dropdown-basic {
     font-size: 1em;
     color: #6e87d2;
 }
-.selected {
+.usernavbar .selected {
     background-color: #4e75ec;
     color: white;
     height: 40px;
 }
-.selected #dropdown-basic,
-.selected .nav-link {
+.usernavbar .selected .dropdown-basic,
+.usernavbar .selected .nav-link {
     color: white;
+}
+.usernavbar a {
+    padding-right: 25px;
+}
+.usernavbar a:hover {
+    text-decoration: none;
 }

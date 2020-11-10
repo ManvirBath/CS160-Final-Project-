@@ -4,26 +4,26 @@
     flex-direction: column;
     height: 100vh;
 }
-.closeacct {
+.closeAccount .closeacct {
     text-align: center;
     flex-direction: column;
     float: inherit;
     margin-top: 15px;
     margin: auto;
 }
-.closeaccount-nextBtn {
+.closeAccount .closeaccount-nextBtn {
     text-align: center;
     margin-top: 25px;
 }
-.closeaccount-types {
+.closeAccount .closeaccount-types {
     margin-bottom: 250px;
 }
-#closeacct-greeting {
+.closeAccount #closeacct-greeting {
     font-size: 3em;
     margin: 10px;
     text-align: center;
 }
-#closeacct-option {
+.closeAccount #closeacct-option {
     font-size: 1.5em;
     margin-bottom: 25px;
 }

@@ -63,6 +63,14 @@ const dropDown = [
                 name: 'Edit Profile',
                 href: '/edit_profile',
             },
+            {
+                name: 'Find ATMS',
+                href: '/GMap',
+            },
+            {
+                name: 'Contact Us',
+                href: '/Contact',
+            },
         ],
     },
 ];
@@ -100,7 +108,7 @@ class UserNavigationBar extends React.Component {
     getSubCat(name, children) {
         return (
             <Dropdown>
-                <Dropdown.Toggle variant="" id="dropdown-basic">
+                <Dropdown.Toggle variant="" className="dropdown-basic">
                     {name}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -137,6 +145,7 @@ class UserNavigationBar extends React.Component {
                     <div className="header-logoff lastItem">
                         <Link to="/main">
                             <Button
+                                className="usernavbar-button"
                                 variant="light"
                                 id="logout-usernavbar"
                                 onClick={this.handleLogout}

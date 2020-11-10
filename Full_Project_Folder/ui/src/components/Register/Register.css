@@ -4,16 +4,16 @@
     display: flex;
     height: 100vh;
 }
-.form {
+.Register .form {
     display: flex;
     flex-direction: column;
     margin-top: 7.5vh;
 }
-.form-control {
+.Register .form-control {
     display: flex;
     justify-content: center;
 }
-.Logo {
+.Register.Logo {
     margin-bottom: 1.5em;
 }
 .Register input {

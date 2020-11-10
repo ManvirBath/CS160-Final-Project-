@@ -4,7 +4,7 @@
     flex-direction: column;
     height: 100vh;
 }
-.container-userdash {
+.userdashboard .container-userdash {
     color: black;
     display: flex;
     align-items: center;
@@ -12,7 +12,7 @@
     justify-content: center;
     height: 100%;
 }
-.box-userdb {
+.userdashboard .box-userdb {
     margin: 8px;
     padding: 8px;
     width: 70vw;
@@ -21,18 +21,18 @@
         -3px -3px 3px rgba(255, 255, 255, 0.5);
     transition: background-color 0.5s;
 }
-.box-userdb:hover {
+.userdashboard .box-userdb:hover {
     background-color: rgb(255, 255, 255);
     box-shadow: inset 3px 3px 3px rgba(0, 0, 0, 0.1),
         inset -3px -3px 3px rgba(255, 255, 255, 0.5);
     cursor: pointer;
 }
-.greeting-userdash {
+.userdashboard .greeting-userdash {
     margin: 15px;
     font-size: 2em;
 }
 
-.scrollbox-userdb {
+.userdashboard .scrollbox-userdb {
     background-color: #f1f1f1;
     color: #3b3c3e;
     font-size: 12px;
@@ -43,34 +43,40 @@
     overflow: auto;
     overflow-x: hidden;
 }
-#accounts-info {
+.userdashboard #accounts-info {
     display: flex;
     border-collapse: collapse;
     flex-direction: column;
     align-items: baseline;
 }
 
-#personalaccount-userdb {
+.userdashboard #personalaccount-userdb {
     background-color: #f1f1f1;
     font-size: 1.9em;
     margin-bottom: 25px;
 }
-#userdb-account-type {
+.userdashboard #userdb-account-type {
     text-transform: capitalize;
     font-size: 1.75em;
     margin-bottom: -7.5px;
 }
-#userdb-account-balance {
+.userdashboard #userdb-account-balance {
     margin-left: auto;
     margin-top: -25px;
     font-size: 1.75em;
 }
-#userdb-account-number {
+.userdashboard #userdb-account-number {
     font-size: 1em;
 }
-#userdb-bal {
+.userdashboard #userdb-bal {
     text-decoration: none;
     margin-left: auto;
     font-size: 1em;
     margin-top: -20px;
+}
+.userdashboard .accounts-container a {
+    color: black;
+}
+.userdashboard a:hover {
+    text-decoration: none;
 }

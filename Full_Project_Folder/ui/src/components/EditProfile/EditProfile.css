@@ -3,23 +3,28 @@
     flex-direction: column;
     display: flex;
     height: 100vh;
+    background-color: #f1f1f1;
 }
-.form {
+.EditProfile .header-editprofile {
+    font-size: 2.5em;
+    margin-top: 25px;
+}
+.EditProfile .form {
     display: flex;
     flex-direction: column;
-    margin-top: 7.5vh;
+    margin-top: 3vh;
 }
-.form-control {
+.EditProfile .form-control {
     display: flex;
     justify-content: center;
 }
-.Logo {
+.EditProfile .Logo {
     margin-bottom: 1.5em;
 }
 .EditProfile input {
     color: black;
-    margin-top: 7.5px;
-    margin-bottom: 7.5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .EditProfile .header {
     font-size: 1.5em;
@@ -31,11 +36,11 @@
 .EditProfile .footer a {
     color: white;
 }
-.EditProfile button {
+.EditProfile .editprofile-btn {
     background: #7b97ea;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.EditProfile button:hover {
+.EditProfile .editprofile-btn:hover {
     background: #1c41b0;
 }
