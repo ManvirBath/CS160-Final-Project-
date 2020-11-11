@@ -1,6 +1,27 @@
 .managerdashboard {
-  display: flex;
-  background-color: #f1f1f1;
-  flex-direction: column;
-  height: 100vh;
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.Account .account-table {
+    display: flex;
+    margin-top: 10px;
+}
+.Account table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.Account td,
+.Account th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.Account tr:nth-child(even) {
+    background-color: #dddddd;
 }

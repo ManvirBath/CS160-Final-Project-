@@ -22,26 +22,13 @@ class ManagerDashboard extends React.Component {
             loading: true,
         };
         this.selected_client = this.selected_client.bind(this);
+        this.selected_acct = this.selected_acct.bind(this);
     }
     selected_client(e) {
         this.setState({ selected_client: e.target.value });
-        let all_info = this.state.all_info;
-        for (var index = 0; index < all_info.length; index++) {
-            if (all_info[index].email === this.state.selected_client) {
-                console.log(all_info[index].accounts);
-                this.setState({
-                    selected_client_accts: all_info[index].accounts.map(
-                        (x) => x
-                    ),
-                });
-                //console.log(this.state.selected_client_accts);
-            }
-        }
-
-        this.state.selected_acct = this.state.selected_client_accts.map((v) => (
-            <option value={v.account_num}>{v.account_num}</option>
-        ));
-        //console.log(this.selected_client_accts.account_num);
+    }
+    selected_acct(e) {
+        this.setState({ selected_acct: e.target.value });
     }
     async getClientsAndAccts() {
         try {
@@ -83,6 +70,34 @@ class ManagerDashboard extends React.Component {
         this.setState({ loading: false });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.selected_client !== this.state.selected_client) {
+            let all_info = this.state.all_info;
+            for (var index = 0; index < all_info.length; index++) {
+                if (all_info[index].email === this.state.selected_client) {
+                    console.log(all_info[index].accounts);
+                    this.setState({
+                        selected_client_accts: all_info[index].accounts.map(
+                            (x) => x
+                        ),
+                    });
+                }
+            }
+        }
+        if (prevState.selected_acct !== this.state.selected_acct) {
+            let acct_info = this.state.selected_client_accts;
+            for (var index = 0; index < acct_info.length; index++) {
+                if (acct_info[index].account_id === this.state.selected_acct) {
+                    console.log(acct_info[index].transactions);
+                    this.setState({
+                        selected_acct_transactions: acct_info[
+                            index
+                        ].transactions.map((x) => x),
+                    });
+                }
+            }
+        }
+    }
     render() {
         let all_client_email = this.state.all_clients.map((v) => (
             <option value={v}>{v}</option>
@@ -92,6 +107,17 @@ class ManagerDashboard extends React.Component {
                 {v.account_type} {v.account_id}
             </option>
         ));
+
+        let acctTransactions = this.state.selected_acct_transactions.map(
+            (v, index) => (
+                <tr>
+                    <th>{index + 1}</th>
+                    <th>{v.transaction_date}</th>
+                    <th>{v.transaction_amount}</th>
+                    <th>{v.transaction_type}</th>
+                </tr>
+            )
+        );
 
         if (this.state.loading) {
             return (
@@ -145,7 +171,11 @@ class ManagerDashboard extends React.Component {
                             Accounts
                         </label>
                     </div>
-                    <select class="custom-select" id="accounts">
+                    <select
+                        class="custom-select"
+                        id="accounts"
+                        onChange={this.selected_acct}
+                    >
                         <option value="defaultVal" disabled selected>
                             Select Account
                         </option>
@@ -153,7 +183,20 @@ class ManagerDashboard extends React.Component {
                     </select>
                 </div>
 
-                <div className="query-results"></div>
+                <div className="query-results">
+                    <h3>Transactions</h3>
+                    <div className="account-table">
+                        <table id="account-table">
+                            <tr>
+                                <th>Transaction Number</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                            {acctTransactions}
+                        </table>
+                    </div>
+                </div>
             </div>
         );
     }
