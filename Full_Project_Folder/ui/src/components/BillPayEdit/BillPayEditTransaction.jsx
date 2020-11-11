@@ -15,25 +15,27 @@ class BillPayTransaction extends React.Component {
             pay_date: this.props.location.pay_date || localStorage.getItem('pay_date'),
             frequency: this.props.location.frequency || localStorage.getItem('frequency'),
         };
+        
     }
 
     componentDidMount() {
-        console.log(typeof this.props.location.from_acct);
-        console.log(typeof this.props.location.routing_num);
-        console.log(typeof this.props.location.to_acct);
-        console.log(typeof this.props.location.amount);
-        console.log(typeof this.props.location.pay_date);
+        console.log(this.state.from_acct);
+        console.log(this.state.routing_num);
+        console.log(this.state.to_acct);
+        console.log(this.state.amount);
+        console.log(this.state.pay_date);
     }
 
-    check(e) {
-        const id = localStorage.getItem('bill_id')
-        axiosInstance
+    async check(e) {
+        const id = await localStorage.getItem('bill_id');
+        console.log("PRESSED:" + localStorage.getItem('from_acct'));
+        const response = await axiosInstance
           .post(`bill_payments/${id}/edit_bill_payment/`, {
-            from_account_num: this.state.from_acct,
-            routing_num: this.state.routing_num,
-            to_account_num: this.state.to_acct,
-            amount: this.state.amount,
-            date: this.state.pay_date,
+            from_account_num: localStorage.getItem('from_acct'),
+            routing_num: localStorage.getItem('routing_num'),
+            to_account_num: localStorage.getItem('to_acct'),
+            amount: localStorage.getItem('amount'),
+            date: localStorage.getItem('pay_date'),
           })
           .catch((error) => {
             console.log(error.response.status);

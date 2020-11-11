@@ -44,7 +44,7 @@ class BillPayEdit extends React.Component {
             const d = res.data;
             this.setState({
                 accts: d,
-                from_acct: this.props.location.from_acct,
+                from_acct: this.state.from_acct,
             });
         });
 
@@ -62,7 +62,7 @@ class BillPayEdit extends React.Component {
     }
     from_acct(e) {
         this.setState({
-            from_acct: e.target.selectedOptions[0],
+            from_acct: e.target.selectedOptions[0].value,
             errorFromAcct: '',
         });
     }

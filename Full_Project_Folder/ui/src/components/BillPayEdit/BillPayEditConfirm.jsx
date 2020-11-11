@@ -15,6 +15,8 @@ class BillPayEditConfirm extends React.Component {
             pay_date: this.props.location.pay_date || localStorage.getItem('pay_date'),
             frequency: this.props.location.frequency || localStorage.getItem('frequency'),
         };
+
+        
     }
 
     render() {

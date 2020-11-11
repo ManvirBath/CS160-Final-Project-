@@ -85,6 +85,7 @@ class BillPayShow extends React.Component {
                             localStorage.setItem('routing_num', v.routing_num);
                             localStorage.setItem('amount', v.amount );
                             localStorage.setItem('pay_date', v.date);
+                            localStorage.setItem('bill_id', v.id);
                         }}>
                         Edit
                     </button>
@@ -109,6 +110,7 @@ class BillPayShow extends React.Component {
                         localStorage.setItem('amount', v.amount );
                         localStorage.setItem('pay_date', v.date);
                         localStorage.setItem('frequency', this.state.frequency);
+                        localStorage.setItem('bill_id', v.id);
                     }}>
                         Cancel
                     </button>
