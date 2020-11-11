@@ -47,31 +47,6 @@ class BillPayShow extends React.Component {
         this.setState({ loading: false });
     }
 
-    // check(e) {
-    //     const id = localStorage.getItem('user_id')
-
-    //     this.setState({to_acct: this.props.to_acct })
-    //     this.setState({from_acct: this.props.from_acct })
-    //     this.setState({routing_num: this.props.routing_num})
-    //     this.setState({amount : this.props.amount })
-    //     this.setState({pay_date: this.props.pay_date })
-    //     this.setState({frequency : this.props.frequency })
-
-    //     console.log(this.state.to_acct)
-    //     // console.log(this.props.from_acct)
-    //     // console.log(this.props.location.routing_num)
-    //     // console.log(this.props.location.amount)
-    //     // console.log(this.props.location.frequency)
-    //     // console.log(this.props.location.pay_date)
-
-    //     // localStorage.setItem('to_acct', this.props.location.to_acct);
-    //     // localStorage.setItem('from_acct', this.props.location.from_acct);
-    //     // localStorage.setItem('routing_num', this.props.location.routing_num);
-    //     // localStorage.setItem('amount', this.props.location.amount );
-    //     // localStorage.setItem('frequency', this.props.location.frequency);
-    //     // localStorage.setItem('pay_date', this.props.location.pay_date);
-    //   }
-
     render() {
         let paymentTemplate = this.state.bill_payments.map((v) => (
             <div className="box-billpayshow">
