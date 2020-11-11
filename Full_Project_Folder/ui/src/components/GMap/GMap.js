@@ -51,7 +51,6 @@ class MapContainer extends React.Component {
         };
     }
     componentDidUpdate(prevProps, prevState) {
-        debugger;
         if (
             this.state.searchedLocation !== null &&
             !Object.is(this.state.searchedLocation, prevState.searchedLocation)
@@ -146,7 +145,7 @@ class MapContainer extends React.Component {
             return (
                 <Marker
                     key={atm.place_id}
-                    animation={ANIMATION.BOUNCE}
+                    animation={ANIMATION.DROP}
                     position={atm.geometry.location}
                     title={atm.name}
                     onClick={() => {
@@ -177,6 +176,7 @@ class MapContainer extends React.Component {
             }
             this.setState({ infoWindow: result });
         });
+        this.setState({ infoWindow: null });
     }
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;

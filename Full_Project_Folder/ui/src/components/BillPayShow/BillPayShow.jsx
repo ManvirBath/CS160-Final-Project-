@@ -26,7 +26,7 @@ class BillPayShow extends React.Component {
         try {
             const res2 = await axiosInstance.get('/bill_payments');
             let loaded_bills = res2.data;
-            this.setState({ bill_payments: loaded_bills });
+            this.setState({ bill_payments: loaded_bills, loading: false });
             return res2;
         } catch (error) {
             // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
