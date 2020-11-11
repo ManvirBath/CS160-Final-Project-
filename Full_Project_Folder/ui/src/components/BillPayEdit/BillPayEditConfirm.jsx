@@ -7,7 +7,7 @@ class BillPayEditConfirm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: window.location.pathname.split( '/' )[2] || -1
+            id: window.location.pathname.split('/')[2] || -1,
         };
     }
 
@@ -28,14 +28,14 @@ class BillPayEditConfirm extends React.Component {
                     <h4>Frequency: One Time</h4>
                 </div>
                 <div className="billpay-buttons">
-                    <Link 
+                    <Link
                         to={{
                             pathname: `/billpayedit/${this.state.id}`,
                             to_acct: this.props.location.to_acct,
                             from_acct: this.props.location.from_acct,
                             routing_num: this.props.location.routing_num,
                             amount: this.props.location.amount,
-                            pay_date: this.props.location.pay_date
+                            pay_date: this.props.location.pay_date,
                         }}
                     >
                         <button type="button" class="btn btn-danger">

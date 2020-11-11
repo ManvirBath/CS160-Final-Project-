@@ -4,29 +4,29 @@
     flex-direction: column;
     height: 0;
 }
-.contactpage {
+.contact .contactpage {
     flex-direction: column;
     text-align: center;
     margin-top: 100px;
 }
-.contact-jumbotron {
+.contact .contact-jumbotron {
     text-align: center;
-    margin-top: 25px;
+    margin-top: 125px;
     line-height: normal;
 }
-.contact-upper {
+.contact .contact-upper {
     width: 100%;
-    height: 120px;
+    height: 105px;
     margin-top: -50px;
     font-size: 1.5em;
     font-family: cursive;
 }
-.contact-office-location {
+.contact .contact-office-location {
     display: inline-block;
     font-size: 1.5em;
     font-family: cursive;
 }
-.contact-phone {
+.contact .contact-phone {
     position: relative;
     bottom: 100px;
     left: 255px;
@@ -36,7 +36,7 @@
     margin: 0;
     clear: inherit;
 }
-.contact-email {
+.contact .contact-email {
     position: relative;
     bottom: 10px;
     right: 0px;
@@ -44,21 +44,27 @@
     display: inline-block;
     font-family: cursive;
 }
-#contactus-greeting {
+.contact .footer a {
+    display: flex;
+    color: white;
+    font-size: 1.25em;
+    justify-content: center;
+}
+.contact #contactus-greeting {
     text-align: center;
     color: white;
     margin-top: 50px;
     font-size: 3em;
 }
-#office-location-header {
+.contact #office-location-header {
     font-size: 1.25em;
     font-family: cursive;
 }
-#contact-number-header {
+.contact #contact-number-header {
     font-size: 1.5em;
     font-family: cursive;
 }
-#contact-email-header {
+.contact #contact-email-header {
     font-size: 1.5em;
     font-family: cursive;
 }

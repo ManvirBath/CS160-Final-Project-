@@ -11,7 +11,6 @@ class Contact extends React.Component {
     render() {
         return (
             <div className="contact">
-                <UserNavigationBar active={4} />
                 <div id="contactus-greeting">Contact Us</div>
                 <Jumbotron className="contact-jumbotron">
                     <div className="contact-upper">
@@ -45,6 +44,12 @@ class Contact extends React.Component {
                         <div id="contact-email">DeepLearningBank@email.com</div>
                     </span>
                 </Jumbotron>
+                <div className="footer">
+                    <Link to="/main">Back to home page</Link>
+                </div>
+                <div className="footer">
+                    <Link to="/userdashboard">Back to dashboard</Link>
+                </div>
             </div>
         );
     }

@@ -1,6 +1,13 @@
 .managerdashboard {
+<<<<<<< HEAD
   display: flex;
   background-color: #f1f1f1;
   flex-direction: column;
   height: 100vh;
+=======
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
+>>>>>>> 2c24fbcab6dc4fd8fbe4e9f29cf3c85a13c249e8
 }

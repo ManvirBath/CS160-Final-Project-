@@ -4,12 +4,12 @@
     display: flex;
     height: 100vh;
 }
-.recovery-form {
+.Recovery .recovery-form {
     display: flex;
     flex-direction: column;
     margin-top: 25vh;
 }
-.Logo {
+.Recovery .Logo {
     margin-bottom: 1.5em;
 }
 .Recovery input {
@@ -27,7 +27,7 @@
 .Recovery .footer a {
     color: white;
 }
-.Recovery button {
+.Recovery .Recovery-btn {
     background: #7b97ea;
     margin-top: 10px;
     margin-bottom: 10px;

@@ -1,13 +1,12 @@
 import React from "react";
 import "./App.css";
 import axiosInstance from "./axios";
-import Login from "./components/Login";
 import Main from "./components/Main";
+import Login from "./components/Login";
 import Logout from "./components/Logout";
 import Recovery from "./components/Recovery";
 import Register from "./components/Register/Register";
 import EditProfile from "./components/EditProfile/EditProfile";
-
 import GMap from "./components/GMap";
 import UserDashboard from "./components/UserDashboard";
 import ManagerDashboard from "./components/ManagerDashboard";
@@ -24,10 +23,8 @@ import BillPay from "./components/BillPay/BillPay";
 import BillPayEdit from "./components/BillPayEdit/BillPayEdit";
 import BillPayEditConfirm from "./components/BillPayEdit/BillPayEditConfirm";
 import BillPayEditTransaction from "./components/BillPayEdit/BillPayEditTransaction";
-
 import BillPayCancelConfirm from "./components/BillPayCancel/BillPayCancelConfirm";
 import BillPayCancelTransaction from "./components/BillPayCancel/BillPayCancelTransaction";
-
 import BillPayShow from "./components/BillPayShow/BillPayShow";
 import BillPayConfirm from "./components/BillPay/BillPayConfirm";
 import BillPayTransaction from "./components/BillPay/BillPayTransaction";
@@ -60,15 +57,15 @@ class App extends React.Component {
               path="/"
               render={(props) => <Main {...props} dark={dark} />}
             />
-            <Route path="/login" component={Login} />
             <Route path="/main" component={Main} />
+            <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="/edit_profile" component={EditProfile} />
 
             <Route path="/recovery" component={Recovery} />
             <Route path="/gmap" component={GMap} />
             <Route path="/userdashboard" component={UserDashboard} />
-            <Route path="/managerdashboard" component={ManagerDashboard} />
+            {<Route path="/managerdashboard" component={ManagerDashboard} />}
             <Route path="/depositcheck" component={DepositCheck} />
             <Route
               path="/depositcheckconfirm"

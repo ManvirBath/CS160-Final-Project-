@@ -17,7 +17,7 @@ from .serializers import ClientSerializer, AccountSerializer, TransactionSeriali
 from .models import Client, Account, Transaction, BillPayment
 from .managers import ClientManager
 from django.db import IntegrityError, transaction
-from rest_framework.decorators import action, api_view
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.views import APIView
 from random import randint
 from background_task import background
@@ -30,9 +30,11 @@ import json
 Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYMENT)
 """
 @background(schedule=30)
+# Make sure to validate that if routing number in this bank, the account number is valid
 def automated_bill():
     time.sleep(5)
     queryset = BillPayment.objects.all()
+    account_queryset = Account.objects.all()
     for i in range(len(queryset)):
         cur_bill_pay = queryset[i]
         account = cur_bill_pay.account
@@ -41,7 +43,71 @@ def automated_bill():
             print("processed")
             continue
 
-        if timezone.now().date() >= cur_bill_pay.date and account.balance >= cur_bill_pay.amount:
+        if cur_bill_pay.routing_num == "123456789" and len(account_queryset.filter(account_num=cur_bill_pay.to_account_num)) == 0:
+            print("Invalid Account: {}, {}".format(cur_bill_pay.to_account_num, cur_bill_pay.id))
+            try:
+                with transaction.atomic():
+                    amount_for_transfer = cur_bill_pay.amount # need to have this as part of posting in API --> tell front end!!!
+                    location_transfer = 'Online' # make sure to put validator of Bill Payments though!!
+
+                    transaction_entry = Transaction(
+                        account = account,
+                        amount = amount_for_transfer,
+                        trans_type = 'External Transfer',
+                        location = location_transfer,
+                        memo = "Bill Payment CANCELLED - INVALID TO ACCT#" + " (External Transfer To Routing Number- {}, To Account Number- {})".format(cur_bill_pay.routing_num, cur_bill_pay.to_account_num)
+                    )
+                    transaction_entry.save()
+
+                    cur_bill_pay.status = 'cancelled'
+                    cur_bill_pay.save()
+            except IntegrityError as ex:
+                print("Invalid Account Error Process Not Working")
+
+        elif timezone.now().date() >= cur_bill_pay.date and account.balance >= cur_bill_pay.amount and cur_bill_pay.routing_num == "123456789":
+            print("Internal Acct#: {}. {}".format(cur_bill_pay.account, cur_bill_pay.id))
+            try:
+                transfer_to_acc_num = cur_bill_pay.to_account_num
+                transfer_to_account = account_queryset.filter(account_num=transfer_to_acc_num)[0]
+
+                with transaction.atomic():
+                    amount_for_transfer = cur_bill_pay.amount # need to have this as part of posting in API --> tell front end!!!
+                    location_deposited = 'Online'
+                    
+                    # FROM
+                    account.balance = account.balance - amount_for_transfer
+                    account.save()
+
+                    transaction_one = Transaction(
+                        account = account,
+                        amount = amount_for_transfer,
+                        trans_type = 'Withdraw - Internal Transfer',
+                        location = location_deposited,
+                        memo = "Bill Payment" + " (External Transfer To Routing Number- {}, To Account Number- {})".format(cur_bill_pay.routing_num, cur_bill_pay.to_account_num)
+                    )
+                    transaction_one.save()
+
+                    # TO
+                    transfer_to_account.balance = transfer_to_account.balance + amount_for_transfer
+                    transfer_to_account.save()
+
+                    transaction_two = Transaction(
+                        account = transfer_to_account,
+                        amount = amount_for_transfer,
+                        trans_type = 'Deposit - Internal Transfer',
+                        location = location_deposited,
+                        memo = 'Bill Payment - TO YOU: Internal Transfer' + ' (External Transfer To Routing Number- {}, From Account Number- {})'.format(cur_bill_pay.routing_num, cur_bill_pay.account.account_num)
+                    )
+                    transaction_two.save()
+
+                    cur_bill_pay.status = 'processed'
+                    cur_bill_pay.save()
+
+            except IntegrityError as ex:
+                print("Invalid Not Enough Funds Error Process Not Working")
+
+        elif timezone.now().date() >= cur_bill_pay.date and account.balance >= cur_bill_pay.amount and cur_bill_pay.routing_num != "123456789":
+            print("Outside External Acct#: {}, {}".format(cur_bill_pay.account, cur_bill_pay.id))
             try:
                 with transaction.atomic():
                     amount_for_transfer = cur_bill_pay.amount # need to have this as part of posting in API --> tell front end!!!
@@ -62,13 +128,120 @@ def automated_bill():
                     cur_bill_pay.status = 'processed'
                     cur_bill_pay.save()
             except IntegrityError as ex:
-                return Response({'error': str(ex)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                print("Processed Bill Payment Process Not Working")
 
-    return 
+        elif timezone.now().date() >= cur_bill_pay.date and account.balance < cur_bill_pay.amount:
+            print("cancelled Acct#: {}, {}".format(cur_bill_pay.account, cur_bill_pay.id))
+            try:
+                with transaction.atomic():
+                    amount_for_transfer = cur_bill_pay.amount # need to have this as part of posting in API --> tell front end!!!
+                    location_transfer = 'Online' # make sure to put validator of Bill Payments though!!
+
+                    transaction_entry = Transaction(
+                        account = account,
+                        amount = amount_for_transfer,
+                        trans_type = 'External Transfer',
+                        location = location_transfer,
+                        memo = "Bill Payment CANCELLED - NOT ENOUGH FUNDS" + " (External Transfer To Routing Number- {}, To Account Number- {})".format(cur_bill_pay.routing_num, cur_bill_pay.to_account_num)
+                    )
+                    transaction_entry.save()
+
+                    cur_bill_pay.status = 'cancelled'
+                    cur_bill_pay.save()
+            except IntegrityError as ex:
+                print("Cancel Bill Payment process not working")
+
+
+        
     
 
 
+@api_view(['GET'])
+def bank_statistics(request):
+    """
+    Used by bank staff to get the total number of clients, accounts, and transactions in the bank
+    Expected External Transfer JSON API:
+    {
+        "num_clients" : the total number of clients in the bank,
+        "num_accounts" : the total number of accounts in the bank
+        "num_transactions" : the total number of transactions in the bank
+    }
+    """
+    if request.user.is_staff:
+        num_clients = Client.objects.count()
+        num_accounts = Account.objects.count()
+        num_transactions = Transaction.objects.count()
+        return Response({'num_clients' : num_clients,
+                         'num_accounts' : num_accounts,
+                         'num_transactions' : num_transactions},
+                         status=status.HTTP_200_OK)
+    else:
+        return HttpResponse('Unauthorized', status=403)
 
+@api_view(['GET'])
+def client_account_statistics(request):
+    """
+    Used by bank staff to view all of the clients, their account balances, and their transactions
+    Expected External Transfer JSON API:
+    [
+        {
+            "email" : client's email
+            "accounts" :
+                [
+                    {
+                        "account_id" : id of the account
+                        "account_balance" : balance of the account
+                        "account_type" : type of the account (either checking or savings)
+                        "transactions" :
+                            [
+                                {
+                                    "transaction_amount" : (string) amount for this transaction
+                                    "transaction_date" : when the transaction took place
+                                    "transaction_type" : the type of the transaction
+                                },
+                                ...
+                            ]
+                    },
+                    ...
+                ]
+        },
+        ...
+    ]
+    """
+    if request.user.is_staff:
+        bank_data = []
+        for client in Client.objects.all():
+            client_data = {}
+            bank_data.append(client_data)
+
+            client_data['email'] = client.email
+
+            client_accounts = []
+            client_data['accounts'] = client_accounts
+
+            for account in Account.objects.all():
+                account_data = {}
+                client_accounts.append(account_data)
+
+                account_data['account_id'] = account.account_num
+                account_data['account_balance'] = account.balance
+                account_data['account_type'] = account.account_type
+
+                account_transactions = []
+                account_data['transactions'] = account_transactions
+
+                for transaction in Transaction.objects.all():
+                    transaction_data = {}
+                    account_transactions.append(transaction_data)
+
+                    transaction_data['transaction_amount'] = transaction.amount
+                    transaction_data['transaction_date'] = transaction.date
+                    transaction_data['transaction_type'] = transaction.trans_type
+
+        return Response(bank_data, status=status.HTTP_200_OK)
+
+    else:
+        HttpResponse('Unauthorized', status=403)
 
 # Create your views here.
 @api_view(['GET'])

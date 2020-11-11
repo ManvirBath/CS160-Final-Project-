@@ -7,17 +7,19 @@ class BillPayCancelConfirm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: window.location.pathname.split( '/' )[2] || -1
+            id: window.location.pathname.split('/')[2] || -1,
         };
     }
 
     render() {
         return (
-            <div className="BillPayConfirm">
+            <div className="BillPayCancel">
                 <UserNavigationBar active={1} />
                 <div className="billpay-headerDiv">
-                    <div id="billpay-confirm-transfer">Confirm Transfer</div>
-                    <div>Are you sure you want to cancel this bill payment?</div>
+                    <div id="billpay-confirm-transfer">Cancel Bill Payment</div>
+                    <div>
+                        Are you sure you want to cancel this bill payment?
+                    </div>
                 </div>
                 <div className="billpay-confirm-details">
                     <h4>Transfer From: {this.props.location.from_acct}</h4>
@@ -28,9 +30,9 @@ class BillPayCancelConfirm extends React.Component {
                     <h4>Frequency: One Time</h4>
                 </div>
                 <div className="billpay-buttons">
-                    <Link 
+                    <Link
                         to={{
-                            pathname: `/billpayshow`,
+                            pathname: '/billpayshow',
                         }}
                     >
                         <button type="button" class="btn btn-danger">
