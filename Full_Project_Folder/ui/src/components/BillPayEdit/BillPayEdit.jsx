@@ -10,7 +10,7 @@ class BillPayEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: -1,
+            id: this.props.location.id || -1,
             bill_payment: [],
 
             to_acct: this.props.location.to_acct || '',
@@ -55,16 +55,16 @@ class BillPayEdit extends React.Component {
     //     this.setState({ routing_num })
     //     this.setState({ amount  })
     // }
-    async componentDidMount() {
+    componentDidMount() {
         // const bills = await this.getBillPayments()
-        const param = await window.location.pathname.split('/')[2];
-        this.setState({ id: param });
-        const accounts = await axiosInstance.get('/accounts/').then((res) => {
+        console.log(this.props.location.id);
+        const accounts = axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
-            this.setState({ accts: d });
+            this.setState({
+                accts: d,
+                from_acct: this.props.location.from_acct,
+            });
         });
-        this.setState({ from_acct: this.props.location.from_acct });
-
         // console.log(this.state.routing_num)
         // console.log(this.state.amount)
         // console.log(this.state.pay_date)
@@ -72,27 +72,25 @@ class BillPayEdit extends React.Component {
     }
 
     to_acct(e) {
-        this.setState({ to_acct: e.target.value });
-        this.setState({ errorToAcct: '' });
+        this.setState({ to_acct: e.target.value, errorToAcct: '' });
     }
     from_acct(e) {
-        this.setState({ from_acct: e.target.selectedOptions[0] });
-        this.setState({ errorFromAcct: '' });
+        this.setState({
+            from_acct: e.target.selectedOptions[0],
+            errorFromAcct: '',
+        });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
-        this.setState({ errorAmount: '' });
+        this.setState({ amount: e.target.value, errorAmount: '' });
     }
     routing_num(e) {
-        this.setState({ routing_num: e.target.value });
-        this.setState({ errorRouting: '' });
+        this.setState({ routing_num: e.target.value, errorRouting: '' });
     }
     frequency(e) {
         this.setState({ frequency: e.target.selectedOptions[0].text });
     }
     pay_date(e) {
-        this.setState({ pay_date: e.target.value });
-        this.setState({ errorDate: '' });
+        this.setState({ pay_date: e.target.value, errorDate: '' });
     }
 
     handleSubmit(e) {
