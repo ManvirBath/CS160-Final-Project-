@@ -77,6 +77,7 @@ class UserDashboard extends React.Component {
             'Header AFTER: ' +
                 this.state.axiosInstance.defaults.headers['Authorization']
         );
+        localStorage.removeItem('bill_id')
         localStorage.removeItem('to_acct');
         localStorage.removeItem('from_acct');
         localStorage.removeItem('routing_num');

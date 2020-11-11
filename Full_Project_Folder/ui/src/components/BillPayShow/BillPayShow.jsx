@@ -19,6 +19,7 @@ class BillPayShow extends React.Component {
             bill_payments: [],
             loading: true,
         };
+
     }
 
     async getBillPayments() {
@@ -36,8 +37,40 @@ class BillPayShow extends React.Component {
 
     async componentDidMount() {
         const bills = await this.getBillPayments();
+        localStorage.removeItem('bill_id')
+        localStorage.removeItem('to_acct')
+        localStorage.removeItem('from_acct')
+        localStorage.removeItem('routing_num')
+        localStorage.removeItem('amount')
+        localStorage.removeItem('pay_date')
+        localStorage.removeItem('frequency')
         this.setState({ loading: false });
     }
+
+    // check(e) {
+    //     const id = localStorage.getItem('user_id')
+
+    //     this.setState({to_acct: this.props.to_acct })
+    //     this.setState({from_acct: this.props.from_acct })
+    //     this.setState({routing_num: this.props.routing_num})
+    //     this.setState({amount : this.props.amount })
+    //     this.setState({pay_date: this.props.pay_date })
+    //     this.setState({frequency : this.props.frequency })
+
+    //     console.log(this.state.to_acct)
+    //     // console.log(this.props.from_acct)
+    //     // console.log(this.props.location.routing_num)
+    //     // console.log(this.props.location.amount)
+    //     // console.log(this.props.location.frequency)
+    //     // console.log(this.props.location.pay_date)
+
+    //     // localStorage.setItem('to_acct', this.props.location.to_acct);
+    //     // localStorage.setItem('from_acct', this.props.location.from_acct);
+    //     // localStorage.setItem('routing_num', this.props.location.routing_num);
+    //     // localStorage.setItem('amount', this.props.location.amount );
+    //     // localStorage.setItem('frequency', this.props.location.frequency);
+    //     // localStorage.setItem('pay_date', this.props.location.pay_date);
+    //   }
 
     render() {
         let paymentTemplate = this.state.bill_payments.map((v) => (
@@ -70,7 +103,14 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" onClick={
+                        () => {
+                            localStorage.setItem('to_acct', v.to_account_num);
+                            localStorage.setItem('from_acct', v.account.split('/')[5]);
+                            localStorage.setItem('routing_num', v.routing_num);
+                            localStorage.setItem('amount', v.amount );
+                            localStorage.setItem('pay_date', v.date);
+                        }}>
                         Edit
                     </button>
                 </Link>
@@ -86,7 +126,15 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger" onClick={
+                    () => {
+                        localStorage.setItem('to_acct', v.to_account_num);
+                        localStorage.setItem('from_acct', v.account.split('/')[5]);
+                        localStorage.setItem('routing_num', v.routing_num);
+                        localStorage.setItem('amount', v.amount );
+                        localStorage.setItem('pay_date', v.date);
+                        localStorage.setItem('frequency', this.state.frequency);
+                    }}>
                         Cancel
                     </button>
                 </Link>
