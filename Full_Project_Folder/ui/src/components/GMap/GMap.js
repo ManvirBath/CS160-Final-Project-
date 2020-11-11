@@ -51,7 +51,6 @@ class MapContainer extends React.Component {
         };
     }
     componentDidUpdate(prevProps, prevState) {
-        debugger;
         if (
             this.state.searchedLocation !== null &&
             !Object.is(this.state.searchedLocation, prevState.searchedLocation)
@@ -108,6 +107,9 @@ class MapContainer extends React.Component {
     }
     getInfoWindow() {
         const { infoWindow } = this.state;
+        if (!infoWindow) {
+            return null;
+        }
         const {
             formatted_address = null,
             geometry,
@@ -146,7 +148,7 @@ class MapContainer extends React.Component {
             return (
                 <Marker
                     key={atm.place_id}
-                    animation={ANIMATION.BOUNCE}
+                    animation={ANIMATION.DROP}
                     position={atm.geometry.location}
                     title={atm.name}
                     onClick={() => {
@@ -175,8 +177,9 @@ class MapContainer extends React.Component {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 details = result;
             }
-            this.setState({ infoWindow: result });
+            this.setState({ infoWindow: details });
         });
+        this.setState({ infoWindow: null });
     }
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;
