@@ -1,0 +1,27 @@
+.MapContainer .myList {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100vh;
+    width: 250px;
+    min-width: 250px;
+}
+.MapContainer .myList--hide {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 0;
+    width: 0;
+}
+.MapContainer .myList .atmInfo {
+    background-color: rgba(125, 125, 125, 0.8);
+    border: solid 1px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-family: sans-serif;
+    color: white;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

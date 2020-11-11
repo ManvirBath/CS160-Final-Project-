@@ -107,9 +107,6 @@ class MapContainer extends React.Component {
     }
     getInfoWindow() {
         const { infoWindow } = this.state;
-        if (!infoWindow) {
-            return null;
-        }
         const {
             formatted_address = null,
             geometry,
@@ -177,7 +174,7 @@ class MapContainer extends React.Component {
             if (status === window.google.maps.places.PlacesServiceStatus.OK) {
                 details = result;
             }
-            this.setState({ infoWindow: details });
+            this.setState({ infoWindow: result });
         });
         this.setState({ infoWindow: null });
     }
