@@ -38,7 +38,7 @@ class CloseAccount extends React.Component {
   }
 
   toAcct(e) {
-    this.setState({ toAcct: e.target.value });
+    this.setState({ toAcct: e.target.value.split("|")[0] });
     this.setState({ errorToAcct: "" });
     this.setState({ errorIsSameAcct: "" });
   }
@@ -72,12 +72,12 @@ class CloseAccount extends React.Component {
       (this.state.errorIsSameAcct === "") &
       (this.state.errorToAcct === "")
     ) {
-      axiosInstance.post(`accounts/${this.props.location.toAcct}/deposit/`, {
+      axiosInstance.post(`accounts/${this.state.toAcct}/deposit/`, {
         amount: this.state.amount,
         location: "Online",
-        memo: " ",
-        check_path: " ",
+        memo: `CLOSED ACCOUNT #${this.state.toAcct}`
       });
+
       axiosInstance.post(`accounts/${this.state.closeAcct}/close_account/`, {
         location: "Online",
         memo: "ACCOUNT CLOSED: " + this.state.closeAcct,
@@ -92,6 +92,7 @@ class CloseAccount extends React.Component {
         {v.account_type} {v.account_num}: {v.balance}
       </option>
     ));
+    console.log(this.state.toAcct)
     return (
       <div className="closeAccount">
         <UserNavigationBar active={0} />
