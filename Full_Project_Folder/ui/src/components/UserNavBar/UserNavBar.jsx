@@ -5,7 +5,6 @@ import { Link, useHistory } from "react-router-dom";
 import "./UserNavBar.css";
 import Logo from "../Logo";
 const dropDown = [
-<<<<<<< HEAD
   {
     name: "Account",
     href: "",
@@ -68,78 +67,12 @@ const dropDown = [
         name: "Contact Us",
         href: "/contact",
       },
+      {
+        name: "Edit Profile",
+        href: "/edit_profile",
+      },
     ],
   },
-=======
-    {
-        name: 'Account',
-        href: '',
-        children: [
-            {
-                name: 'View my Account',
-                href: '/userdashboard',
-            },
-            {
-                name: 'Open an Account',
-                href: '/openaccount',
-            },
-            {
-                name: 'Close an Account',
-                href: '/closeaccount',
-            },
-        ],
-    },
-    {
-        name: 'Pay Bill',
-        href: '',
-        children: [
-            {
-                name: 'Create Bill Payment',
-                href: '/billpay',
-            },
-            {
-                name: 'Show Bill Payments',
-                href: '/billpayshow',
-            },
-        ],
-    },
-    {
-        name: 'Transfer',
-        href: '/billpay',
-        children: [
-            {
-                name: 'Between my accounts',
-                href: '/transferinternal',
-            },
-            {
-                name: 'Between external accounts',
-                href: '/transferexternal',
-            },
-        ],
-    },
-    {
-        name: 'Deposit',
-        href: '/depositcheck',
-    },
-    {
-        name: 'Services',
-        href: '',
-        children: [
-            {
-                name: 'ATM Locator',
-                href: '/GMap',
-            },
-            {
-                name: 'Contact Us',
-                href: '/contact',
-            },
-            {
-                name: 'Edit Profile',
-                href: '/edit_profile',
-            },
-        ],
-    },
->>>>>>> origin/master
 ];
 class UserNavigationBar extends React.Component {
   constructor(props) {
