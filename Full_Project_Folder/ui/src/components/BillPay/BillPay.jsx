@@ -135,6 +135,20 @@ class BillPay extends React.Component {
             e.preventDefault();
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
+
+        if (this.state.errorToAcct == '' &&
+            this.state.errorFromAcct == '' &&
+            this.state.errorRouting == '' &&
+            this.state.errorAmount == '' &&
+            this.state.errorDate== '') {
+                console.log("Hello")
+                localStorage.setItem('to_acct', this.state.to_acct);
+                localStorage.setItem('from_acct', this.state.from_acct.value);
+                localStorage.setItem('routing_num', this.state.routing_num);
+                localStorage.setItem('amount', this.state.amount);
+                localStorage.setItem('frequency', this.state.frequency);
+                localStorage.setItem('pay_date', this.state.pay_date);
+            }
     }
 
     render() {
