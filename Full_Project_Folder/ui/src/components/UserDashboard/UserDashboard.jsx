@@ -71,20 +71,40 @@ class UserDashboard extends React.Component {
             throw error;
         }
     }
-    componentDidMount() {
-        this.state.axiosInstance = axiosInstance;
+    async componentDidMount() {
+        this.state.axiosInstance = await axiosInstance;
         console.log(
             'Header AFTER: ' +
                 this.state.axiosInstance.defaults.headers['Authorization']
         );
-        const clients = this.getClients();
-        const accounts = this.getAccounts();
-        const iD = this.setID();
+        localStorage.removeItem('to_acct');
+        localStorage.removeItem('from_acct');
+        localStorage.removeItem('routing_num');
+        localStorage.removeItem('amount');
+        localStorage.removeItem('frequency');
+        localStorage.removeItem('pay_date');
+        
+        const clients = await this.getClients();
+        const accounts = await this.getAccounts();
+        const iD = await this.setID();
         this.setState({ loading: false });
     }
 
     render() {
         localStorage.setItem('user_id', this.state.id);
+
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            );
+        }
 
         let acctTemplate = this.state.accts.map((v) => (
             <div className="box-userdb">
@@ -113,19 +133,6 @@ class UserDashboard extends React.Component {
         ));
         const { name, saving, checking } = this.state;
         // console.log(localStorage)
-
-        if (this.state.loading) {
-            return (
-                <div>
-                    <Loader
-                        type="Puff"
-                        color="#00BFFF"
-                        height={100}
-                        width={100}
-                    />
-                </div>
-            );
-        }
 
         return (
             <div className="userdashboard">
