@@ -97,48 +97,39 @@ class EditProfile extends React.Component {
     }
 
     firstname(e) {
-        this.setState({ firstname: e.target.value });
-        this.setState({ err_firstname: '' });
+        this.setState({ firstname: e.target.value, err_firstname: '' });
     }
 
     lastname(e) {
-        this.setState({ lastname: e.target.value });
-        this.setState({ err_lastname: '' });
+        this.setState({ lastname: e.target.value, err_lastname: '' });
     }
 
     email(e) {
-        this.setState({ email: e.target.value });
-        this.setState({ err_email: '' });
+        this.setState({ email: e.target.value, err_email: '' });
     }
 
     address(e) {
-        this.setState({ address: e.target.value });
-        this.setState({ err_address: '' });
+        this.setState({ address: e.target.value, err_address: '' });
     }
 
     city(e) {
-        this.setState({ city: e.target.value });
-        this.setState({ err_city: '' });
+        this.setState({ city: e.target.value, err_city: '' });
     }
 
     region(e) {
-        this.setState({ region: e.target.value });
-        this.setState({ err_region: '' });
+        this.setState({ region: e.target.value, err_region: '' });
     }
 
     zipcode(e) {
-        this.setState({ zipcode: e.target.value });
-        this.setState({ err_zipcode: '' });
+        this.setState({ zipcode: e.target.value, err_zipcode: '' });
     }
 
     phone_number(e) {
-        this.setState({ phone_number: e.target.value });
-        this.setState({ err_phone_number: '' });
+        this.setState({ phone_number: e.target.value, err_phone_number: '' });
     }
 
     birthday(e) {
-        this.setState({ birthday: e.target.value });
-        this.setState({ err_birthday: '' });
+        this.setState({ birthday: e.target.value, err_birthday: '' });
     }
 
     calculate_age = (date) => {

@@ -39,43 +39,47 @@ class BillPay extends React.Component {
     }
 
     to_acct(e) {
-        this.setState({ to_acct: e.target.value, errorToAcct: '' });
+        this.setState({ to_acct: e.target.value });
+        this.setState({ errorToAcct: '' });
     }
     from_acct(e) {
-        this.setState({
-            from_acct: e.target.selectedOptions[0],
-            errorFromAcct: '',
-        });
+        this.setState({ from_acct: e.target.selectedOptions[0] });
+        this.setState({ errorFromAcct: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value, errorAmount: '' });
+        this.setState({ amount: e.target.value });
+        this.setState({ errorAmount: '' });
     }
     routing_num(e) {
-        this.setState({ routing_num: e.target.value, errorRouting: '' });
+        this.setState({ routing_num: e.target.value });
+        this.setState({ errorRouting: '' });
     }
     frequency(e) {
         this.setState({ frequency: e.target.selectedOptions[0].text });
     }
     pay_date(e) {
-        this.setState({ pay_date: e.target.value, errorDate: '' });
+        this.setState({ pay_date: e.target.value });
+        this.setState({ errorDate: '' });
     }
 
     handleSubmit(e) {
-        e.preventDefault();
         //validates to account
         if (this.state.to_acct === '') {
+            e.preventDefault();
             this.setState({
                 errorToAcct: 'Account number cannot be empty',
             });
         } else if (
-            this.state.to_acct.length > 8 ||
-            this.state.to_acct.length < 8
+            (this.state.to_acct.length > 8) |
+            (this.state.to_acct.length < 8)
         ) {
+            e.preventDefault();
             this.setState({
                 errorToAcct: 'Account number must be 8 digits',
             });
         }
         if (this.state.to_acct.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
             this.setState({
                 errorToAcct:
                     'Account number must contain only values 0-9 (inclusive)',
@@ -84,6 +88,7 @@ class BillPay extends React.Component {
 
         //validates routing number
         if (this.state.routing_num === '') {
+            e.preventDefault();
             this.setState({
                 errorRouting: 'Routing number cannot be empty',
             });
@@ -91,11 +96,13 @@ class BillPay extends React.Component {
             (this.state.routing_num.length > 9) |
             (this.state.routing_num.length < 9)
         ) {
+            e.preventDefault();
             this.setState({
                 errorRouting: 'Routing number must be 9 digits',
             });
         }
         if (this.state.routing_num.match(/^[0-9]*$/gm) == null) {
+            e.preventDefault();
             this.setState({
                 errorRouting:
                     'Routing number must contain only values 0-9 (inclusive)',
@@ -103,12 +110,14 @@ class BillPay extends React.Component {
         }
         //validates from account
         if (this.state.from_acct === '') {
+            e.preventDefault();
             this.setState({
                 errorFromAcct: 'Select an account to transfer from',
             });
         }
         //validates amount
         if (this.state.amount <= 0) {
+            e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
         }
         //validate paydate (make sure date selected isn't in past)
@@ -116,12 +125,14 @@ class BillPay extends React.Component {
         var parts = this.state.pay_date.split('-');
         var selectedDate = new Date(parts[0], parts[1] - 1, parts[2]);
         if (selectedDate < today) {
+            e.preventDefault();
             this.setState({
                 errorDate: 'Scheduled date cannot be in the past.',
             });
         }
         console.log(this.state.pay_date);
         if (this.state.pay_date == '') {
+            e.preventDefault();
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
     }

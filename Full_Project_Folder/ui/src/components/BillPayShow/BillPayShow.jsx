@@ -61,6 +61,7 @@ class BillPayShow extends React.Component {
                 <Link
                     to={{
                         pathname: `/billpayedit/${v.id}`,
+                        id: v.id,
                         to_acct: v.to_account_num,
                         from_acct: v.account.split('/')[5],
                         routing_num: v.routing_num,
