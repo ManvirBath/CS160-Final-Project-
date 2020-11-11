@@ -8,6 +8,9 @@ class BillPayTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            status_response:
+                "Thank you for your bill payment! Please contact us if you have any questions or concerns.",
+            alert_type: "alert alert-success",
             to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
             from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
             routing_num: this.props.location.routing_num || localStorage.getItem('routing_num'),
@@ -28,7 +31,7 @@ class BillPayTransaction extends React.Component {
 
     async check(e) {
         const id = await localStorage.getItem('bill_id');
-        console.log("PRESSED:" + localStorage.getItem('from_acct'));
+        
         const response = await axiosInstance
           .post(`bill_payments/${id}/edit_bill_payment/`, {
             from_account_num: localStorage.getItem('from_acct'),
