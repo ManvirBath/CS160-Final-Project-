@@ -10,6 +10,7 @@
     "semi": "error",
     "indent": ["error", 4],
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"]
+    "quotes": ["error", "single"],
+    "no-debugger": 2
   }
 }

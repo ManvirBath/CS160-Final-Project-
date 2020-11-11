@@ -59,11 +59,28 @@ class MapContainer extends React.Component {
       console.log("updating");
       this.searchNearBy();
     }
+<<<<<<< HEAD
     if (
       this.state.searchedLocation === null &&
       prevState.searchedLocation !== null
     ) {
       this.setState({ atms: [] });
+=======
+    componentDidUpdate(prevProps, prevState) {
+        if (
+            this.state.searchedLocation !== null &&
+            !Object.is(this.state.searchedLocation, prevState.searchedLocation)
+        ) {
+            console.log('updating');
+            this.searchNearBy();
+        }
+        if (
+            this.state.searchedLocation === null &&
+            prevState.searchedLocation !== null
+        ) {
+            this.setState({ atms: [] });
+        }
+>>>>>>> origin/master
     }
   }
   onLoad(input) {
@@ -189,6 +206,7 @@ class MapContainer extends React.Component {
             >
               {searchedLocation !== null && (
                 <Marker
+<<<<<<< HEAD
                   animation={ANIMATION.DROP}
                   position={searchedLocation.geometry.location}
                   title="Initial Search Location"
@@ -228,6 +246,106 @@ class MapContainer extends React.Component {
       </div>
     );
   }
+=======
+                    key={atm.place_id}
+                    animation={ANIMATION.DROP}
+                    position={atm.geometry.location}
+                    title={atm.name}
+                    onClick={() => {
+                        this.markerClick(atm);
+                    }}
+                />
+            );
+        });
+        return xml;
+    }
+    markerClick(atm) {
+        const { place_id } = atm;
+        const { placeService } = this;
+        const request = {
+            placeId: place_id,
+            fields: [
+                'name',
+                'formatted_phone_number',
+                'geometry',
+                'formatted_address',
+                'photo',
+            ],
+        };
+        placeService.getDetails(request, (result, status) => {
+            let details = null;
+            if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+                details = result;
+            }
+            this.setState({ infoWindow: result });
+        });
+        this.setState({ infoWindow: null });
+    }
+    render() {
+        const { searchedLocation, atms, infoWindow } = this.state;
+        return (
+            <div className="MapContainer">
+                <div style={{ background: 'white' }} className="gmap-header">
+                    <Link to="/main">Back to home page </Link>
+                    <Link to="/userdashboard">Back to dashboard</Link>
+                </div>
+                <div className="googleMap">
+                    <LoadScript
+                        googleMapsApiKey={API_KEY}
+                        libraries={libraries}
+                    >
+                        <GoogleMap
+                            options={options}
+                            mapContainerStyle={mapStyles}
+                            zoom={5}
+                            center={defaultCenter}
+                            onLoad={this.onLoad}
+                        >
+                            {searchedLocation !== null && (
+                                <Marker
+                                    animation={ANIMATION.DROP}
+                                    position={
+                                        searchedLocation.geometry.location
+                                    }
+                                    title="Initial Search Location"
+                                />
+                            )}
+                            {infoWindow !== null && this.getInfoWindow()}
+                            {atms.length > 0 && this.getATMS()}
+                            <Autocomplete
+                                onLoad={this.onLoad}
+                                onPlaceChanged={this.onPlaceChanged}
+                            >
+                                <input
+                                    type="text"
+                                    placeholder="Enter a chase atm"
+                                    style={{
+                                        boxSizing: 'border-box',
+                                        border: '1px solid transparent',
+                                        width: '240px',
+                                        height: '32px',
+                                        padding: '0 12px',
+                                        borderRadius: '3px',
+                                        boxShadow:
+                                            '0 2px 6px rgba(0, 0, 0, 0.3)',
+                                        fontSize: '14px',
+                                        outline: 'none',
+                                        textOverflow: 'ellipses',
+                                        position: 'absolute',
+                                        backgroundColor: 'white',
+                                        left: '50%',
+                                        top: '10px',
+                                        marginLeft: '-120px',
+                                    }}
+                                />
+                            </Autocomplete>
+                        </GoogleMap>
+                    </LoadScript>
+                </div>
+            </div>
+        );
+    }
+>>>>>>> origin/master
 }
 
 export default MapContainer;
