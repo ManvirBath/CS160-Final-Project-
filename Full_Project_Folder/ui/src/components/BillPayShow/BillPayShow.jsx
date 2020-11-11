@@ -19,6 +19,7 @@ class BillPayShow extends React.Component {
             bill_payments: [],
             loading: true,
         };
+
     }
 
     async getBillPayments() {
@@ -34,8 +35,16 @@ class BillPayShow extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.getBillPayments();
+    async componentDidMount() {
+        const bills = await this.getBillPayments();
+        localStorage.removeItem('bill_id')
+        localStorage.removeItem('to_acct')
+        localStorage.removeItem('from_acct')
+        localStorage.removeItem('routing_num')
+        localStorage.removeItem('amount')
+        localStorage.removeItem('pay_date')
+        localStorage.removeItem('frequency')
+        this.setState({ loading: false });
     }
 
     render() {
@@ -69,7 +78,15 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" onClick={
+                        () => {
+                            localStorage.setItem('to_acct', v.to_account_num);
+                            localStorage.setItem('from_acct', v.account.split('/')[5]);
+                            localStorage.setItem('routing_num', v.routing_num);
+                            localStorage.setItem('amount', v.amount );
+                            localStorage.setItem('pay_date', v.date);
+                            localStorage.setItem('bill_id', v.id);
+                        }}>
                         Edit
                     </button>
                 </Link>
@@ -85,7 +102,16 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-danger">
+                    <button type="submit" class="btn btn-danger" onClick={
+                    () => {
+                        localStorage.setItem('to_acct', v.to_account_num);
+                        localStorage.setItem('from_acct', v.account.split('/')[5]);
+                        localStorage.setItem('routing_num', v.routing_num);
+                        localStorage.setItem('amount', v.amount );
+                        localStorage.setItem('pay_date', v.date);
+                        localStorage.setItem('frequency', this.state.frequency);
+                        localStorage.setItem('bill_id', v.id);
+                    }}>
                         Cancel
                     </button>
                 </Link>
