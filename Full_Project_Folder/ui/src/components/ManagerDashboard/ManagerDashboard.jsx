@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './ManagerDashboard.css';
-import Logo from '../Logo';
-import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import ManagerNavigationBar from '../ManagerNavBar/ManagerNavBar';
 import Loader from 'react-loader-spinner';
@@ -26,6 +24,7 @@ class ManagerDashboard extends React.Component {
     }
     selected_client(e) {
         this.setState({ selected_client: e.target.value });
+        this.setState({ selected_acct_transactions: [] });
     }
     selected_acct(e) {
         this.setState({ selected_acct: e.target.value });
@@ -39,10 +38,6 @@ class ManagerDashboard extends React.Component {
             res1.data.forEach((element) =>
                 this.state.all_clients.push(element.email)
             );
-            //this.setState({ accounts: res1.data[0].accounts });
-            //console.log(res1.data);
-            //console.log(this.state.all_info);
-            //return res1;
         } catch (error) {
             throw error;
         }

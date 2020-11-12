@@ -5,23 +5,23 @@
     height: 100vh;
 }
 
-.Account .account-table {
+.account-table {
     display: flex;
     margin-top: 10px;
 }
-.Account table {
+table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-.Account td,
-.Account th {
+td,
+th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
 }
 
-.Account tr:nth-child(even) {
+tr:nth-child(even) {
     background-color: #dddddd;
 }
