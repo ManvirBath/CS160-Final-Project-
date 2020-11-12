@@ -1,25 +1,25 @@
 .managernavbar {
-    background-color: #4169e1;
-    width: 100vw;
+  background-color: #4169e1;
+  width: 100vw;
 }
 .managernavbar .navlist {
-    height: 2em;
-    font-size: 1.25em;
-    background-color: #dcdcdc;
+  height: 2em;
+  font-size: 1.25em;
+  background-color: #dcdcdc;
 }
 .managernavbar .flexbox {
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
 }
 .managernavbar .Logo {
-    flex-direction: row;
-    align-items: center;
-    margin: 0;
-    margin-left: 30px;
-    padding: 0;
+  flex-direction: row;
+  align-items: center;
+  margin: 0;
+  margin-left: 30px;
+  padding: 0;
 }
 .managernavbar .Logo_text {
-    padding: 0;
-    margin-left: 15px;
-    font-size: 2.5em;
+  padding: 0;
+  margin-left: 15px;
+  font-size: 2.5em;
 }
