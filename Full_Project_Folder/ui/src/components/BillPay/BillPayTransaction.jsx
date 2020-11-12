@@ -1,7 +1,6 @@
 import React from "react";
 import "./BillPay.css";
 import { Link } from "react-router-dom";
-import axiosInstance from "../../axios";
 import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class BillPayTransaction extends React.Component {
@@ -19,7 +18,6 @@ class BillPayTransaction extends React.Component {
       frequency: this.props.location.frequency || localStorage.getItem('frequency'),
     };
 
-    this.check = this.check.bind(this)
   }
 
   componentDidMount() {
@@ -29,27 +27,29 @@ class BillPayTransaction extends React.Component {
     console.log(typeof this.state.to_acct);
     console.log(typeof this.state.amount);
     console.log(typeof this.state.pay_date);
+
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = this._backConfirm;
   }
 
-  check(e) {
-    const id = localStorage.getItem('user_id')
-    axiosInstance
-      .post(`clients/${id}/create_bill_payment/`, {
-        from_account_num: this.state.from_acct,
-        routing_num: this.state.routing_num,
-        to_account_num: this.state.to_acct,
-        amount: this.state.amount,
-        date: this.state.pay_date,
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-        this.setState({ alert_type: "alert alert-danger" });
-        this.setState({
-          status_response:
-            "ERROR: This was not a valid payment. Please try again.",
-        });
-      });
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this._confirm);
+    window.onpopstate = () => { }
   }
+
+  _backConfirm = async () => {
+      let event = window.confirm("Cannot go back to submission page. ");
+      if(event){
+          window.history.pushState(null, "", window.location.href);
+      }
+  }
+
+  _confirm = (e) => {
+      var confirmationMessage = "\o/";
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+  }
+
   render() {
     return (
       <div className="BillPayTransaction">
@@ -74,12 +74,12 @@ class BillPayTransaction extends React.Component {
         </div>
         <div className="billpay-transaction-buttons">
           <Link to="/billpay">
-            <button type="submit" class="btn btn-success" onClick={this.check}>
+            <button type="submit" class="btn btn-success">
               Pay another bill
             </button>
           </Link>
           <Link to="/userdashboard">
-            <button type="submit" class="btn btn-primary" onClick={this.check}>
+            <button type="submit" class="btn btn-primary">
               Back to Dashboard
             </button>
           </Link>

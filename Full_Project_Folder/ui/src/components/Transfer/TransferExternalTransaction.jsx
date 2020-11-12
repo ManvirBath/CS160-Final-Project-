@@ -11,6 +11,11 @@ class TransferExternalTransaction extends React.Component {
       status_response:
         "Thank you for your transfer request! Please contact us if you have any questions or concerns.",
       alert_type: "alert alert-success",
+      to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
+      from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
+      routing_num: this.props.location.routing_num|| localStorage.getItem('routing_num'),
+      amount: this.props.location.amount || localStorage.getItem('amount'),
+      memo: this.props.location.memo || localStorage.getItem('memo'),
     };
   }
 
@@ -21,40 +26,26 @@ class TransferExternalTransaction extends React.Component {
     console.log(this.props.location.memo);
     console.log(typeof parseInt(this.props.location.routing_num));
 
-    if (parseInt(this.props.location.routing_num) == parseInt("123456789")) {
-      axiosInstance
-        .post(`accounts/${this.props.location.from_acct}/transfer_internal/`, {
-          to_account_number: this.props.location.to_acct,
-          amount: this.props.location.amount,
-          location: "Online",
-          memo: this.props.location.memo,
-        })
-        .catch((error) => {
-          console.log(error.response.status);
-          this.setState({ alert_type: "alert alert-danger" });
-          this.setState({
-            status_response:
-              "ERROR: This was not a valid transaction. Please try again.",
-          });
-        });
-    } else {
-      axiosInstance
-        .post(`accounts/${this.props.location.from_acct}/transfer_external/`, {
-          amount: this.props.location.amount,
-          location: "Online",
-          routing_num: this.props.location.routing_num,
-          to_account_num: this.props.location.to_acct,
-          memo: this.props.location.memo,
-        })
-        .catch((error) => {
-          console.log(error.response.status);
-          this.setState({ alert_type: "alert alert-danger" });
-          this.setState({
-            status_response:
-              "ERROR: This was not a valid transaction. Please try again.",
-          });
-        });
-    }
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = this._backConfirm;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("beforeunload", this._confirm);
+    window.onpopstate = () => { }
+  }
+
+  _backConfirm = async () => {
+      let event = window.confirm("Cannot go back to transfer submission page. ");
+      if(event){
+          window.history.pushState(null, "", window.location.href);
+      }
+  }
+
+  _confirm = (e) => {
+      var confirmationMessage = "\o/";
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
   }
 
   render() {
@@ -73,11 +64,11 @@ class TransferExternalTransaction extends React.Component {
           </div>
         </div>
         <div className="transfer-external-transactionInfo">
-          <h3>From: {this.props.location.from_acct}</h3>
-          <h3>To: {this.props.location.to_acct}</h3>
-          <h3>Routing number: {this.props.location.routing_num}</h3>
-          <h3>Amount: {this.props.location.amount}</h3>
-          <h3>Memo: {this.props.location.memo}</h3>
+          <h3>From: {this.state.from_acct}</h3>
+          <h3>To: {this.state.to_acct}</h3>
+          <h3>Routing number: {this.state.routing_num}</h3>
+          <h3>Amount: {this.state.amount}</h3>
+          <h3>Memo: {this.state.memo}</h3>
         </div>
         <div className="transfer-external-transactionbuttons">
           <Link to="/userdashboard">

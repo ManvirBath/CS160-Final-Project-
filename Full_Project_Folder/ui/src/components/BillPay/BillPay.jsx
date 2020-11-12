@@ -142,7 +142,7 @@ class BillPay extends React.Component {
             this.state.errorAmount == '' &&
             this.state.errorDate== '') {
                 localStorage.setItem('to_acct', this.state.to_acct);
-                localStorage.setItem('from_acct', this.state.from_acct.value);
+                localStorage.setItem('from_acct', this.state.from_acct.value); // FROM ACCOUNT?? ISSUE!!!
                 localStorage.setItem('routing_num', this.state.routing_num);
                 localStorage.setItem('amount', this.state.amount);
                 localStorage.setItem('frequency', this.state.frequency);

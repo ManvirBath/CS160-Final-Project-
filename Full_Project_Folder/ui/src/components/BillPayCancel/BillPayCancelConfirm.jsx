@@ -1,6 +1,7 @@
 import React from 'react';
 import './BillPayCancel.css';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class BillPayCancelConfirm extends React.Component {
@@ -16,6 +17,20 @@ class BillPayCancelConfirm extends React.Component {
             frequency: this.props.location.frequency || localStorage.getItem('frequency'),
         };
     }
+
+    async check(e) {
+        const id = await localStorage.getItem('bill_id');
+        
+        const response = axiosInstance.post(`bill_payments/${id}/cancel_bill_payment/`)
+          .catch((error) => {
+            console.log(error.response.status);
+            this.setState({ alert_type: "alert alert-danger" });
+            this.setState({
+              status_response:
+                "ERROR: This was not a valid payment. Please try again.",
+            });
+          });
+      }
 
     render() {
         return (
@@ -56,7 +71,7 @@ class BillPayCancelConfirm extends React.Component {
                             frequency: this.state.frequency,
                         }}
                     >
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" onClick={this.check}>
                             Submit
                         </button>
                     </Link>

@@ -1,7 +1,6 @@
 import React from 'react';
 import './DepositCheck.css';
 import { Link } from 'react-router-dom';
-import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class DepositCheckTransaction extends React.Component {
@@ -11,28 +10,35 @@ class DepositCheckTransaction extends React.Component {
             status_response:
                 'Thank you for your deposit! Please contact us if you have any questions or concerns.',
             alert_type: 'alert alert-success',
+            to_account: this.props.location.account || localStorage.getItem('to_account'),
+            to_account_num: this.props.location.to_account_num || localStorage.getItem('to_account_num'),
+            amount: this.props.location.amount || localStorage.getItem('amount'),
+            memo: this.props.location.memo || localStorage.getItem('memo'),
+            check_image: this.props.location.check_image || localStorage.getItem('check_image'),
         };
     }
 
     componentDidMount() {
-        axiosInstance
-            .post(`accounts/${this.props.location.to_account_num}/deposit/`, {
-                amount: this.props.location.amount,
-                location: 'Online',
-                memo: this.props.location.memo,
-                check_path: this.props.location.check_image,
-            })
-            .catch((error) => {
-                console.log(error.response.status);
-                this.setState({
-                    alert_type: 'alert alert-danger',
-                    status_response:
-                        'ERROR: This was not a valid deposit. Please try again.',
-                });
-            });
-        console.log(
-            `helloaccounts/${this.props.location.to_account_num}/deposit/`
-        );
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = this._backConfirm;
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this._confirm);
+        window.onpopstate = () => { }
+    }
+  
+    _backConfirm = async () => {
+        let event = window.confirm("Cannot go back to submission page. ");
+        if(event){
+            window.history.pushState(null, "", window.location.href);
+        }
+    }
+  
+    _confirm = (e) => {
+        var confirmationMessage = "\o/";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
     }
     render() {
         return (
@@ -47,10 +53,10 @@ class DepositCheckTransaction extends React.Component {
                     <p>{this.state.status_response}</p>
                 </div>
                 <div className="depositchecktransaction-info">
-                    <h4>Deposit to: {this.props.location.account}</h4>
-                    <h4>Amount: {this.props.location.amount}</h4>
-                    <h4>Memo: {this.props.location.memo}</h4>
-                    <h4>Check file: {this.props.location.check_image}</h4>
+                    <h4>Deposit to: {this.state.account}</h4>
+                    <h4>Amount: {this.state.amount}</h4>
+                    <h4>Memo: {this.state.memo}</h4>
+                    <h4>Check file: {this.state.check_image}</h4>
                     <div className="deposit-check-transactions-buttons">
                         <Link to="/depositcheck">
                             <button
