@@ -1,7 +1,6 @@
 import React from "react";
 import "./Transfer.css";
 import { Link } from "react-router-dom";
-import axiosInstance from "../../axios";
 import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class TransferInternalTransaction extends React.Component {
@@ -15,6 +14,7 @@ class TransferInternalTransaction extends React.Component {
       from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
       amount: this.props.location.amount || localStorage.getItem('amount'),
       memo: this.props.location.memo || localStorage.getItem('memo'),
+      
     };
   }
 
@@ -23,26 +23,33 @@ class TransferInternalTransaction extends React.Component {
     console.log(this.state.to_acct);
     console.log(this.state.amount);
     console.log(this.state.memo);
+
+    // window.addEventListener('popstate', (event) => {
+    //   if (event.state) {
+    //     alert("Please press 'Go to Dashboard' button")
+    //   }
+    //  }, false);
+
+    //  window.addEventListener("beforeunload", this._confirm);
+     window.history.pushState(null, "", window.location.href);
+     window.onpopstate = this._backConfirm;
+  }
+  componentWillUnmount() {
+      window.removeEventListener("beforeunload", this._confirm);
+      window.onpopstate = () => { }
   }
 
-  async check(e) {
-    const from_cur_acc = await localStorage.getItem('from_acct');
-    
-    const response = await axiosInstance
-    .post(`accounts/${from_cur_acc}/transfer_internal/`, {
-      to_account_number: localStorage.getItem('to_acct'),
-      amount: localStorage.getItem('amount'),
-      location: "Online",
-      memo: localStorage.getItem('memo'),
-    })
-    .catch((error) => {
-      console.log(error.response.status);
-      this.setState({ alert_type: "alert alert-danger" });
-      this.setState({
-        status_response:
-          "ERROR: This was not a valid transaction. Please try again.",
-      });
-    });
+  _backConfirm = async () => {
+      let event = window.confirm("Cannot go back to transfer submission page. ");
+      if(event){
+          window.history.pushState(null, "", window.location.href);
+      }
+  }
+
+  _confirm = (e) => {
+      var confirmationMessage = "\o/";
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
   }
   
   render() {
@@ -67,7 +74,7 @@ class TransferInternalTransaction extends React.Component {
         </div>
         <div className="transfer-internal-transactionbuttons">
         <Link to="/userdashboard">
-            <button type="submit" class="btn btn-primary" id="internal-transaction-backto-dash" onClick={this.check}>
+            <button type="submit" class="btn btn-primary" id="internal-transaction-backto-dash">
               Back to Dashboard
             </button>
         </Link>

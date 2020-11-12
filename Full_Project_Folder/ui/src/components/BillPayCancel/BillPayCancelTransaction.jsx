@@ -1,7 +1,6 @@
 import React from 'react';
 import './BillPayCancel.css';
 import { Link } from 'react-router-dom';
-import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class BillPayCancelTransaction extends React.Component {
@@ -28,21 +27,28 @@ class BillPayCancelTransaction extends React.Component {
         console.log(this.props.location.to_acct);
         console.log(this.props.location.amount);
         console.log(this.props.location.pay_date);
+
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = this._backConfirm;
     }
 
-    async check(e) {
-        const id = await localStorage.getItem('bill_id');
-        
-        const response = axiosInstance.post(`bill_payments/${id}/cancel_bill_payment/`)
-          .catch((error) => {
-            console.log(error.response.status);
-            this.setState({ alert_type: "alert alert-danger" });
-            this.setState({
-              status_response:
-                "ERROR: This was not a valid payment. Please try again.",
-            });
-          });
-      }
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this._confirm);
+        window.onpopstate = () => { }
+    }
+  
+    _backConfirm = async () => {
+        let event = window.confirm("Cannot go back to submission page. ");
+        if(event){
+            window.history.pushState(null, "", window.location.href);
+        }
+    }
+  
+    _confirm = (e) => {
+        var confirmationMessage = "\o/";
+        e.returnValue = confirmationMessage;
+        return confirmationMessage;
+    }
 
     render() {
         return (
@@ -72,7 +78,7 @@ class BillPayCancelTransaction extends React.Component {
                 </div>
                 <div className="billpay-transaction-buttons">
                     <Link to="/billpayshow">
-                        <button type="submit" class="btn btn-success" onClick={this.check}>
+                        <button type="submit" class="btn btn-success">
                             Show Bills
                         </button>
                     </Link>

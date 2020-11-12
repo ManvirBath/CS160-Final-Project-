@@ -10,13 +10,15 @@ class DepositCheck extends React.Component {
         this.state = {
             to_account: '',
             to_account_num: '',
-            amount: '',
-            memo: 'n/a',
+            amount: localStorage.getItem('amount') || "",
+            memo: localStorage.getItem('memo') || "n/a",
             check_image: '',
             file: null,
+
             errorAmount: '',
             errorAccount: '',
             errorCheck: '',
+
             accts: [],
         };
         this.to_account = this.to_account.bind(this);
@@ -27,8 +29,8 @@ class DepositCheck extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
-        axiosInstance.get('/accounts/').then((res) => {
+    async componentDidMount() {
+        const accounts = await axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
             this.setState({ accts: d });
         });
@@ -83,7 +85,16 @@ class DepositCheck extends React.Component {
                 errorCheck,
                 errorAccount,
             });
+        } else {
+            localStorage.setItem('to_account', this.state.to_account);
+            localStorage.setItem('amount', this.state.amount);
+            localStorage.setItem('memo', this.state.memo);
+            localStorage.setItem('file', this.state.file);
+            localStorage.setItem('check_image', this.state.check_image);
+            localStorage.setItem('to_account_num', this.state.to_account_num);
         }
+
+
     }
     render() {
         let userAccts = this.state.accts.map((v) => (
@@ -119,6 +130,7 @@ class DepositCheck extends React.Component {
                             step="0.01"
                             placeholder="$"
                             onChange={this.amount}
+                            value={this.state.amount}
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
@@ -130,6 +142,7 @@ class DepositCheck extends React.Component {
                             placeholder="Memo"
                             class="form-control"
                             onChange={this.memo}
+                            value={this.state.memo}
                         />
                     </div>
                     <div className="Deposit-Page-righthalf">
