@@ -1,7 +1,9 @@
 import React from 'react';
+import './GMap.css';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import { Link } from 'react-router-dom';
-import { AutoSizer, List } from 'react-virtualized';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import {
     GoogleMap,
     LoadScript,
@@ -171,6 +173,24 @@ class MapContainer extends React.Component {
             </div>
         );
     }
+    hideOrNot() {
+        return (
+            <div
+                onClick={() => {
+                    this.setState((prevState) => {
+                        return { hideList: !prevState.hideList };
+                    });
+                }}
+                className="hideListButton"
+            >
+                {this.state.hideList ? (
+                    <i class="medium material-icons">menu</i>
+                ) : (
+                    <i class="medium material-icons">close</i>
+                )}
+            </div>
+        );
+    }
     markerClick(atm) {
         const { place_id } = atm;
         const { placeService } = this;
@@ -195,6 +215,7 @@ class MapContainer extends React.Component {
     }
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;
+        const hideList = atms.length > 0 ? this.hideOrNot.bind(this)() : null;
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
@@ -253,26 +274,7 @@ class MapContainer extends React.Component {
                             </Autocomplete>
                         </GoogleMap>
                     </LoadScript>
-                    <div
-                        onClick={() => {
-                            this.setState((prevState) => {
-                                return { hideList: !prevState.hideList };
-                            });
-                        }}
-                        className="hideListButton"
-                        style={{
-                            position: 'absolute',
-                            top: '5px',
-                            left: '10px',
-                            zIndex: 2,
-                        }}
-                    >
-                        {this.state.hideList ? (
-                            <i class="medium material-icons">menu</i>
-                        ) : (
-                            <i class="medium material-icons">close</i>
-                        )}
-                    </div>
+                    {hideList}
                     <div
                         className={`myList ${
                             this.state.hideList ? 'myList--hide' : ''
