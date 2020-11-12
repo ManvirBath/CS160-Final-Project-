@@ -25,3 +25,13 @@
     flex-direction: column;
     justify-content: center;
 }
+.MapContainer .gmap-header {
+    position: absolute;
+    z-index: 2;
+}
+.MapContainer .hideListButton {
+    position: absolute;
+    top: 25px;
+    left: 10px;
+    z-index: 2;
+}
