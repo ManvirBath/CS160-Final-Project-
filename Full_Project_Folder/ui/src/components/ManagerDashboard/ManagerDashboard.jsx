@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './ManagerDashboard.css';
-import Logo from '../Logo';
-import { Link, useHistory } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import ManagerNavigationBar from '../ManagerNavBar/ManagerNavBar';
 import Loader from 'react-loader-spinner';
@@ -9,64 +7,191 @@ import Loader from 'react-loader-spinner';
 class ManagerDashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            all_clients: [],
+            all_info: [],
+            selected_client: '',
+            selected_client_accts: [],
+            selected_acct: '',
+            selected_acct_transactions: [],
+            num_clients: 0,
+            num_accounts: 0,
+            num_transactions: 0,
+            loading: true,
+        };
+        this.selected_client = this.selected_client.bind(this);
+        this.selected_acct = this.selected_acct.bind(this);
     }
-    async getClients() {
+    selected_client(e) {
+        this.setState({ selected_client: e.target.value });
+        this.setState({ selected_acct_transactions: [] });
+    }
+    selected_acct(e) {
+        this.setState({ selected_acct: e.target.value });
+    }
+    async getClientsAndAccts() {
         try {
-            const res2 = await this.state.axiosInstance.get('/all_accounts');
-            let users = res2.data;
-            console.log(users);
-            return res2;
+            const res1 = await this.state.axiosInstance.get(
+                '/client_account_statistics/'
+            );
+            this.setState({ all_info: res1.data });
+            res1.data.forEach((element) =>
+                this.state.all_clients.push(element.email)
+            );
         } catch (error) {
             throw error;
         }
     }
+
+    async getBankStats() {
+        try {
+            const res2 = await this.state.axiosInstance.get(
+                '/bank_statistics/'
+            );
+            //console.log(res2);
+            this.setState({ num_accounts: res2.data.num_accounts });
+            this.setState({ num_clients: res2.data.num_clients });
+            this.setState({ num_transactions: res2.data.num_transactions });
+            console.log(this.state.num_accounts);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async componentDidMount() {
         this.state.axiosInstance = axiosInstance;
-        const clients = await this.getClients();
+        await this.getClientsAndAccts();
+        await this.getBankStats();
         this.setState({ loading: false });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.selected_client !== this.state.selected_client) {
+            let all_info = this.state.all_info;
+            for (var index = 0; index < all_info.length; index++) {
+                if (all_info[index].email === this.state.selected_client) {
+                    console.log(all_info[index].accounts);
+                    this.setState({
+                        selected_client_accts: all_info[index].accounts.map(
+                            (x) => x
+                        ),
+                    });
+                }
+            }
+        }
+        if (prevState.selected_acct !== this.state.selected_acct) {
+            let acct_info = this.state.selected_client_accts;
+            for (var index = 0; index < acct_info.length; index++) {
+                if (acct_info[index].account_id === this.state.selected_acct) {
+                    console.log(acct_info[index].transactions);
+                    this.setState({
+                        selected_acct_transactions: acct_info[
+                            index
+                        ].transactions.map((x) => x),
+                    });
+                }
+            }
+        }
+    }
     render() {
+        let all_client_email = this.state.all_clients.map((v) => (
+            <option value={v}>{v}</option>
+        ));
+        let client_accts = this.state.selected_client_accts.map((v) => (
+            <option value={v.account_id}>
+                {v.account_type} {v.account_id}
+            </option>
+        ));
+
+        let acctTransactions = this.state.selected_acct_transactions.map(
+            (v, index) => (
+                <tr>
+                    <th>{index + 1}</th>
+                    <th>{v.transaction_date}</th>
+                    <th>{v.transaction_amount}</th>
+                    <th>{v.transaction_type}</th>
+                </tr>
+            )
+        );
+
+        if (this.state.loading) {
+            return (
+                <div>
+                    <Loader
+                        type="Puff"
+                        color="#00BFFF"
+                        height={100}
+                        width={100}
+                    />
+                </div>
+            );
+        }
         return (
             <div className="managerdashboard">
                 <ManagerNavigationBar />
                 <div className="statistics">
                     <label for="client-stats">Clients</label>
-
                     <span id="client-stats" class="badge badge-secondary">
-                        [insert # of clients]
+                        {this.state.num_clients}
                     </span>
-
                     <label for="account-stats">Accounts</label>
-
                     <span id="account-stats" class="badge badge-secondary">
-                        [insert # of accounts]
+                        {this.state.num_accounts}
                     </span>
-
                     <label for="transaction-stats">Transactions</label>
-
                     <span id="transaction-stats" class="badge badge-secondary">
-                        [insert # of transactions]
+                        {this.state.num_transactions}
                     </span>
                 </div>
+
                 <div className="search-area">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                                Query
-                            </span>
-                        </div>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter keyword here"
-                            aria-label="query-search"
-                            aria-describedby="basic-addon1"
-                        />
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="clients">
+                            Clients
+                        </label>
+                    </div>
+                    <select
+                        class="custom-select"
+                        id="clients"
+                        onChange={this.selected_client}
+                    >
+                        <option value="defaultVal" disabled selected>
+                            Select Client
+                        </option>
+                        {all_client_email}
+                    </select>
+
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="accounts">
+                            Accounts
+                        </label>
+                    </div>
+                    <select
+                        class="custom-select"
+                        id="accounts"
+                        onChange={this.selected_acct}
+                    >
+                        <option value="defaultVal" disabled selected>
+                            Select Account
+                        </option>
+                        {client_accts}
+                    </select>
+                </div>
+
+                <div className="query-results">
+                    <h3>Transactions</h3>
+                    <div className="account-table">
+                        <table id="account-table">
+                            <tr>
+                                <th>Transaction Number</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                            {acctTransactions}
+                        </table>
                     </div>
                 </div>
-                <div className="query-results"></div>
             </div>
         );
     }
