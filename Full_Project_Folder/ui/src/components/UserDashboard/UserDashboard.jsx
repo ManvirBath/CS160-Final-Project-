@@ -84,6 +84,7 @@ class UserDashboard extends React.Component {
         localStorage.removeItem('amount');
         localStorage.removeItem('frequency');
         localStorage.removeItem('pay_date');
+        localStorage.removeItem('memo');
         
         const clients = await this.getClients();
         const accounts = await this.getAccounts();

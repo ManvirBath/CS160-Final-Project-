@@ -6,7 +6,20 @@ import UserNavigationBar from '../UserNavBar/UserNavBar';
 class TransferInternalConfirm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+
+        this.state = {
+            to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
+            from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
+            amount: this.props.location.amount || localStorage.getItem('amount'),
+            memo: this.props.location.memo || localStorage.getItem('memo'),
+        };
+    }
+
+    componentDidMount() {
+        console.log(localStorage.getItem('to_acct'))
+        console.log(localStorage.getItem('from_acct'))
+        console.log(localStorage.getItem('amount'))
+        console.log(localStorage.getItem('memo'))
     }
 
     render() {
@@ -24,14 +37,21 @@ class TransferInternalConfirm extends React.Component {
                 <div className="transfer-internal-confirm">
                     <h4>
                         Transfer From:
-                        {this.props.location.from_acct}
+                        {this.state.from_acct}
                     </h4>
-                    <h4>Transfer To: {this.props.location.to_acct}</h4>
-                    <h4>Amount: {this.props.location.amount}</h4>
-                    <h4>Memo: {this.props.location.memo}</h4>
+                    <h4>Transfer To: {this.state.to_acct}</h4>
+                    <h4>Amount: {this.state.amount}</h4>
+                    <h4>Memo: {this.state.memo}</h4>
                 </div>
                 <div className="buttons-transfer-internal-confirm">
-                    <Link to="/transferinternal">
+                    <Link to={{
+                        pathname: "/transferinternal",
+                        to_acct: this.state.to_acct,
+                        from_acct: this.state.from_acct.value,
+                        amount: this.state.amount,
+                        memo: this.state.memo,
+                    }}
+                    >
                         <button
                             type="button"
                             class="btn btn-danger"
@@ -43,12 +63,12 @@ class TransferInternalConfirm extends React.Component {
                     <Link
                         to={{
                             pathname: '/transferinternaltransaction',
-                            from_acct: this.props.location.from_acct,
-                            to_acct: this.props.location.to_acct,
-                            amount: this.props.location.amount,
-                            memo: this.props.location.memo,
+                            from_acct: this.state.from_acct,
+                            to_acct: this.state.to_acct,
+                            amount: this.state.amount,
+                            memo: this.state.memo,
                         }}
-                    >
+                        >
                         <button
                             type="button"
                             class="btn btn-primary"
