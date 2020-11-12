@@ -219,7 +219,7 @@ def client_account_statistics(request):
             client_accounts = []
             client_data['accounts'] = client_accounts
 
-            for account in Account.objects.all():
+            for account in Account.objects.filter(client=client):
                 account_data = {}
                 client_accounts.append(account_data)
 
@@ -230,7 +230,7 @@ def client_account_statistics(request):
                 account_transactions = []
                 account_data['transactions'] = account_transactions
 
-                for transaction in Transaction.objects.all():
+                for transaction in Transaction.objects.filter(account=account):
                     transaction_data = {}
                     account_transactions.append(transaction_data)
 

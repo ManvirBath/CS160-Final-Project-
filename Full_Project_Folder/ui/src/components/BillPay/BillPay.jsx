@@ -141,7 +141,6 @@ class BillPay extends React.Component {
             this.state.errorRouting == '' &&
             this.state.errorAmount == '' &&
             this.state.errorDate== '') {
-                console.log("Hello")
                 localStorage.setItem('to_acct', this.state.to_acct);
                 localStorage.setItem('from_acct', this.state.from_acct.value);
                 localStorage.setItem('routing_num', this.state.routing_num);
