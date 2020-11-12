@@ -1,6 +1,9 @@
 import React from 'react';
+import './GMap.css';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import { Link } from 'react-router-dom';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import {
     GoogleMap,
     LoadScript,
@@ -156,6 +159,38 @@ class MapContainer extends React.Component {
         });
         return xml;
     }
+    getListRow({ index, style }) {
+        const { atms } = this.state;
+        const atm = atms[index];
+        if (!atm) {
+            return null;
+        }
+        return (
+            <div className="atmInfo" style={style}>
+                <div className="atmName">{atm.name}</div>
+                <div className="atmVicinity">{atm.vicinity}</div>
+                <div className="atmRating">{atm.rating}</div>
+            </div>
+        );
+    }
+    hideOrNot() {
+        return (
+            <div
+                onClick={() => {
+                    this.setState((prevState) => {
+                        return { hideList: !prevState.hideList };
+                    });
+                }}
+                className="hideListButton"
+            >
+                {this.state.hideList ? (
+                    <i class="medium material-icons">menu</i>
+                ) : (
+                    <i class="medium material-icons">close</i>
+                )}
+            </div>
+        );
+    }
     markerClick(atm) {
         const { place_id } = atm;
         const { placeService } = this;
@@ -180,6 +215,7 @@ class MapContainer extends React.Component {
     }
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;
+        const hideList = atms.length > 0 ? this.hideOrNot.bind(this)() : null;
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
@@ -238,6 +274,28 @@ class MapContainer extends React.Component {
                             </Autocomplete>
                         </GoogleMap>
                     </LoadScript>
+                    {hideList}
+                    <div
+                        className={`myList ${
+                            this.state.hideList ? 'myList--hide' : ''
+                        }`}
+                    >
+                        {atms.length > 0 && (
+                            <AutoSizer>
+                                {({ height }) => (
+                                    <List
+                                        className="List"
+                                        height={height}
+                                        itemCount={atms.length}
+                                        itemSize={80}
+                                        width={250}
+                                    >
+                                        {this.getListRow.bind(this)}
+                                    </List>
+                                )}
+                            </AutoSizer>
+                        )}
+                    </div>
                 </div>
             </div>
         );
