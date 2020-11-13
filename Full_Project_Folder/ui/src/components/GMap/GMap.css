@@ -25,13 +25,36 @@
     flex-direction: column;
     justify-content: center;
 }
-.MapContainer .gmap-header {
-    position: absolute;
-    z-index: 2;
+.MapContainer .myList .atmInfo:hover {
+    background-color: rgb(125, 125, 125);
+    cursor: pointer;
 }
 .MapContainer .hideListButton {
     position: absolute;
-    top: 25px;
-    left: 10px;
+    right: 250px;
+    top: 5px;
     z-index: 2;
+    font-size: 1.25em;
+    color: black;
+}
+.MapContainer .homepage-header {
+    position: absolute;
+    z-index: 2;
+    color: black;
+    font-size: 1.25em;
+}
+.MapContainer .userdb-header {
+    position: absolute;
+    z-index: 2;
+    margin-top: 25px;
+    color: black;
+    font-size: 1.25em;
+}
+.MapContainer .open-option {
+    font-size: 2em;
+    right: 0;
+}
+.MapContainer .close-option {
+    font-size: 2em;
+    right: 0;
 }
