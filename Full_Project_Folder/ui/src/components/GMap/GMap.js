@@ -166,7 +166,13 @@ class MapContainer extends React.Component {
             return null;
         }
         return (
-            <div className="atmInfo" style={style}>
+            <div
+                className="atmInfo"
+                style={style}
+                onClick={() => {
+                    this.markerClick(atm);
+                }}
+            >
                 <div className="atmName">{atm.name}</div>
                 <div className="atmVicinity">{atm.vicinity}</div>
                 <div className="atmRating">{atm.rating}</div>
