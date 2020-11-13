@@ -32,7 +32,7 @@ Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYME
 @background(schedule=30)
 # Make sure to validate that if routing number in this bank, the account number is valid
 def automated_bill():
-    time.sleep(5)
+    time.sleep(5) # PUT 28800 TO RUN THIS EVERY 8 HOURS!!!
     queryset = BillPayment.objects.all()
     account_queryset = Account.objects.all()
     for i in range(len(queryset)):
@@ -150,6 +150,8 @@ def automated_bill():
                     cur_bill_pay.save()
             except IntegrityError as ex:
                 print("Cancel Bill Payment process not working")
+        else:
+            continue
 
 
         
