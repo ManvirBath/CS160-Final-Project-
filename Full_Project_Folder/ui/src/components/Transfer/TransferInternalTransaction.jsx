@@ -7,8 +7,8 @@ class TransferInternalTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status_response: this.props.location.status_response,
-            alert_type: this.props.location.alert_type,
+            status_response: localStorage.getItem('status_response'),
+            alert_type: localStorage.getItem('alert_type'),
             to_acct:
                 this.props.location.to_acct || localStorage.getItem('to_acct'),
             from_acct:
@@ -25,7 +25,7 @@ class TransferInternalTransaction extends React.Component {
         console.log(this.state.to_acct);
         console.log(this.state.amount);
         console.log(this.state.memo);
-        console.log(this.props.location.alert_type);
+        console.log('hello123' + localStorage.getItem('status_response'));
         // window.addEventListener('popstate', (event) => {
         //   if (event.state) {
         //     alert("Please press 'Go to Dashboard' button")
@@ -63,11 +63,11 @@ class TransferInternalTransaction extends React.Component {
                 <div className="internal-transaction-headerDivTransaction">
                     <div
                         className="TransactionAlert"
-                        class={this.state.alert_type}
+                        class={localStorage.getItem('alert_type')}
                         role="alert"
                         id="depositchecktransaction-ty"
                     >
-                        <p>{this.state.status_response}</p>
+                        <p>{localStorage.getItem('status_response')}</p>
                     </div>
                 </div>
                 <div className="transfer-internal-transactionInfo">
