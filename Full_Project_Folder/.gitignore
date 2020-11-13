@@ -1,6 +1,6 @@
 secret_key.txt
 
-ui/.eslintcache
+/ui/.eslintcache
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
