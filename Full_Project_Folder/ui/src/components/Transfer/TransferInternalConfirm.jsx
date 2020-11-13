@@ -9,9 +9,6 @@ class TransferInternalConfirm extends React.Component {
         super(props);
 
         this.state = {
-            status_response:
-                'Thank you for your transfer request! Please contact us if you have any questions or concerns.',
-            alert_type: 'alert alert-success',
             to_acct:
                 this.props.location.to_acct || localStorage.getItem('to_acct'),
             from_acct:
@@ -24,14 +21,16 @@ class TransferInternalConfirm extends React.Component {
         this.check = this.check.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         console.log(localStorage.getItem('to_acct'));
         console.log(localStorage.getItem('from_acct'));
         console.log(localStorage.getItem('amount'));
         console.log(localStorage.getItem('memo'));
-    }
-
-    async check(e) {
+        localStorage.setItem(
+            'status_response',
+            'Thank you for your transfer request! Please contact us if you have any questions or concerns.'
+        );
+        localStorage.setItem('alert_type', 'alert alert-success');
         const from_cur_acc = await localStorage.getItem('from_acct');
 
         const response = await axiosInstance
@@ -43,13 +42,20 @@ class TransferInternalConfirm extends React.Component {
             })
             .catch((error) => {
                 console.log(error.response.status);
-                this.state.alert_type = 'alert alert-danger';
+                this.state.error_stat = error.response.status;
+                localStorage.setItem('alert_type', 'alert alert-danger');
+                localStorage.setItem(
+                    'status_response',
+                    'ERROR: This was not a valid transaction. Please try again.'
+                );
                 //this.setState({ alert_type: 'alert alert-danger' });
-                console.log('hello' + this.state.alert_type);
-                this.setState({
-                    status_response:
-                        'ERROR: This was not a valid transaction. Please try again.',
-                });
+                // console.log('hello' + this.state.alert_type);
+                // this.setState({
+                //     alert_type: 'alert alert-danger',
+                //     status_response:
+                //         'ERROR: This was not a valid transaction. Please try again.',
+                // });
+                // console.log('hello' + this.state.alert_type);
             });
     }
 
@@ -95,8 +101,6 @@ class TransferInternalConfirm extends React.Component {
                     <Link
                         to={{
                             pathname: '/transferinternaltransaction',
-                            status_response: this.state.status_response,
-                            alert_type: this.state.alert_type,
                             from_acct: this.state.from_acct,
                             to_acct: this.state.to_acct,
                             amount: this.state.amount,
@@ -107,7 +111,6 @@ class TransferInternalConfirm extends React.Component {
                             type="submit"
                             class="btn btn-primary"
                             id="transfer-internal-btn2"
-                            onClick={this.check}
                         >
                             Submit
                         </button>
