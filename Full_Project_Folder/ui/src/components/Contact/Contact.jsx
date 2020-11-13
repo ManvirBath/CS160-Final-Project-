@@ -45,10 +45,10 @@ class Contact extends React.Component {
                     </span>
                 </Jumbotron>
                 <div className="footer">
-                    <Link to="/main">Back to home page</Link>
+                    <Link to="/main">Home page</Link>
                 </div>
                 <div className="footer">
-                    <Link to="/userdashboard">Back to dashboard</Link>
+                    <Link to="/userdashboard">Dashboard</Link>
                 </div>
             </div>
         );
