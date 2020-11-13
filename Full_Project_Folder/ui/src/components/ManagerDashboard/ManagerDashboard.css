@@ -25,3 +25,8 @@ th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+.managerdashboard .statistics {
+}
+.managerdashboard #logout-managernavbar {
+    margin-right: 15px;
+}

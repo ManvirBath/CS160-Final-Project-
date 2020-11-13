@@ -394,7 +394,7 @@ class EditProfile extends React.Component {
                     />
                     <h6 className="error">{this.state.err_birthday}</h6>
                     <button
-                        className="editprofile-btn btn"
+                        className="btn btn-primary editprofile-btn btn"
                         type="submit"
                         onSubmit={this.onSubmit}
                         onClick={this.handleSubmit}

@@ -37,10 +37,8 @@
     color: white;
 }
 .EditProfile .editprofile-btn {
-    background: #7b97ea;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.EditProfile .editprofile-btn:hover {
-    background: #1c41b0;
+.EditProfile .error {
 }
