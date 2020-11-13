@@ -53,7 +53,13 @@ const dropDown = [
   },
   {
     name: "Deposit",
-    href: "/depositcheck",
+    href: "",
+    children: [
+      {
+        name: "Deposit Money",
+        href: "/depositcheck"
+      }
+    ]
   },
   {
     name: "Services",
@@ -93,6 +99,7 @@ class UserNavigationBar extends React.Component {
   getListItem(data, pos) {
     const { name, href, children } = data;
     const active = pos === this.props.active;
+    
     return (
       <li key={href} className={`nav-item ${active ? "selected" : ""}`}>
         {children ? (
@@ -114,7 +121,23 @@ class UserNavigationBar extends React.Component {
         <Dropdown.Menu>
           {children.map((child) => {
             return (
-              <Dropdown.Item key={child.href} href={child.href}>
+              <Dropdown.Item onClick={
+                () => {
+                  console.log("SELECTED!!!")
+                  localStorage.removeItem('bill_id')
+                  localStorage.removeItem('to_acct');
+                  localStorage.removeItem('from_acct');
+                  localStorage.removeItem('routing_num');
+                  localStorage.removeItem('amount');
+                  localStorage.removeItem('frequency');
+                  localStorage.removeItem('pay_date');
+                  localStorage.removeItem('memo');
+          
+                  localStorage.removeItem('to_account');
+                  localStorage.removeItem('to_account_num');
+                  localStorage.removeItem('check_image');
+
+                }} key={child.href} href={child.href}>
                 {child.name}
               </Dropdown.Item>
             );
