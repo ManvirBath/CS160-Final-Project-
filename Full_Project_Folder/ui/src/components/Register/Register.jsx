@@ -9,7 +9,7 @@ import axiosInstance from '../../axios';
 import Loader from "react-loader-spinner";
 
 class Register extends React.Component {
-constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
             firstname: '',
@@ -22,6 +22,8 @@ constructor(props) {
             zipcode: '',
             phone_number: '',
             birthday: '',
+
+            other_accts: [],
 
             err_firstname: '',
             err_lastname: '',
@@ -48,11 +50,12 @@ constructor(props) {
         this.birthday = this.birthday.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-    async getClient() {
-        const response = await axiosInstance.get();
-    }
+    // async getClient() {
+    //     const response = await axiosInstance.get();
+    // }
 
     async getClient() {
         try {
@@ -246,8 +249,9 @@ constructor(props) {
         }
     }
 
-    onSubmit = (e) => {
+    onSubmit(e) {
         e.preventDefault();
+        console.log("YES!!!")
         if (
             this.state.err_address == '' &&
             this.state.err_birthday == '' &&
@@ -262,17 +266,19 @@ constructor(props) {
             console.log(this.state.firstname);
             console.log(this.state.lastname);
             console.log(this.state.email);
+            console.log(this.state.password)
             console.log(this.state.address);
             console.log(this.state.city);
             console.log(this.state.region);
             console.log(this.state.zipcode);
             console.log(this.state.phone_number);
             console.log(this.state.birthday);
+
             const response = axiosInstance.post(`register/`, {
                 first_name: this.state.firstname,
                 last_name: this.state.lastname,
                 email: this.state.email,
-                password: this.password,
+                password: this.state.password,
                 address: this.state.address,
                 city: this.state.city,
                 state: this.state.region,
@@ -291,6 +297,7 @@ constructor(props) {
             <div className="Register">
                 <div className="form">
                     <Logo color="rgb(255,255,255)" text="Deep Learning Bank"></Logo>
+                    <form className="form" onSubmit={this.onSubmit}>
                     <input
                         className="form-control"
                         name="firstname"
@@ -467,6 +474,7 @@ constructor(props) {
                     >
                         Submit
                     </button>
+                </form>
                 </div>
                 <div className="footer">
                     Already have an account? <Link to="/login">Login</Link>
