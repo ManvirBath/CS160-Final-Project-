@@ -175,7 +175,6 @@ class MapContainer extends React.Component {
             >
                 <div className="atmName">{atm.name}</div>
                 <div className="atmVicinity">{atm.vicinity}</div>
-                <div className="atmRating">{atm.rating}</div>
             </div>
         );
     }
@@ -190,9 +189,9 @@ class MapContainer extends React.Component {
                 className="hideListButton"
             >
                 {this.state.hideList ? (
-                    <i class="medium material-icons">menu</i>
+                    <i className="open-option small material-icons">menu</i>
                 ) : (
-                    <i class="medium material-icons">close</i>
+                    <i className="close-option small material-icons">close</i>
                 )}
             </div>
         );
@@ -225,8 +224,13 @@ class MapContainer extends React.Component {
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
-                    <Link to="/main">Back to home page </Link>
-                    <Link to="/userdashboard">Back to dashboard</Link>
+                    <Link className="homepage-header" to="/main">
+                        Home page{' '}
+                    </Link>
+                    <Link className="userdb-header" to="/userdashboard">
+                        {' '}
+                        Dashboard
+                    </Link>
                 </div>
                 <div className="googleMap">
                     <LoadScript
