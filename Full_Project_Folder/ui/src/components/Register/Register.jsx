@@ -57,27 +57,6 @@ class Register extends React.Component {
     //     const response = await axiosInstance.get();
     // }
 
-    async getClient() {
-        try {
-            const res2 = await axiosInstance.get(`clients/`);
-            const loaded_client = res2.data;
-
-            this.setState({ firstname: loaded_client.first_name });
-            this.setState({ lastname: loaded_client.last_name });
-            this.setState({ email: loaded_client.email });
-            this.setState({ address: loaded_client.address });
-            this.setState({ city: loaded_client.city });
-            this.setState({ region: loaded_client.state });
-            this.setState({ zipcode: loaded_client.zipcode });
-            this.setState({ phone_number: loaded_client.phone_num });
-            this.setState({ birthday: loaded_client.birthday });
-
-            return res2;
-        } catch (error) {
-            throw error;
-        }
-    }
-
     // To check other user's emails (can't be the same!!!)
     async getOtherAccounts() {
         try {
@@ -93,7 +72,6 @@ class Register extends React.Component {
         }
     }
     async componentDidMount() {
-        const client = await this.getClient();
         const other_accounts = await this.getOtherAccounts();
         this.setState({ loading: false });
 
@@ -176,15 +154,6 @@ class Register extends React.Component {
             e.preventDefault();
             this.setState({
                 err_email: 'Not valid email',
-            });
-        } else if (
-            this.state.other_accts.some(
-                (acct) => acct.email === this.state.email
-            )
-        ) {
-            e.preventDefault();
-            this.setState({
-                err_email: 'Email already in bank',
             });
         }
 
