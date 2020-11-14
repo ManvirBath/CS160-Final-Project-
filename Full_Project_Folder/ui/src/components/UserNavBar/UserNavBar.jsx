@@ -136,6 +136,9 @@ class UserNavigationBar extends React.Component {
                   localStorage.removeItem('to_account');
                   localStorage.removeItem('to_account_num');
                   localStorage.removeItem('check_image');
+                  localStorage.removeItem('account_num')
+                  localStorage.removeItem('account_type')
+                  localStorage.removeItem('balance')
 
                 }} key={child.href} href={child.href}>
                 {child.name}

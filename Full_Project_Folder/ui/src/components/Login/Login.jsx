@@ -3,7 +3,13 @@ import axiosInstance from "../../axios";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
 import Logo from "../Logo";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 
 export default function SignIn() {
   const history = useHistory();
@@ -58,6 +64,13 @@ export default function SignIn() {
       throw err;
     }
   };
+  
+  // if (localStorage.getItem('user_id') == null) {
+  //   return (
+  //     <Redirect to='/' />
+  //   )
+  // }
+
   return (
     <div className="Login">
       <div className="form1">

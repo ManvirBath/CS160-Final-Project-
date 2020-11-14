@@ -221,16 +221,21 @@ class MapContainer extends React.Component {
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;
         const hideList = atms.length > 0 ? this.hideOrNot.bind(this)() : null;
+        let button;
+        if (localStorage.getItem('email') == null) {
+            button = <Link className="homepage-header" to="/main">
+                    Home page{' '}
+            </Link>
+        } else {
+            button = <Link className="userdb-header" to="/userdashboard">
+                {' '}
+                Dashboard
+            </Link>
+        }
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
-                    <Link className="homepage-header" to="/main">
-                        Home page{' '}
-                    </Link>
-                    <Link className="userdb-header" to="/userdashboard">
-                        {' '}
-                        Dashboard
-                    </Link>
+                    {button}
                 </div>
                 <div className="googleMap">
                     <LoadScript

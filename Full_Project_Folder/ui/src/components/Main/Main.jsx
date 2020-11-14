@@ -1,12 +1,29 @@
 import React from "react";
 import "./Main.css";
 import BackgroundImg from "./dlb.svg";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  Link
+} from 'react-router-dom';
 class Main extends React.Component {
   state = {};
+  
+  // componentDidMount() {
+  //   if (localStorage.getItem('user_id') != null) {
+  //     return (
+  //       <Redirect to='/userdashboard' />
+  //     )
+  //   }
+  // }
   render() {
     const color = this.props.color || "rgb(70, 88, 190)";
+
+    
     return (
+      
       <div className="MainPage">
         <div className="introDiv">
           <h1 className="introHeader">Deep Learning Bank</h1>

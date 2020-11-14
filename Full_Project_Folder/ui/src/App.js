@@ -41,10 +41,30 @@ import {
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+const LoggedInRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      localStorage.getItem('email') != null
+        ? <Component {...props} />
+        : <Redirect to='/' />
+    )} />
+  )
+
+const LoggedOutRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} render={(props) => (
+      localStorage.getItem('email') == null
+        ? <Component {...props} />
+        : <Redirect to='/userdashboard' />
+    )} />
+  )
+
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = { dark: false };
+    }
+
+    componentDidUpdate() {
+        console.log("APP: " + localStorage.getItem('user_id'))
     }
     render() {
         const { dark } = this.state;
@@ -57,93 +77,93 @@ class App extends React.Component {
                             path="/"
                             render={(props) => <Main {...props} dark={dark} />}
                         />
-                        <Route path="/main" component={Main} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/register" component={Register} />
-                        <Route path="/edit_profile" component={EditProfile} />
+                        <LoggedOutRoute path="/main" component={Main} />
+                        <LoggedOutRoute path="/login" component={Login} />
+                        <LoggedOutRoute path="/register" component={Register} />
+                        <LoggedInRoute path="/edit_profile" component={EditProfile} />
 
-                        <Route path="/recovery" component={Recovery} />
+                        <LoggedOutRoute path="/recovery" component={Recovery} />
                         <Route path="/gmap" component={GMap} />
-                        <Route
+                        <LoggedInRoute
                             path="/userdashboard"
                             component={UserDashboard}
                         />
                         {
-                            <Route
+                            <LoggedInRoute
                                 path="/managerdashboard"
                                 component={ManagerDashboard}
                             />
                         }
-                        <Route path="/depositcheck" component={DepositCheck} />
-                        <Route
+                        <LoggedInRoute path="/depositcheck" component={DepositCheck} />
+                        <LoggedInRoute
                             path="/depositcheckconfirm"
                             component={DepositCheckConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/depositchecktransaction"
                             component={DepositCheckTransaction}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferinternal"
                             component={TransferInternal}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferinternalconfirm"
                             component={TransferInternalConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferinternaltransaction"
                             component={TransferInternalTransaction}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferexternal"
                             component={TransferExternal}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferexternalconfirm"
                             component={TransferExternalConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/transferexternaltransaction"
                             component={TransferExternalTransaction}
                         />
-                        <Route path="/billpay" component={BillPay} />
-                        <Route
+                        <LoggedInRoute path="/billpay" component={BillPay} />
+                        <LoggedInRoute
                             path="/billpayedit/:id"
                             component={BillPayEdit}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/billpayedit_confirm/:id"
                             component={BillPayEditConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/billpayedit_transaction/:id"
                             component={BillPayEditTransaction}
                         />
 
-                        <Route
+                        <LoggedInRoute
                             path="/billpaycancel_confirm/:id"
                             component={BillPayCancelConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/billpaycancel_transaction/:id"
                             component={BillPayCancelTransaction}
                         />
 
-                        <Route path="/billpayshow" component={BillPayShow} />
-                        <Route
+                        <LoggedInRoute path="/billpayshow" component={BillPayShow} />
+                        <LoggedInRoute
                             path="/billpayconfirm"
                             component={BillPayConfirm}
                         />
-                        <Route
+                        <LoggedInRoute
                             path="/billpaytransaction"
                             component={BillPayTransaction}
                         />
-                        <Route path="/account" component={Account} />
-                        <Route path="/open_account" component={OpenAccount} />
+                        <LoggedInRoute path="/account" component={Account} />
+                        <LoggedInRoute path="/open_account" component={OpenAccount} />
                         <Route path="/contact" component={Contact} />
-                        <Route path="/openaccount" component={OpenAccount} />
-                        <Route path="/closeaccount" component={CloseAccount} />
+                        <LoggedInRoute path="/openaccount" component={OpenAccount} />
+                        <LoggedInRoute path="/closeaccount" component={CloseAccount} />
                         <Route path="/logout" component={Logout} />
                         <Route path="/NotFound" component={NotFound} />
                         <Redirect from="*" to="/NotFound" />
