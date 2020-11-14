@@ -40,13 +40,14 @@
 .MapContainer .homepage-header {
     position: absolute;
     z-index: 2;
+    left: 1px;
     color: black;
     font-size: 1.25em;
 }
 .MapContainer .userdb-header {
     position: absolute;
     z-index: 2;
-    margin-top: 25px;
+    left: 1px;
     color: black;
     font-size: 1.25em;
 }
