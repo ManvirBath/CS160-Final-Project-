@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import './Register.css';
 import Logo from '../Logo';
 import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link
+} from 'react-router-dom';
 import axiosInstance from '../../axios';
 
 export default function SignUp() {
@@ -52,6 +58,13 @@ export default function SignUp() {
                 console.log(res.data);
             });
     };
+
+    // if (localStorage.getItem('user_id') == null) {
+    //   return (
+    //     <Redirect to='/' />
+    //   )
+    // }
+
     return (
         <div className="Register">
             <div className="form">

@@ -11,12 +11,15 @@ class Account extends React.Component {
 
         this.state = {
             transaction_arr: [],
+            account_num: this.props.location.account_num || localStorage.getItem('account_num'),
+            acct_type: this.props.location.acct_type || localStorage.getItem('account_type'),
+            balance: this.props.location.balance || localStorage.getItem('balance')
         };
     }
     async getTransactions() {
         try {
             const res = await this.state.axiosInstance.get(
-                `accounts/${this.props.location.account_num}/transactions/`
+                `accounts/${this.state.account_num}/transactions/`
             );
             const d = res.data;
             this.setState({ transaction_arr: d });
@@ -48,11 +51,11 @@ class Account extends React.Component {
             <div className="Account">
                 <UserNavigationBar active={0} />
                 <h1 className="acctTypeName">
-                    {this.props.location.acct_type}:{' '}
-                    {this.props.location.account_num}
+                    {this.state.acct_type}:{' '}
+                    {this.state.account_num}
                 </h1>
                 <h4 className="acctBalance">
-                    Account Balance: ${this.props.location.balance}
+                    Account Balance: ${this.state.balance}
                 </h4>
                 <h2 id="account-title">Transactions</h2>
                 <div className="account-table">
