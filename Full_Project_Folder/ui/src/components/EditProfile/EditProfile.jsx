@@ -148,14 +148,16 @@ class EditProfile extends React.Component {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_firstname:
+                    'First name must be in letters only and between 2-40 characters',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_lastname:
+                    'Last name must be in letters only and between 2-40 characters',
             });
         }
 
@@ -166,7 +168,8 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Not valid email',
+                err_email:
+                    'Invalid email. Either no input or incorrect email address',
             });
         } else if (
             this.state.other_accts.some(
@@ -175,14 +178,15 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Email already in bank',
+                err_email: 'Email is already registered',
             });
         }
 
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address: 'Not Valid address (No Special Chars exc . and #)',
+                err_address:
+                    'Invalid address (No special characters except . and #)',
             });
         }
 
@@ -194,7 +198,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Not valid city: Only language based letters. Length b/w 2 and 40 chars allowed.',
+                    'Invalid city: Length must be between 2-40 characters',
             });
         }
 
@@ -202,14 +206,15 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_region:
-                    'Not valid state: Only capital letters and length of 2',
+                    'Invalid state: Only capital letters and length of 2',
             });
         }
 
         if (this.state.zipcode.match(/^[0-9]{5,5}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_zipcode: 'Not valid zipcode: Only numbers and length of 5',
+                err_zipcode:
+                    'Invalid zipcode: Only numbers and must be length of 5',
             });
         }
 
@@ -221,7 +226,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'Not valid phone number: Format should be XXX-XXX-XXXX and numbers only',
+                    'Invalid phone number: Format should be XXX-XXX-XXXX',
             });
         }
 
@@ -231,7 +236,7 @@ class EditProfile extends React.Component {
 
         if (getAge <= 17) {
             this.setState({
-                err_birthday: 'You must be at least 18 years of old to join.',
+                err_birthday: 'You must be at least 18 years or older to join',
             });
         }
     }
@@ -297,16 +302,23 @@ class EditProfile extends React.Component {
                 <UserNavigationBar active={4} />
                 <div className="header-editprofile">Edit Profile</div>
                 <form className="form" onSubmit={this.onSubmit}>
-                    <input
-                        className="form-control"
-                        name="firstname"
-                        label="Firstname"
-                        id="firstname"
-                        placeholder="First Name"
-                        value={this.state.firstname}
-                        onChange={this.firstname}
-                    />
-                    <h6 className="error">{this.state.err_firstname}</h6>
+                    <div className="input-container flexbox">
+                        <input
+                            className="form-control"
+                            name="firstname"
+                            label="firstname"
+                            id="firstname"
+                            placeholder="First Name"
+                            value={this.state.firstname}
+                            onChange={this.firstname}
+                        />
+                        <span
+                            className="error"
+                            id="editprofile-firstname-error"
+                        >
+                            {this.state.err_firstname}
+                        </span>
+                    </div>
                     <input
                         className="form-control"
                         name="lastname"
@@ -316,7 +328,7 @@ class EditProfile extends React.Component {
                         value={this.state.lastname}
                         onChange={this.lastname}
                     />
-                    <h6 className="error">{this.state.err_lastname}</h6>
+                    <div className="error">{this.state.err_lastname}</div>
                     <input
                         className="form-control"
                         name="email"
@@ -326,7 +338,7 @@ class EditProfile extends React.Component {
                         value={this.state.email}
                         onChange={this.email}
                     />
-                    <h6 className="error">{this.state.err_email}</h6>
+                    <div className="error">{this.state.err_email}</div>
                     <input
                         className="form-control"
                         type="address"
@@ -337,7 +349,7 @@ class EditProfile extends React.Component {
                         value={this.state.address}
                         onChange={this.address}
                     />
-                    <h6 className="error">{this.state.err_address}</h6>
+                    <div className="error">{this.state.err_address}</div>
                     <input
                         className="form-control"
                         type="city"
@@ -348,7 +360,7 @@ class EditProfile extends React.Component {
                         value={this.state.city}
                         onChange={this.city}
                     />
-                    <h6 className="error">{this.state.err_city}</h6>
+                    <div className="error">{this.state.err_city}</div>
                     <input
                         className="form-control"
                         type="region"
@@ -359,7 +371,7 @@ class EditProfile extends React.Component {
                         value={this.state.region}
                         onChange={this.region}
                     />
-                    <h6 className="error">{this.state.err_region}</h6>
+                    <div className="error">{this.state.err_region}</div>
                     <input
                         className="form-control"
                         type="zipcode"
@@ -370,7 +382,7 @@ class EditProfile extends React.Component {
                         value={this.state.zipcode}
                         onChange={this.zipcode}
                     />
-                    <h6 className="error">{this.state.err_zipcode}</h6>
+                    <div className="error">{this.state.err_zipcode}</div>
                     <input
                         className="form-control"
                         type="phone_number"
@@ -381,7 +393,7 @@ class EditProfile extends React.Component {
                         value={this.state.phone_number}
                         onChange={this.phone_number}
                     />
-                    <h6 className="error">{this.state.err_phone_number}</h6>
+                    <div className="error">{this.state.err_phone_number}</div>
                     <input
                         className="form-control"
                         type="date"
@@ -392,7 +404,7 @@ class EditProfile extends React.Component {
                         value={this.state.birthday}
                         onChange={this.birthday}
                     />
-                    <h6 className="error">{this.state.err_birthday}</h6>
+                    <div className="error">{this.state.err_birthday}</div>
                     <button
                         className="editprofile-btn btn btn-primary"
                         type="submit"
