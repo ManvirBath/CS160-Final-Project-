@@ -18,7 +18,6 @@ class TransferInternalConfirm extends React.Component {
                 this.props.location.amount || localStorage.getItem('amount'),
             memo: this.props.location.memo || localStorage.getItem('memo'),
         };
-        this.check = this.check.bind(this);
     }
 
     async componentDidMount() {

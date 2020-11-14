@@ -8,36 +8,44 @@ class DepositCheckConfirm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status_response:
-                "Thank you for your transfer request! Please contact us if you have any questions or concerns.",
-            alert_type: "alert alert-success",
-            to_account: this.props.location.account || localStorage.getItem('to_account'),
-            to_account_num: this.props.location.to_account_num || localStorage.getItem('to_account_num'),
-            amount: this.props.location.amount || localStorage.getItem('amount'),
+            to_account:
+                this.props.location.account ||
+                localStorage.getItem('to_account'),
+            to_account_num:
+                this.props.location.to_account_num ||
+                localStorage.getItem('to_account_num'),
+            amount:
+                this.props.location.amount || localStorage.getItem('amount'),
             memo: this.props.location.memo || localStorage.getItem('memo'),
-            check_image: this.props.location.check_image || localStorage.getItem('check_image'),
+            check_image:
+                this.props.location.check_image ||
+                localStorage.getItem('check_image'),
             file: null,
         };
     }
 
-    async check(e) {
+    async componentDidMount() {
         const to_curr_acc = await localStorage.getItem('to_account_num');
-        
+        localStorage.setItem('alert_type', 'alert alert-success');
+        localStorage.setItem(
+            'status_response',
+            'Thank you for your deposit! Please contact us if you have any questions or concerns.'
+        );
         axiosInstance
             .post(`accounts/${to_curr_acc}/deposit/`, {
                 amount: localStorage.getItem('amount'),
                 location: 'Online',
-                memo: localStorage.getItem('memo')
+                memo: localStorage.getItem('memo'),
             })
             .catch((error) => {
                 console.log(error.response.status);
-                this.setState({
-                    alert_type: 'alert alert-danger',
-                    status_response:
-                        'ERROR: This was not a valid deposit. Please try again.',
-                });
+                localStorage.setItem('alert_type', 'alert alert-danger');
+                localStorage.setItem(
+                    'status_response',
+                    'ERROR: This was not a valid deposit. Please try again.'
+                );
             });
-      }
+    }
 
     render() {
         return (
@@ -66,11 +74,10 @@ class DepositCheckConfirm extends React.Component {
                                 amount: this.state.amount,
                                 memo: this.state.memo,
                                 check_image: this.state.check_image,
-                                to_account_num: this.state
-                                    .to_account_num,
+                                to_account_num: this.state.to_account_num,
                             }}
                         >
-                            <button type="button" class="btn btn-primary" onClick={this.check}>
+                            <button type="button" class="btn btn-primary">
                                 Submit
                             </button>
                         </Link>

@@ -18,9 +18,9 @@ class TransferInternal extends React.Component {
             errorFromAcct: '',
             errorAmount: '',
             errorIsSameAcct: '',
+            errorMemo: '',
 
             accts: [],
-            // others_accts: [],
             axiosInstance: null,
             loading: true,
         };
@@ -67,6 +67,7 @@ class TransferInternal extends React.Component {
     }
     memo(e) {
         this.setState({ memo: e.target.value });
+        this.setState({ errorMemo: '' });
     }
 
     handleSubmit(e) {
@@ -99,11 +100,26 @@ class TransferInternal extends React.Component {
             this.setState({ errorAmount: 'Amount must be greater than 0' });
         }
 
+        //validates memo
+        if (this.state.memo.length >= 50) {
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo must be less than 50 characters long',
+            });
+        }
+        if (this.state.memo.match(/^[A-Za-z0-9/ ]*$/gm) == null) {
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo can only contain letters and numbers',
+            });
+        }
+
         if (
             this.state.errorToAcct == '' &&
             this.state.errorFromAcct == '' &&
             this.state.errorAmount == '' &&
-            this.state.errorIsSameAcct == ''
+            this.state.errorIsSameAcct == '' &&
+            this.state.errorMemo == ''
         ) {
             localStorage.setItem('to_acct', this.state.to_acct);
             localStorage.setItem('from_acct', this.state.from_acct.value);
@@ -206,6 +222,7 @@ class TransferInternal extends React.Component {
                             class="form-control"
                             onChange={this.memo}
                         />
+                        <h6 className="error">{this.state.errorMemo}</h6>
                     </div>
                     <div className="nextBtn">
                         <Link
