@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import PhoneInput from 'react-phone-number-input/input'
-import isPossiblePhoneNumber from 'libphonenumber-js'
 import './Register.css';
 import Logo from '../Logo';
 import {useHistory, withRouter} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../axios';
-import Loader from "react-loader-spinner";
 
 class Register extends React.Component {
     constructor(props) {
@@ -22,8 +19,6 @@ class Register extends React.Component {
             zipcode: '',
             phone_number: '',
             birthday: '',
-
-            other_accts: [],
 
             err_firstname: '',
             err_lastname: '',
@@ -51,33 +46,6 @@ class Register extends React.Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    // async getClient() {
-    //     const response = await axiosInstance.get();
-    // }
-
-    // To check other user's emails (can't be the same!!!)
-    async getOtherAccounts() {
-        try {
-            const res2 = await axiosInstance.get(`/all_clients/`);
-
-            const loaded_accounts = res2.data;
-
-            this.setState({ other_accts: loaded_accounts });
-
-            return res2;
-        } catch (error) {
-            throw error;
-        }
-    }
-    async componentDidMount() {
-        const other_accounts = await this.getOtherAccounts();
-        this.setState({ loading: false });
-
-        for (var i = 0; i < this.state.other_accts.length; i++) {
-            console.log(this.state.other_accts[i]);
-        }
     }
 
     firstname(e) {
@@ -135,14 +103,14 @@ class Register extends React.Component {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_firstname: 'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_lastname: 'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
@@ -166,7 +134,7 @@ class Register extends React.Component {
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address: 'Not Valid address (No Special Chars exc . and #)',
+                err_address: 'Please omit any special characters and ensure the address is between 2 and 50 characters long',
             });
         }
 
@@ -178,7 +146,7 @@ class Register extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Not valid city: Only language based letters. Length b/w 2 and 40 chars allowed.',
+                    'Please omit any special characters and ensure the name is between 2 and 40 characters long.',
             });
         }
 
@@ -190,20 +158,20 @@ class Register extends React.Component {
             });
         }
 
-        if (this.state.zipcode.match(/^[0-9]{5,5}$/gm) == null) {
+        if (this.state.zipcode.length != 5) {
             e.preventDefault();
             this.setState({
-                err_zipcode: 'Not valid zipcode: Only numbers and length of 5',
+                err_zipcode: 'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
             });
         }
 
         if (
-            this.state.phone_number.match(/(\d{9})|(\d{3}-\d{3}-\d{4})/) == null
+            this.state.phone_number.toString().length != 11 && this.state.phone_number.toString().length != 12
         ) {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'Not valid phone number: Format should be XXX-XXX-XXXX or numbers only',
+                    'The provided number is not valid. The country code is optional.'
             });
         }
 
@@ -220,7 +188,7 @@ class Register extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        console.log("YES!!!")
+        //var response = null;
         if (
             this.state.err_address == '' &&
             this.state.err_birthday == '' &&
@@ -243,7 +211,7 @@ class Register extends React.Component {
             console.log(this.state.phone_number);
             console.log(this.state.birthday);
 
-            const response = axiosInstance.post(`register/`, {
+            axiosInstance.post(`register/`, {
                 first_name: this.state.firstname,
                 last_name: this.state.lastname,
                 email: this.state.email,
@@ -254,11 +222,22 @@ class Register extends React.Component {
                 zipcode: this.state.zipcode,
                 phone_num: this.state.phone_number,
                 birthday: this.state.birthday,
+            }).then(response => {
+                console.log(this.props.history);
+                this.props.history.push('/login/');
+            }).catch(err => {
+                if(err.response) {
+                    if(err.response.data.email != null)
+                        this.setState( {err_email: 'This email is already in use. Please try again with a different email address.' })
+                    else
+                        alert('A problem processing your input has occured. Please check the format of your input and try again. If this error persists, please contact support.')
+                } else if(err.request) {
+                    alert('Your request could not reach the server. Please check your internet connection ant try again. If this error persists, please contact support.')
+                } else {
+                    alert('An unknown error has occured. Please try again. If this error persists, please contact support.')
+                }
             });
         }
-
-        console.log(this.props.history);
-        this.props.history.push('/login/');
     };
 
     render() {
@@ -409,6 +388,7 @@ class Register extends React.Component {
                         id="zipcode"
                         label="zipcode"
                         placeholder="Zipcode"
+                        type="number"
                         value={this.state.zipcode}
                         onChange={this.zipcode}
                     />
@@ -419,7 +399,8 @@ class Register extends React.Component {
                         name="phone_number"
                         id="phone_number"
                         label="phone_number"
-                        placeholder="Phone Number"
+                        placeholder="Phone Number (numbers only)"
+                        type="number"
                         value={this.state.phone_number}
                         onChange={this.phone_number}
                     />
