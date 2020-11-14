@@ -144,20 +144,21 @@ class EditProfile extends React.Component {
         return age_now;
     };
 
+
+
+
     handleSubmit(e) {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname:
-                    'First name must be in letters only and between 2-40 characters',
+                err_firstname: 'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname:
-                    'Last name must be in letters only and between 2-40 characters',
+                err_lastname: 'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
@@ -169,7 +170,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_email:
-                    'Invalid email. Either no input or incorrect email address',
+                    'Not a valid email address',
             });
         } else if (
             this.state.other_accts.some(
@@ -178,15 +179,14 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Email is already registered',
+                err_email: 'This email is already in use. Please try again with a different email address.',
             });
         }
 
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address:
-                    'Invalid address (No special characters except . and #)',
+                err_address: 'Please omit any special characters and ensure the address is between 2 and 50 characters long',
             });
         }
 
@@ -198,35 +198,32 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Invalid city: Length must be between 2-40 characters',
+                    'Please omit any special characters and ensure the name is between 2 and 40 characters long.',
             });
         }
 
-        if (this.state.region.match(/^[A-Z]{2,2}$/gm) == null) {
+        if (this.state.region == '') {
             e.preventDefault();
             this.setState({
                 err_region:
-                    'Invalid state: Only capital letters and length of 2',
+                    'Must select a U.S. State/Territory',
             });
         }
 
-        if (this.state.zipcode.match(/^[0-9]{5,5}$/gm) == null) {
+        if (this.state.zipcode.length != 5) {
             e.preventDefault();
             this.setState({
-                err_zipcode:
-                    'Invalid zipcode: Only numbers and must be length of 5',
+                err_zipcode: 'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
             });
         }
 
         if (
-            this.state.phone_number.match(
-                /^[0-9]{3,3}-[0-9]{3,3}-[0-9]{4,4}$/gm
-            ) == null
+            this.state.phone_number.toString().length != 10 && this.state.phone_number.toString().length != 11
         ) {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'Invalid phone number: Format should be XXX-XXX-XXXX. No letters.',
+                    'The provided number is not valid. The country code is optional.'
             });
         }
 
@@ -234,9 +231,9 @@ class EditProfile extends React.Component {
             (new Date() - new Date(this.state.birthday).getTime()) / 3.15576e10
         );
 
-        if (getAge <= 17) {
+        if (this.state.birthday == '' || getAge <= 17) {
             this.setState({
-                err_birthday: 'You must be at least 18 years of old to join.',
+                err_birthday: 'You must be at least 18 years old to join.',
             });
         }
     }
@@ -354,7 +351,7 @@ class EditProfile extends React.Component {
                         onChange={this.city}
                     />
                     <h6 className="error">{this.state.err_city}</h6>
-                    <input
+                    <select
                         className="form-control"
                         type="region"
                         name="region"
@@ -363,11 +360,73 @@ class EditProfile extends React.Component {
                         placeholder="Region"
                         value={this.state.region}
                         onChange={this.region}
-                    />
+                    >
+                        <option value="" hidden={true}>U.S. State/Territory</option>
+                        <optgroup label="States">
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Deleware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LS">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </optgroup>
+                        <optgroup label="U.S. Territories">
+                            <option value="DC">Washington D.C.</option>
+                            <option value="AS">American Samoa</option>
+                            <option value="GU">Guam</option>
+                            <option value="MP">Northern Mariana Islands</option>
+                            <option value="PR">Puerto Rico</option>
+                            <option value="VI">U.S. Virgin Islands</option>
+                        </optgroup>
+                     </select>
                     <h6 className="error">{this.state.err_region}</h6>
                     <input
                         className="form-control"
-                        type="zipcode"
+                        type="number"
                         name="zipcode"
                         id="zipcode"
                         label="zipcode"
@@ -378,7 +437,7 @@ class EditProfile extends React.Component {
                     <h6 className="error">{this.state.err_zipcode}</h6>
                     <input
                         className="form-control"
-                        type="phone_number"
+                        type="number"
                         name="phone_number"
                         id="phone_number"
                         label="phone_number"
