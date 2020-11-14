@@ -1,16 +1,18 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "rules": {
-    "semi": "error",
-    "indent": ["error", 4],
-    "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
-    "no-debugger": 2
-  }
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "experimentalObjectRestSpread": true
+        }
+    },
+    "rules": {
+        "semi": "error",
+        "indent": ["error", 4],
+        "linebreak-style": ["error", "unix"],
+        "quotes": ["error", "single"],
+        "no-debugger": 2
+    },
+    "parser": "babel-eslint"
 }

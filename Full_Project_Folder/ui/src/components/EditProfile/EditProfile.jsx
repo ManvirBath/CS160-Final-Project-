@@ -148,14 +148,16 @@ class EditProfile extends React.Component {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_firstname:
+                    'First name must be in letters only and between 2-40 characters',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname: 'Last name must be b/w 2-40 chars, Letters Only',
+                err_lastname:
+                    'Last name must be in letters only and between 2-40 characters',
             });
         }
 
@@ -166,7 +168,8 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Not valid email',
+                err_email:
+                    'Invalid email. Either no input or incorrect email address',
             });
         } else if (
             this.state.other_accts.some(
@@ -175,14 +178,15 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Email already in bank',
+                err_email: 'Email is already registered',
             });
         }
 
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address: 'Not Valid address (No Special Chars exc . and #)',
+                err_address:
+                    'Invalid address (No special characters except . and #)',
             });
         }
 
@@ -194,7 +198,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Not valid city: Only language based letters. Length b/w 2 and 40 chars allowed.',
+                    'Invalid city: Length must be between 2-40 characters',
             });
         }
 
@@ -202,14 +206,15 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_region:
-                    'Not valid state: Only capital letters and length of 2',
+                    'Invalid state: Only capital letters and length of 2',
             });
         }
 
         if (this.state.zipcode.match(/^[0-9]{5,5}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_zipcode: 'Not valid zipcode: Only numbers and length of 5',
+                err_zipcode:
+                    'Invalid zipcode: Only numbers and must be length of 5',
             });
         }
 
@@ -221,7 +226,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'Not valid phone number: Format should be XXX-XXX-XXXX and numbers only',
+                    'Invalid phone number: Format should be XXX-XXX-XXXX. No letters.',
             });
         }
 

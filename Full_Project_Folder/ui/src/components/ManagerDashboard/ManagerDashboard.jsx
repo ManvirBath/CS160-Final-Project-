@@ -134,11 +134,15 @@ class ManagerDashboard extends React.Component {
                     <span id="client-stats" class="badge badge-secondary">
                         {this.state.num_clients}
                     </span>
-                    <label for="account-stats">Accounts</label>
+                    <label for="account-stats" id="accounts-label">
+                        Accounts
+                    </label>
                     <span id="account-stats" class="badge badge-secondary">
                         {this.state.num_accounts}
                     </span>
-                    <label for="transaction-stats">Transactions</label>
+                    <label for="transaction-stats" id="transactions-label">
+                        Transactions
+                    </label>
                     <span id="transaction-stats" class="badge badge-secondary">
                         {this.state.num_transactions}
                     </span>
