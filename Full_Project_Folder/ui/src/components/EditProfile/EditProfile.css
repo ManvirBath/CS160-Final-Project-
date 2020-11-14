@@ -10,7 +10,7 @@
     margin-top: 25px;
 }
 .EditProfile .form {
-    display: flex;
+    display: grid;
     flex-direction: column;
     margin-top: 3vh;
 }
@@ -23,7 +23,7 @@
 }
 .EditProfile input {
     color: black;
-    margin-top: 5px;
+    margin-top: 15px;
     margin-bottom: 5px;
 }
 .EditProfile .header {
@@ -39,4 +39,16 @@
 .EditProfile .editprofile-btn {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.EditProfile .error {
+    color: red;
+    max-width: 225px;
+    max-height: 0px;
+    font-size: 0.95em;
+    position: relative;
+    top: -43px;
+    left: 300px;
+}
+.EditProfile .input-container {
+    flex-direction: column;
 }
