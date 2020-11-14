@@ -41,21 +41,34 @@ import {
 } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const LoggedInRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      localStorage.getItem('email') != null
-        ? <Component {...props} />
-        : <Redirect to='/' />
-    )} />
-  )
+function LoggedInRoute({ component: Component, ...rest }) {
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                localStorage.getItem('email') != null ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/login" />
+                )
+            }
+        />
+    );
+}
 
-const LoggedOutRoute = ({ component: Component, ...rest }) => (
-    <Route {...rest} render={(props) => (
-      localStorage.getItem('email') == null
-        ? <Component {...props} />
-        : <Redirect to='/userdashboard' />
-    )} />
-  )
+function LoggedOutRoute({ component: Component, ...rest }) {
+    return (
+        <Route
+            render={(props) =>
+                localStorage.getItem('email') == null ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/userdashboard" />
+                )
+            }
+        />
+    );
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -64,7 +77,7 @@ class App extends React.Component {
     }
 
     componentDidUpdate() {
-        console.log("APP: " + localStorage.getItem('user_id'))
+        console.log('APP: ' + localStorage.getItem('user_id'));
     }
     render() {
         const { dark } = this.state;
@@ -80,7 +93,10 @@ class App extends React.Component {
                         <LoggedOutRoute path="/main" component={Main} />
                         <LoggedOutRoute path="/login" component={Login} />
                         <LoggedOutRoute path="/register" component={Register} />
-                        <LoggedInRoute path="/edit_profile" component={EditProfile} />
+                        <LoggedInRoute
+                            path="/editprofile"
+                            component={EditProfile}
+                        />
 
                         <LoggedOutRoute path="/recovery" component={Recovery} />
                         <Route path="/gmap" component={GMap} />
@@ -94,7 +110,10 @@ class App extends React.Component {
                                 component={ManagerDashboard}
                             />
                         }
-                        <LoggedInRoute path="/depositcheck" component={DepositCheck} />
+                        <LoggedInRoute
+                            path="/depositcheck"
+                            component={DepositCheck}
+                        />
                         <LoggedInRoute
                             path="/depositcheckconfirm"
                             component={DepositCheckConfirm}
@@ -150,7 +169,10 @@ class App extends React.Component {
                             component={BillPayCancelTransaction}
                         />
 
-                        <LoggedInRoute path="/billpayshow" component={BillPayShow} />
+                        <LoggedInRoute
+                            path="/billpayshow"
+                            component={BillPayShow}
+                        />
                         <LoggedInRoute
                             path="/billpayconfirm"
                             component={BillPayConfirm}
@@ -160,10 +182,19 @@ class App extends React.Component {
                             component={BillPayTransaction}
                         />
                         <LoggedInRoute path="/account" component={Account} />
-                        <LoggedInRoute path="/open_account" component={OpenAccount} />
+                        <LoggedInRoute
+                            path="/open_account"
+                            component={OpenAccount}
+                        />
                         <Route path="/contact" component={Contact} />
-                        <LoggedInRoute path="/openaccount" component={OpenAccount} />
-                        <LoggedInRoute path="/closeaccount" component={CloseAccount} />
+                        <LoggedInRoute
+                            path="/openaccount"
+                            component={OpenAccount}
+                        />
+                        <LoggedInRoute
+                            path="/closeaccount"
+                            component={CloseAccount}
+                        />
                         <Route path="/logout" component={Logout} />
                         <Route path="/NotFound" component={NotFound} />
                         <Redirect from="*" to="/NotFound" />

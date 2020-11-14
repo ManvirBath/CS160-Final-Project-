@@ -67,7 +67,7 @@ const dropDown = [
         children: [
             {
                 name: 'Edit Profile',
-                href: '/edit_profile',
+                href: '/editprofile',
             },
             {
                 name: 'Find ATMS',
