@@ -1,0 +1,72 @@
+.contact {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 0;
+}
+.contact .contactpage {
+    flex-direction: column;
+    text-align: center;
+    margin-top: 100px;
+}
+.contact .contact-jumbotron {
+    text-align: center;
+    margin-top: 125px;
+    line-height: normal;
+}
+.contact .contact-upper {
+    width: 100%;
+    height: 105px;
+    margin-top: -50px;
+    font-size: 1.5em;
+    font-family: cursive;
+}
+.contact .contact-office-location {
+    display: inline-block;
+    font-size: 1.5em;
+    font-family: cursive;
+}
+.contact .contact-phone {
+    position: relative;
+    bottom: 100px;
+    left: 255px;
+    font-size: 1.5em;
+    display: inline-block;
+    font-family: cursive;
+    margin: 0;
+    clear: inherit;
+}
+.contact .contact-email {
+    position: relative;
+    bottom: 10px;
+    right: 0px;
+    font-size: 1.5em;
+    display: inline-block;
+    font-family: cursive;
+}
+.contact .footer a {
+    display: flex;
+    color: white;
+    font-size: 1.25em;
+    justify-content: center;
+}
+.contact .Logo {
+}
+.contact #contactus-greeting {
+    text-align: center;
+    color: white;
+    margin-top: 50px;
+    font-size: 3em;
+}
+.contact #office-location-header {
+    font-size: 1.25em;
+    font-family: cursive;
+}
+.contact #contact-number-header {
+    font-size: 1.5em;
+    font-family: cursive;
+}
+.contact #contact-email-header {
+    font-size: 1.5em;
+    font-family: cursive;
+}
