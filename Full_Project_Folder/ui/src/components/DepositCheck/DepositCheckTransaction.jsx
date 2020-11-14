@@ -7,50 +7,56 @@ class DepositCheckTransaction extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            status_response:
-                'Thank you for your deposit! Please contact us if you have any questions or concerns.',
-            alert_type: 'alert alert-success',
-            to_account: this.props.location.account || localStorage.getItem('to_account'),
-            to_account_num: this.props.location.to_account_num || localStorage.getItem('to_account_num'),
-            amount: this.props.location.amount || localStorage.getItem('amount'),
+            status_response: localStorage.getItem('status_response'),
+            alert_type: localStorage.getItem('alert_type'),
+            to_account:
+                this.props.location.account ||
+                localStorage.getItem('to_account'),
+            to_account_num:
+                this.props.location.to_account_num ||
+                localStorage.getItem('to_account_num'),
+            amount:
+                this.props.location.amount || localStorage.getItem('amount'),
             memo: this.props.location.memo || localStorage.getItem('memo'),
-            check_image: this.props.location.check_image || localStorage.getItem('check_image'),
+            check_image:
+                this.props.location.check_image ||
+                localStorage.getItem('check_image'),
         };
     }
 
     componentDidMount() {
-        window.history.pushState(null, "", window.location.href);
+        window.history.pushState(null, '', window.location.href);
         window.onpopstate = this._backConfirm;
     }
 
     componentWillUnmount() {
-        window.removeEventListener("beforeunload", this._confirm);
-        window.onpopstate = () => { }
+        window.removeEventListener('beforeunload', this._confirm);
+        window.onpopstate = () => {};
     }
-  
+
     _backConfirm = async () => {
-        let event = window.confirm("Cannot go back to submission page. ");
-        if(event){
-            window.history.pushState(null, "", window.location.href);
+        let event = window.confirm('Cannot go back to submission page. ');
+        if (event) {
+            window.history.pushState(null, '', window.location.href);
         }
-    }
-  
+    };
+
     _confirm = (e) => {
-        var confirmationMessage = "\o/";
+        var confirmationMessage = 'o/';
         e.returnValue = confirmationMessage;
         return confirmationMessage;
-    }
+    };
     render() {
         return (
             <div className="DepositCheckTransaction">
                 <UserNavigationBar active={3} />
                 <div
                     className="TransactionAlert"
-                    class={this.state.alert_type}
+                    class={localStorage.getItem('alert-type')}
                     role="alert"
                     id="depositchecktransaction-ty"
                 >
-                    <p>{this.state.status_response}</p>
+                    <p>{localStorage.getItem('status_response')}</p>
                 </div>
                 <div className="depositchecktransaction-info">
                     <h4>Deposit to: {this.state.account}</h4>

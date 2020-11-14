@@ -2,49 +2,61 @@ import React from 'react';
 import './Transfer.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
-import axiosInstance from "../../axios";
+import axiosInstance from '../../axios';
 
 class TransferInternalConfirm extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            status_response:
-                "Thank you for your transfer request! Please contact us if you have any questions or concerns.",
-            alert_type: "alert alert-success",
-            to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
-            from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
-            amount: this.props.location.amount || localStorage.getItem('amount'),
+            to_acct:
+                this.props.location.to_acct || localStorage.getItem('to_acct'),
+            from_acct:
+                this.props.location.from_acct ||
+                localStorage.getItem('from_acct'),
+            amount:
+                this.props.location.amount || localStorage.getItem('amount'),
             memo: this.props.location.memo || localStorage.getItem('memo'),
         };
     }
 
-    componentDidMount() {
-        console.log(localStorage.getItem('to_acct'))
-        console.log(localStorage.getItem('from_acct'))
-        console.log(localStorage.getItem('amount'))
-        console.log(localStorage.getItem('memo'))
-    }
-
-    async check(e) {
+    async componentDidMount() {
+        console.log(localStorage.getItem('to_acct'));
+        console.log(localStorage.getItem('from_acct'));
+        console.log(localStorage.getItem('amount'));
+        console.log(localStorage.getItem('memo'));
+        localStorage.setItem(
+            'status_response',
+            'Thank you for your transfer request! Please contact us if you have any questions or concerns.'
+        );
+        localStorage.setItem('alert_type', 'alert alert-success');
         const from_cur_acc = await localStorage.getItem('from_acct');
-        
+
         const response = await axiosInstance
-        .post(`accounts/${from_cur_acc}/transfer_internal/`, {
-          to_account_number: localStorage.getItem('to_acct'),
-          amount: localStorage.getItem('amount'),
-          location: "Online",
-          memo: localStorage.getItem('memo'),
-        })
-        .catch((error) => {
-          console.log(error.response.status);
-          this.setState({ alert_type: "alert alert-danger" });
-          this.setState({
-            status_response:
-              "ERROR: This was not a valid transaction. Please try again.",
-          });
-        });
-      }
+            .post(`accounts/${from_cur_acc}/transfer_internal/`, {
+                to_account_number: localStorage.getItem('to_acct'),
+                amount: localStorage.getItem('amount'),
+                location: 'Online',
+                memo: localStorage.getItem('memo'),
+            })
+            .catch((error) => {
+                console.log(error.response.status);
+                this.state.error_stat = error.response.status;
+                localStorage.setItem('alert_type', 'alert alert-danger');
+                localStorage.setItem(
+                    'status_response',
+                    'ERROR: This was not a valid transaction. Please try again.'
+                );
+                //this.setState({ alert_type: 'alert alert-danger' });
+                // console.log('hello' + this.state.alert_type);
+                // this.setState({
+                //     alert_type: 'alert alert-danger',
+                //     status_response:
+                //         'ERROR: This was not a valid transaction. Please try again.',
+                // });
+                // console.log('hello' + this.state.alert_type);
+            });
+    }
 
     render() {
         return (
@@ -68,13 +80,14 @@ class TransferInternalConfirm extends React.Component {
                     <h4>Memo: {this.state.memo}</h4>
                 </div>
                 <div className="buttons-transfer-internal-confirm">
-                    <Link to={{
-                        pathname: "/transferinternal",
-                        to_acct: this.state.to_acct,
-                        from_acct: this.state.from_acct.value,
-                        amount: this.state.amount,
-                        memo: this.state.memo,
-                    }}
+                    <Link
+                        to={{
+                            pathname: '/transferinternal',
+                            to_acct: this.state.to_acct,
+                            from_acct: this.state.from_acct.value,
+                            amount: this.state.amount,
+                            memo: this.state.memo,
+                        }}
                     >
                         <button
                             type="button"
@@ -92,12 +105,11 @@ class TransferInternalConfirm extends React.Component {
                             amount: this.state.amount,
                             memo: this.state.memo,
                         }}
-                        >
+                    >
                         <button
                             type="submit"
                             class="btn btn-primary"
                             id="transfer-internal-btn2"
-                            onClick={this.check}
                         >
                             Submit
                         </button>

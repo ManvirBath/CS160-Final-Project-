@@ -10,8 +10,8 @@ class DepositCheck extends React.Component {
         this.state = {
             to_account: '',
             to_account_num: '',
-            amount: localStorage.getItem('amount') || "",
-            memo: localStorage.getItem('memo') || "n/a",
+            amount: localStorage.getItem('amount') || '',
+            memo: localStorage.getItem('memo') || 'n/a',
             check_image: '',
             file: null,
 
@@ -37,54 +37,69 @@ class DepositCheck extends React.Component {
     }
 
     to_account(e) {
-        this.setState({
-            to_account: e.target.selectedOptions[0].text,
-            to_account_num: e.target.value,
-            errorAccount: '',
-        });
+        this.setState({ to_account: e.target.selectedOptions[0].text });
+        this.setState({ errorAccount: '' });
     }
     amount(e) {
-        this.setState({
-            amount: parseFloat(e.target.value).toFixed(2),
-            errorAmount: '',
-        });
+        this.setState({ amount: parseFloat(e.target.value).toFixed(2) });
+        this.setState({ errorAmount: '' });
     }
     memo(e) {
         this.setState({ memo: e.target.value });
+        this.setState({ errorMemo: '' });
     }
     check_image(e) {
         this.setState({
             check_image: e.target.value,
             file: URL.createObjectURL(e.target.files[0]),
-            errorCheck: '',
         });
+        this.setState({ errorCheck: '' });
     }
 
     handleSubmit(e) {
-        let errorCheck = '';
-        let errorAccount = '';
         let error = false;
-        const { file, to_account, toAccount, amount } = this.state;
         //validates check
-        if (file == null) {
+        if (this.state.file == null) {
             error = true;
-            errorCheck = 'Please upload a check!';
+            e.preventDefault();
+            this.setState({ errorCheck: 'Please upload a check!' });
         }
         //validates to account
-        if (toAccount === '') {
+        if (this.state.to_account === '') {
             error = true;
-            errorAccount = 'Please select an account to deposit the check to!';
+            e.preventDefault();
+            this.setState({
+                errorAccount:
+                    'Please select an account to deposit the check to!',
+            });
         }
-        //validates amount
-        if (amount <= 0 || amount > 5000) {
+        if (this.state.amount <= 0) {
             error = true;
-            errorAccount = 'Amount must be between 0.01 and 5000.00!';
+            e.preventDefault();
+            this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+        } else if (this.state.amount > 1000000) {
+            error = true;
+            e.preventDefault();
+            this.setState({
+                errorAmount: 'Amount must be less than 1,000,000',
+            });
+        }
+
+        if (this.state.memo.length >= 50) {
+            error = true;
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo must be less than 50 characters long',
+            });
+        }
+        if (this.state.memo.match(/^[A-Za-z0-9/]*$/gm) == null) {
+            error = true;
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo can only contain letters and numbers',
+            });
         }
         if (error) {
-            this.setState({
-                errorCheck,
-                errorAccount,
-            });
         } else {
             localStorage.setItem('to_account', this.state.to_account);
             localStorage.setItem('amount', this.state.amount);
@@ -93,8 +108,6 @@ class DepositCheck extends React.Component {
             localStorage.setItem('check_image', this.state.check_image);
             localStorage.setItem('to_account_num', this.state.to_account_num);
         }
-
-
     }
     render() {
         let userAccts = this.state.accts.map((v) => (
@@ -127,7 +140,6 @@ class DepositCheck extends React.Component {
                             className="amountInput"
                             id="amount-input"
                             min="0"
-                            step="0.01"
                             placeholder="$"
                             onChange={this.amount}
                             value={this.state.amount}
@@ -144,6 +156,7 @@ class DepositCheck extends React.Component {
                             onChange={this.memo}
                             value={this.state.memo}
                         />
+                        <h6 className="error">{this.state.errorMemo}</h6>
                     </div>
                     <div className="Deposit-Page-righthalf">
                         <h4 id="upload-check">Upload Check:</h4>
