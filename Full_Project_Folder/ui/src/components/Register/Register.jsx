@@ -121,7 +121,7 @@ class Register extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Not valid email',
+                err_email: 'Not a valid email address',
             });
         }
 
@@ -166,7 +166,7 @@ class Register extends React.Component {
         }
 
         if (
-            this.state.phone_number.toString().length != 11 && this.state.phone_number.toString().length != 12
+            this.state.phone_number.toString().length != 10 && this.state.phone_number.toString().length != 11
         ) {
             e.preventDefault();
             this.setState({
@@ -188,7 +188,6 @@ class Register extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        //var response = null;
         if (
             this.state.err_address == '' &&
             this.state.err_birthday == '' &&
@@ -383,7 +382,6 @@ class Register extends React.Component {
                     <h6 className="error">{this.state.err_region}</h6>
                     <input
                         className="form-control"
-                        type="zipcode"
                         name="zipcode"
                         id="zipcode"
                         label="zipcode"
@@ -395,7 +393,6 @@ class Register extends React.Component {
                     <h6 className="error">{this.state.err_zipcode}</h6>
                     <input
                         className="form-control"
-                        type="phone_number"
                         name="phone_number"
                         id="phone_number"
                         label="phone_number"
@@ -428,6 +425,9 @@ class Register extends React.Component {
                 </div>
                 <div className="footer">
                     Already have an account? <Link to="/login">Login</Link>
+                </div>
+                <div className="footer">
+                    <Link to="/main">Back to home page</Link>
                 </div>
             </div>
         )
