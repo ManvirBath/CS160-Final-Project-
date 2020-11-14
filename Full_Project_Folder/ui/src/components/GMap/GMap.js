@@ -179,6 +179,7 @@ class MapContainer extends React.Component {
         );
     }
     hideOrNot() {
+        const open = this.state.hideList ? 'hideListButton-open' : '';
         return (
             <div
                 onClick={() => {
@@ -186,7 +187,7 @@ class MapContainer extends React.Component {
                         return { hideList: !prevState.hideList };
                     });
                 }}
-                className="hideListButton"
+                className={`hideListButton ${open}`}
             >
                 {this.state.hideList ? (
                     <i className="open-option small material-icons">menu</i>
@@ -223,14 +224,18 @@ class MapContainer extends React.Component {
         const hideList = atms.length > 0 ? this.hideOrNot.bind(this)() : null;
         let button;
         if (localStorage.getItem('email') == null) {
-            button = <Link className="homepage-header" to="/main">
+            button = (
+                <Link className="homepage-header" to="/main">
                     Home page{' '}
-            </Link>
+                </Link>
+            );
         } else {
-            button = <Link className="userdb-header" to="/userdashboard">
-                {' '}
-                Dashboard
-            </Link>
+            button = (
+                <Link className="userdb-header" to="/userdashboard">
+                    {' '}
+                    Dashboard
+                </Link>
+            );
         }
         return (
             <div className="MapContainer">
@@ -266,7 +271,7 @@ class MapContainer extends React.Component {
                             >
                                 <input
                                     type="text"
-                                    placeholder="Enter a chase atm"
+                                    placeholder="Enter an address"
                                     style={{
                                         boxSizing: 'border-box',
                                         border: '1px solid transparent',
