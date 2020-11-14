@@ -43,7 +43,7 @@ class CloseAccount extends React.Component {
     this.setState({ errorIsSameAcct: "" });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     //validates close account
     if (this.state.closeAcct === "") {
       e.preventDefault();
@@ -72,13 +72,13 @@ class CloseAccount extends React.Component {
       (this.state.errorIsSameAcct === "") &
       (this.state.errorToAcct === "")
     ) {
-      axiosInstance.post(`accounts/${this.state.toAcct}/deposit/`, {
+      const res1 = await axiosInstance.post(`accounts/${this.state.toAcct}/deposit/`, {
         amount: this.state.amount,
         location: "Online",
         memo: `CLOSED ACCOUNT #${this.state.toAcct}`
       });
 
-      axiosInstance.post(`accounts/${this.state.closeAcct}/close_account/`, {
+      const res2 = await axiosInstance.post(`accounts/${this.state.closeAcct}/close_account/`, {
         location: "Online",
         memo: "ACCOUNT CLOSED: " + this.state.closeAcct,
       });

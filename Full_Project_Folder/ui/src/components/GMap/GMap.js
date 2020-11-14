@@ -1,6 +1,9 @@
 import React from 'react';
+import './GMap.css';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import { Link } from 'react-router-dom';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 import {
     GoogleMap,
     LoadScript,
@@ -51,7 +54,6 @@ class MapContainer extends React.Component {
         };
     }
     componentDidUpdate(prevProps, prevState) {
-        debugger;
         if (
             this.state.searchedLocation !== null &&
             !Object.is(this.state.searchedLocation, prevState.searchedLocation)
@@ -146,7 +148,7 @@ class MapContainer extends React.Component {
             return (
                 <Marker
                     key={atm.place_id}
-                    animation={ANIMATION.BOUNCE}
+                    animation={ANIMATION.DROP}
                     position={atm.geometry.location}
                     title={atm.name}
                     onClick={() => {
@@ -156,6 +158,44 @@ class MapContainer extends React.Component {
             );
         });
         return xml;
+    }
+    getListRow({ index, style }) {
+        const { atms } = this.state;
+        const atm = atms[index];
+        if (!atm) {
+            return null;
+        }
+        return (
+            <div
+                className="atmInfo"
+                style={style}
+                onClick={() => {
+                    this.markerClick(atm);
+                }}
+            >
+                <div className="atmName">{atm.name}</div>
+                <div className="atmVicinity">{atm.vicinity}</div>
+            </div>
+        );
+    }
+    hideOrNot() {
+        const open = this.state.hideList ? 'hideListButton-open' : '';
+        return (
+            <div
+                onClick={() => {
+                    this.setState((prevState) => {
+                        return { hideList: !prevState.hideList };
+                    });
+                }}
+                className={`hideListButton ${open}`}
+            >
+                {this.state.hideList ? (
+                    <i className="open-option small material-icons">menu</i>
+                ) : (
+                    <i className="close-option small material-icons">close</i>
+                )}
+            </div>
+        );
     }
     markerClick(atm) {
         const { place_id } = atm;
@@ -177,14 +217,30 @@ class MapContainer extends React.Component {
             }
             this.setState({ infoWindow: result });
         });
+        this.setState({ infoWindow: null });
     }
     render() {
         const { searchedLocation, atms, infoWindow } = this.state;
+        const hideList = atms.length > 0 ? this.hideOrNot.bind(this)() : null;
+        let button;
+        if (localStorage.getItem('email') == null) {
+            button = (
+                <Link className="homepage-header" to="/main">
+                    Home page{' '}
+                </Link>
+            );
+        } else {
+            button = (
+                <Link className="userdb-header" to="/userdashboard">
+                    {' '}
+                    Dashboard
+                </Link>
+            );
+        }
         return (
             <div className="MapContainer">
                 <div style={{ background: 'white' }} className="gmap-header">
-                    <Link to="/main">Back to home page </Link>
-                    <Link to="/userdashboard">Back to dashboard</Link>
+                    {button}
                 </div>
                 <div className="googleMap">
                     <LoadScript
@@ -215,7 +271,7 @@ class MapContainer extends React.Component {
                             >
                                 <input
                                     type="text"
-                                    placeholder="Enter a chase atm"
+                                    placeholder="Enter an address"
                                     style={{
                                         boxSizing: 'border-box',
                                         border: '1px solid transparent',
@@ -238,6 +294,28 @@ class MapContainer extends React.Component {
                             </Autocomplete>
                         </GoogleMap>
                     </LoadScript>
+                    {hideList}
+                    <div
+                        className={`myList ${
+                            this.state.hideList ? 'myList--hide' : ''
+                        }`}
+                    >
+                        {atms.length > 0 && (
+                            <AutoSizer>
+                                {({ height }) => (
+                                    <List
+                                        className="List"
+                                        height={height}
+                                        itemCount={atms.length}
+                                        itemSize={80}
+                                        width={250}
+                                    >
+                                        {this.getListRow.bind(this)}
+                                    </List>
+                                )}
+                            </AutoSizer>
+                        )}
+                    </div>
                 </div>
             </div>
         );

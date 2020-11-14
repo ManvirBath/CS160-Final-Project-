@@ -3,4 +3,58 @@
     background-color: #f1f1f1;
     flex-direction: column;
     height: 100vh;
+    margin: auto;
+    text-align: center;
+}
+
+.managerdashboard .account-table {
+    margin-top: 10px;
+}
+.managerdashboard .query-results {
+    margin-top: 35px;
+}
+.managerdashboard .search-area {
+    display: flex;
+    flex-direction: column;
+    display: block;
+    margin: 0 auto;
+}
+.managerdashboard .input-group-prepend {
+    margin-top: 7.5px;
+}
+.managerdashboard .statistics {
+    padding: 15px;
+    font-size: 1.5em;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,
+th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+.managerdashboard #client-stats {
+    margin-left: 1px;
+}
+.managerdashboard #account-stats {
+    margin-left: 1px;
+}
+.managerdashboard #transaction-stats {
+    margin-left: 1px;
+}
+.managerdashboard #accounts-label {
+    margin-left: 15px;
+}
+.managerdashboard #transactions-label {
+    margin-left: 15px;
 }

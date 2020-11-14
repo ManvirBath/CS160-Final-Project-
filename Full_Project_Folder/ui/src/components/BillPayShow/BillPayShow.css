@@ -3,12 +3,45 @@
     background-color: #f1f1f1;
     flex-direction: column;
     height: 100vh;
+    width: 100vw;
 }
 .container-billpayshow {
     color: black;
     display: flex;
-    align-items: center;
-    flex-direction: column;
     justify-content: center;
     height: 100%;
+}
+.BillPayShow .box-billpayshow {
+    margin: 8px;
+    padding: 8px;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 1.5em;
+}
+.BillPayShow .greeting-billpayshow {
+    margin: 15px;
+    font-size: 2em;
+    margin-bottom: 50px;
+}
+.BillPayShow .scrollbox-billpayshow {
+    background-color: #f1f1f1;
+    color: #3b3c3e;
+    font-size: 12px;
+    left: -1px;
+    height: 600px;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.BillPayShow .billpayshow-container a {
+    color: black;
+}
+.BillPayShow #personalaccount-billpayshow {
+    font-size: 2.5em;
+    margin-top: 10px;
+}
+.BillPayShow #payments-info {
+    display: flex;
+    border-collapse: collapse;
+    flex-direction: column;
+    align-items: baseline;
 }

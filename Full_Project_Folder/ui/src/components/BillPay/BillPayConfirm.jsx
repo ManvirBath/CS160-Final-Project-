@@ -2,6 +2,7 @@ import React from 'react';
 import './BillPay.css';
 import { Link } from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
+import axiosInstance from "../../axios";
 
 class BillPayConfirm extends React.Component {
     constructor(props) {
@@ -14,7 +15,29 @@ class BillPayConfirm extends React.Component {
             pay_date: this.props.location.pay_date || localStorage.getItem('pay_date'),
             frequency: this.props.location.frequency || localStorage.getItem('frequency'),
         };
+
+        this.check = this.check.bind(this)
     }
+
+    async check(e) {
+        const id = localStorage.getItem('user_id')
+        const res = await axiosInstance
+          .post(`clients/${id}/create_bill_payment/`, {
+            from_account_num: this.state.from_acct,
+            routing_num: this.state.routing_num,
+            to_account_num: this.state.to_acct,
+            amount: this.state.amount,
+            date: this.state.pay_date,
+          })
+          .catch((error) => {
+            console.log(error.response.status);
+            this.setState({ alert_type: "alert alert-danger" });
+            this.setState({
+              status_response:
+                "ERROR: This was not a valid payment. Please try again.",
+            });
+          });
+      }
 
     render() {
         return (
@@ -49,7 +72,7 @@ class BillPayConfirm extends React.Component {
                             frequency: this.state.frequency,
                         }}
                     >
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" onClick={this.check}>
                             Submit
                         </button>
                     </Link>

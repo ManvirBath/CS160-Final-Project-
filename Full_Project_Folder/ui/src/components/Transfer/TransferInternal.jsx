@@ -11,12 +11,14 @@ class TransferInternal extends React.Component {
     this.state = {
       to_acct: "",
       from_acct: "",
-      amount: "",
-      memo: "n/a",
+      amount: localStorage.getItem('amount') || "",
+      memo: localStorage.getItem('memo')|| "n/a",
+
       errorToAcct: "",
       errorFromAcct: "",
       errorAmount: "",
       errorIsSameAcct: "",
+
       accts: [],
       // others_accts: [],
       axiosInstance: null,
@@ -43,6 +45,10 @@ class TransferInternal extends React.Component {
   async componentDidMount() {
     const clients = await this.getClientAccounts();
     this.setState({ loading: false });
+    console.log(localStorage.getItem('to_acct'))
+    console.log(localStorage.getItem('from_acct'))
+    console.log(localStorage.getItem('amount'))
+    console.log(localStorage.getItem('memo'))
   }
 
   to_acct(e) {
@@ -93,6 +99,16 @@ class TransferInternal extends React.Component {
       this.setState({ errorAmount: "Amount must be greater than 0" });
     }
 
+    if (this.state.errorToAcct == '' &&
+        this.state.errorFromAcct == '' &&
+        this.state.errorAmount == '' &&
+        this.state.errorIsSameAcct== '') {
+            localStorage.setItem('to_acct', this.state.to_acct);
+            localStorage.setItem('from_acct', this.state.from_acct.value);
+            localStorage.setItem('amount', this.state.amount);
+            localStorage.setItem('memo', this.state.memo);
+        }
+
     console.log(this.state.to_acct);
     console.log(this.state.from_acct.value);
     console.log(this.state.amount);
@@ -108,11 +124,17 @@ class TransferInternal extends React.Component {
       );
     }
 
-    let userAccts = this.state.accts.map((v) => (
-      <option value={v.account_num}>
-        {v.account_type} {v.account_num}: {v.balance}
-      </option>
-    ));
+    let userAccts = this.state.accts.map((v) =>
+            v.account_num == this.state.from_acct ? (
+                <option value={v.account_num} selected>
+                    {v.account_type} {v.account_num}: {v.balance}
+                </option>
+            ) : (
+                <option value={v.account_num}>
+                    {v.account_type} {v.account_num}: {v.balance}
+                </option>
+            )
+        );
 
     return (
       <div className="TransferInternal">
@@ -160,6 +182,7 @@ class TransferInternal extends React.Component {
               placeholder="$"
               id="internal-amount-div"
               onChange={this.amount}
+              value={this.state.amount}
               class="form-control"
             ></input>
             <h6 className="error">{this.state.errorAmount}</h6>
@@ -170,6 +193,7 @@ class TransferInternal extends React.Component {
               className="memoInput"
               id="transfer-internal-memoInput"
               placeholder="Memo"
+              value={this.state.memo}
               class="form-control"
               onChange={this.memo}
             />

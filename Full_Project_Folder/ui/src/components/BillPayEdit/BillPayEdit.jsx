@@ -10,15 +10,16 @@ class BillPayEdit extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.location.id || -1,
+            id: this.props.location.id || localStorage.getItem('bill_id'),
             bill_payment: [],
 
-            to_acct: this.props.location.to_acct || '',
-            from_acct: this.props.location.to_acct || '',
-            routing_num: this.props.location.routing_num || '',
-            amount: this.props.location.amount || '',
-            frequency: '',
-            pay_date: this.props.location.pay_date || '',
+            to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
+            from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
+            routing_num: this.props.location.routing_num || localStorage.getItem('routing_num'),
+            amount: this.props.location.amount || localStorage.getItem('amount'),
+            pay_date: this.props.location.pay_date || localStorage.getItem('pay_date'),
+            frequency: this.props.location.frequency || localStorage.getItem('frequency'),
+
             accts: [],
             errorToAcct: '',
             errorFromAcct: '',
@@ -36,25 +37,6 @@ class BillPayEdit extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // async getBillPayments() {
-    //     try {
-    //         const res2 = await axiosInstance.get('/bill_payments');
-    //         let loaded_bills = res2.data;
-    //         this.setState({ bill_payments: loaded_bills});
-    //         return res2;
-    //     } catch (error) {
-    //         // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
-    //         // console.log("Hello Client error: ", JSON.stringify(error, null, 4));
-    //         throw error;
-    //     }
-    // }
-
-    // getDerivedStateFromProps() {
-    //     const { to_acct, routing_num, amount,   } = this.props.location
-    //     this.setState({ to_acct })
-    //     this.setState({ routing_num })
-    //     this.setState({ amount  })
-    // }
     componentDidMount() {
         // const bills = await this.getBillPayments()
         console.log(this.props.location.id);
@@ -62,13 +44,17 @@ class BillPayEdit extends React.Component {
             const d = res.data;
             this.setState({
                 accts: d,
-                from_acct: this.props.location.from_acct,
+                from_acct: this.state.from_acct,
             });
         });
-        // console.log(this.state.routing_num)
-        // console.log(this.state.amount)
-        // console.log(this.state.pay_date)
-        // console.log(this.state.frequency)
+
+        console.log(localStorage.getItem('bill_id'))
+        console.log(localStorage.getItem('to_acct'))
+        console.log(localStorage.getItem('from_acct'))
+        console.log(localStorage.getItem('routing_num'))
+        console.log(localStorage.getItem('amount'))
+        console.log(localStorage.getItem('pay_date'))
+        console.log(localStorage.getItem('frequency'))
     }
 
     to_acct(e) {
@@ -76,7 +62,7 @@ class BillPayEdit extends React.Component {
     }
     from_acct(e) {
         this.setState({
-            from_acct: e.target.selectedOptions[0],
+            from_acct: e.target.selectedOptions[0].value,
             errorFromAcct: '',
         });
     }
@@ -101,8 +87,8 @@ class BillPayEdit extends React.Component {
                 errorToAcct: 'Account number cannot be empty',
             });
         } else if (
-            (this.state.to_acct.length > 9) |
-            (this.state.to_acct.length < 9)
+            (this.state.to_acct.length > 8) |
+            (this.state.to_acct.length < 8)
         ) {
             e.preventDefault();
             this.setState({
@@ -166,6 +152,20 @@ class BillPayEdit extends React.Component {
             e.preventDefault();
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
+
+        if (this.state.errorToAcct == '' &&
+            this.state.errorFromAcct == '' &&
+            this.state.errorRouting == '' &&
+            this.state.errorAmount == '' &&
+            this.state.errorDate== '') {
+                console.log("Hello")
+                localStorage.setItem('to_acct', this.state.to_acct);
+                localStorage.setItem('from_acct', this.state.from_acct);
+                localStorage.setItem('routing_num', this.state.routing_num);
+                localStorage.setItem('amount', this.state.amount);
+                localStorage.setItem('frequency', this.state.frequency);
+                localStorage.setItem('pay_date', this.state.pay_date);
+            }
     }
 
     render() {
@@ -261,7 +261,7 @@ class BillPayEdit extends React.Component {
                             to={{
                                 pathname: `/billpayedit_confirm/${this.state.id}`,
                                 to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct.value,
+                                from_acct: this.state.from_acct,
                                 routing_num: this.state.routing_num,
                                 amount: this.state.amount,
                                 pay_date: this.state.pay_date,

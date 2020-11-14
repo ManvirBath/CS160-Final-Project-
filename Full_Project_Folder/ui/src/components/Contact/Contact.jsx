@@ -8,7 +8,23 @@ class Contact extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
+        let button;
+        if (localStorage.getItem('email') == null) {
+            button = (
+                <div className="footer">
+                    <Link to="/main">Home page</Link>
+                </div>
+            );
+        } else {
+            button = (
+                <div className="footer">
+                    <Link to="/userdashboard">Dashboard</Link>
+                </div>
+            );
+        }
+
         return (
             <div className="contact">
                 <div id="contactus-greeting">Contact Us</div>
@@ -44,12 +60,7 @@ class Contact extends React.Component {
                         <div id="contact-email">DeepLearningBank@email.com</div>
                     </span>
                 </Jumbotron>
-                <div className="footer">
-                    <Link to="/main">Back to home page</Link>
-                </div>
-                <div className="footer">
-                    <Link to="/userdashboard">Back to dashboard</Link>
-                </div>
+                {button}
             </div>
         );
     }

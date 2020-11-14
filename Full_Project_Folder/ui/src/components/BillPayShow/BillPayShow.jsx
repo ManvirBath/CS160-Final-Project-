@@ -25,7 +25,7 @@ class BillPayShow extends React.Component {
         try {
             const res2 = await axiosInstance.get('/bill_payments');
             let loaded_bills = res2.data;
-            this.setState({ bill_payments: loaded_bills });
+            this.setState({ bill_payments: loaded_bills, loading: false });
             return res2;
         } catch (error) {
             // console.log("Header: " + axiosInstance.defaults.headers['Authorization'])
@@ -36,25 +36,36 @@ class BillPayShow extends React.Component {
 
     async componentDidMount() {
         const bills = await this.getBillPayments();
+        localStorage.removeItem('bill_id');
+        localStorage.removeItem('to_acct');
+        localStorage.removeItem('from_acct');
+        localStorage.removeItem('routing_num');
+        localStorage.removeItem('amount');
+        localStorage.removeItem('pay_date');
+        localStorage.removeItem('frequency');
         this.setState({ loading: false });
     }
 
     render() {
         let paymentTemplate = this.state.bill_payments.map((v) => (
             <div className="box-billpayshow">
-                <div key={v.id} className="accounts-container">
-                    <div className={v.to_account_num} id="accounts-info">
-                        <div id="billpayshow-account-type">
-                            To Account Number: {v.to_account_num}
-                        </div>
+                <div key={v.id} className="billpayshow-container">
+                    <div className={v.to_account_num} id="payments-info">
+                        <div className="contain-billpayshow">
+                            <div id="billpayshow-account-type">
+                                To Account Number: {v.to_account_num}
+                            </div>
 
-                        <div id="billpayshow-account-balance">${v.amount}</div>
-                        <div id="billpayshow-account-number">
-                            {v.account.split('/')[5]}
+                            <div id="billpayshow-account-balance">
+                                Bill Amount: ${v.amount}
+                            </div>
+                            <div id="billpayshow-account-number">
+                                Routing Number: {v.account.split('/')[5]}
+                            </div>
+                            <div id="billpayshow-account-number">
+                                Date: {v.date}
+                            </div>
                         </div>
-                        <div id="billpayshow-account-number">{v.date}</div>
-
-                        <div id="billpayshow-bal">Amount</div>
                     </div>
                 </div>
 
@@ -70,7 +81,21 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-primary">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        onClick={() => {
+                            localStorage.setItem('to_acct', v.to_account_num);
+                            localStorage.setItem(
+                                'from_acct',
+                                v.account.split('/')[5]
+                            );
+                            localStorage.setItem('routing_num', v.routing_num);
+                            localStorage.setItem('amount', v.amount);
+                            localStorage.setItem('pay_date', v.date);
+                            localStorage.setItem('bill_id', v.id);
+                        }}
+                    >
                         Edit
                     </button>
                 </Link>
@@ -86,7 +111,25 @@ class BillPayShow extends React.Component {
                         frequency: this.state.frequency,
                     }}
                 >
-                    <button type="button" class="btn btn-danger">
+                    <button
+                        type="submit"
+                        class="btn btn-danger"
+                        onClick={() => {
+                            localStorage.setItem('to_acct', v.to_account_num);
+                            localStorage.setItem(
+                                'from_acct',
+                                v.account.split('/')[5]
+                            );
+                            localStorage.setItem('routing_num', v.routing_num);
+                            localStorage.setItem('amount', v.amount);
+                            localStorage.setItem('pay_date', v.date);
+                            localStorage.setItem(
+                                'frequency',
+                                this.state.frequency
+                            );
+                            localStorage.setItem('bill_id', v.id);
+                        }}
+                    >
                         Cancel
                     </button>
                 </Link>
@@ -111,7 +154,7 @@ class BillPayShow extends React.Component {
                 <UserNavigationBar active={1} />
                 <div className="container-billpayshow">
                     <div className="flexbox-column-billpayshow">
-                        <div id="personalaccount-billpayshow">
+                        <div className="greeting-billpayshow">
                             Bill Payments
                         </div>
                         <div className="scrollbox-billpayshow">

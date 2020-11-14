@@ -1,7 +1,6 @@
 import React from "react";
 import "./Transfer.css";
 import { Link } from "react-router-dom";
-import axiosInstance from "../../axios";
 import UserNavigationBar from "../UserNavBar/UserNavBar";
 
 class TransferInternalTransaction extends React.Component {
@@ -11,31 +10,48 @@ class TransferInternalTransaction extends React.Component {
       status_response:
         "Thank you for your transfer request! Please contact us if you have any questions or concerns.",
       alert_type: "alert alert-success",
+      to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
+      from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
+      amount: this.props.location.amount || localStorage.getItem('amount'),
+      memo: this.props.location.memo || localStorage.getItem('memo'),
+      
     };
   }
 
   componentDidMount() {
-    console.log(this.props.location.from_acct);
-    console.log(this.props.location.to_acct);
-    console.log(this.props.location.amount);
-    console.log(this.props.location.memo);
+    console.log(this.state.from_acct);
+    console.log(this.state.to_acct);
+    console.log(this.state.amount);
+    console.log(this.state.memo);
 
-    axiosInstance
-      .post(`accounts/${this.props.location.from_acct}/transfer_internal/`, {
-        to_account_number: this.props.location.to_acct,
-        amount: this.props.location.amount,
-        location: "Online",
-        memo: this.props.location.memo,
-      })
-      .catch((error) => {
-        console.log(error.response.status);
-        this.setState({ alert_type: "alert alert-danger" });
-        this.setState({
-          status_response:
-            "ERROR: This was not a valid transaction. Please try again.",
-        });
-      });
+    // window.addEventListener('popstate', (event) => {
+    //   if (event.state) {
+    //     alert("Please press 'Go to Dashboard' button")
+    //   }
+    //  }, false);
+
+    //  window.addEventListener("beforeunload", this._confirm);
+     window.history.pushState(null, "", window.location.href);
+     window.onpopstate = this._backConfirm;
   }
+  componentWillUnmount() {
+      window.removeEventListener("beforeunload", this._confirm);
+      window.onpopstate = () => { }
+  }
+
+  _backConfirm = async () => {
+      let event = window.confirm("Cannot go back to transfer submission page. ");
+      if(event){
+          window.history.pushState(null, "", window.location.href);
+      }
+  }
+
+  _confirm = (e) => {
+      var confirmationMessage = "\o/";
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+  }
+  
   render() {
     return (
       <div className="DepositCheckTransaction">
@@ -51,21 +67,17 @@ class TransferInternalTransaction extends React.Component {
           </div>
         </div>
         <div className="transfer-internal-transactionInfo">
-          <h4>From: {this.props.location.from_acct}</h4>
-          <h4>To: {this.props.location.to_acct}</h4>
-          <h4>Amount: {this.props.location.amount}</h4>
-          <h4>Memo: {this.props.location.memo}</h4>
+          <h4>From: {this.state.from_acct}</h4>
+          <h4>To: {this.state.to_acct}</h4>
+          <h4>Amount: {this.state.amount}</h4>
+          <h4>Memo: {this.state.memo}</h4>
         </div>
         <div className="transfer-internal-transactionbuttons">
-          <Link to="/userdashboard">
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="internal-transaction-backto-dash"
-            >
+        <Link to="/userdashboard">
+            <button type="submit" class="btn btn-primary" id="internal-transaction-backto-dash">
               Back to Dashboard
             </button>
-          </Link>
+        </Link>
         </div>
       </div>
     );

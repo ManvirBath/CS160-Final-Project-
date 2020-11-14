@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './UserDashboard.css';
 import Logo from '../Logo';
-import { Link, useHistory } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link
+} from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import Loader from 'react-loader-spinner';
@@ -22,6 +28,7 @@ class UserDashboard extends React.Component {
             loading: true,
         };
     }
+
     async getAccounts() {
         try {
             const res = await this.state.axiosInstance.get('/accounts');
@@ -72,23 +79,31 @@ class UserDashboard extends React.Component {
         }
     }
     async componentDidMount() {
+
         this.state.axiosInstance = await axiosInstance;
         console.log(
             'Header AFTER: ' +
                 this.state.axiosInstance.defaults.headers['Authorization']
         );
+        localStorage.removeItem('bill_id')
         localStorage.removeItem('to_acct');
         localStorage.removeItem('from_acct');
         localStorage.removeItem('routing_num');
         localStorage.removeItem('amount');
         localStorage.removeItem('frequency');
         localStorage.removeItem('pay_date');
+        localStorage.removeItem('memo');
+
+        localStorage.removeItem('to_account');
+        localStorage.removeItem('to_account_num');
+        localStorage.removeItem('check_image');
         
         const clients = await this.getClients();
         const accounts = await this.getAccounts();
         const iD = await this.setID();
         this.setState({ loading: false });
     }
+    
 
     render() {
         localStorage.setItem('user_id', this.state.id);
@@ -116,6 +131,12 @@ class UserDashboard extends React.Component {
                             acct_type: v.account_type,
                             balance: v.balance,
                         }}
+                        onClick={() => {
+                            localStorage.setItem('account_num', v.account_num)
+                            localStorage.setItem('account_type', v.account_type)
+                            localStorage.setItem('balance', v.balance)
+                        }
+                        }
                     >
                         <div className={v.account_type} id="accounts-info">
                             <div id="userdb-account-type">{v.account_type}</div>

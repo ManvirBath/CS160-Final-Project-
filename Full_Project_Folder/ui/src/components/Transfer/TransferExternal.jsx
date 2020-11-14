@@ -9,15 +9,17 @@ class TransferExternal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      to_acct: "",
+      to_acct: localStorage.getItem('to_acct') || "",
       from_acct: "",
-      routing_num: "",
-      amount: "",
-      memo: "n/a",
+      routing_num: localStorage.getItem('routing_num') || "",
+      amount: localStorage.getItem('amount') || "",
+      memo: localStorage.getItem('memo') || "n/a",
+
       errorToAcct: "",
       errorFromAcct: "",
       errorRouting: "",
       errorAmount: "",
+
       accts: [],
       others_accts: [],
       loading: true,
@@ -140,6 +142,19 @@ class TransferExternal extends React.Component {
       e.preventDefault();
       this.setState({ errorAmount: "Amount must be greater than 0.00!" });
     }
+
+    // NEED TO CHECK IF THE ROUTING NUMBER IS THE SAME, CHECK IF AN ACCOUNT NUMBER IS IN OUR BANK OR NOT
+
+    if (this.state.errorToAcct == '' &&
+        this.state.errorFromAcct == '' &&
+        this.state.errorAmount == '' &&
+        this.state.errorRouting == '' ) {
+            localStorage.setItem('to_acct', this.state.to_acct);
+            localStorage.setItem('from_acct', this.state.from_acct.value);
+            localStorage.setItem('routing_num', this.state.routing_num);
+            localStorage.setItem('amount', this.state.amount);
+            localStorage.setItem('memo', this.state.memo);
+        }
   }
 
   render() {
@@ -151,11 +166,17 @@ class TransferExternal extends React.Component {
       );
     }
 
-    let userAccts = this.state.accts.map((v) => (
-      <option value={v.account_num}>
-        {v.account_type} {v.account_num}: {v.balance}
-      </option>
-    ));
+    let userAccts = this.state.accts.map((v) =>
+        v.account_num == this.state.from_acct ? (
+            <option value={v.account_num} selected>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
+        ) : (
+            <option value={v.account_num}>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
+        )
+    );
 
     return (
       <div className="TransferExternal">
@@ -185,6 +206,7 @@ class TransferExternal extends React.Component {
                 id="external-accountNumber-div"
                 placeholder="Account Number"
                 onChange={this.to_acct}
+                value={this.state.to_acct}
                 class="form-control"
               ></input>
               <h6 className="error">{this.state.errorToAcct}</h6>
@@ -194,6 +216,7 @@ class TransferExternal extends React.Component {
                 id="external-routingNumber-div"
                 placeholder="Routing Number"
                 onChange={this.routing_num}
+                value={this.state.routing_num}
                 class="form-control"
               ></input>
               <h6 className="error">{this.state.errorRouting}</h6>
@@ -202,6 +225,7 @@ class TransferExternal extends React.Component {
                 className="amountInput"
                 id="external-amount-div"
                 placeholder="Amount"
+                value={this.state.amount}
                 onChange={this.amount}
                 class="form-control"
               ></input>
@@ -214,6 +238,7 @@ class TransferExternal extends React.Component {
                 id="transfer-external-memoInput"
                 placeholder="Memo"
                 class="form-control"
+                value={this.state.memo}
                 onChange={this.memo}
               />
             </div>
