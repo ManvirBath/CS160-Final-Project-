@@ -25,7 +25,6 @@ class TransferInternalTransaction extends React.Component {
         console.log(this.state.to_acct);
         console.log(this.state.amount);
         console.log(this.state.memo);
-        console.log('hello123' + localStorage.getItem('status_response'));
         // window.addEventListener('popstate', (event) => {
         //   if (event.state) {
         //     alert("Please press 'Go to Dashboard' button")
