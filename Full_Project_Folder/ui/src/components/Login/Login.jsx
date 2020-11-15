@@ -57,6 +57,7 @@ export default function SignIn() {
           );
         })
         .catch((error) => {
+          alert("Wrong password")
           throw error;
         });
       return response;
@@ -64,12 +65,6 @@ export default function SignIn() {
       throw err;
     }
   };
-  
-  // if (localStorage.getItem('user_id') == null) {
-  //   return (
-  //     <Redirect to='/' />
-  //   )
-  // }
 
   return (
     <div className="Login">
