@@ -11,7 +11,7 @@ class DepositCheck extends React.Component {
             to_account: '',
             to_account_num: '',
             amount: localStorage.getItem('amount') || '',
-            memo: localStorage.getItem('memo') || 'n/a',
+            memo: localStorage.getItem('memo') || '',
             check_image: '',
             file: null,
 
@@ -41,7 +41,8 @@ class DepositCheck extends React.Component {
         this.setState({ errorAccount: '' });
     }
     amount(e) {
-        this.setState({ amount: parseFloat(e.target.value).toFixed(2) });
+        //this.setState({ amount: parseFloat(e.target.value).toFixed(2) });
+        this.setState({ amount: e.target.value });
         this.setState({ errorAmount: '' });
     }
     memo(e) {
@@ -73,15 +74,12 @@ class DepositCheck extends React.Component {
                     'Please select an account to deposit the check to!',
             });
         }
-        if (this.state.amount <= 0) {
-            error = true;
-            e.preventDefault();
-            this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
-        } else if (this.state.amount > 1000000) {
+        //validates amount
+        if (this.state.amount <= 0 || this.state.amount > 100000) {
             error = true;
             e.preventDefault();
             this.setState({
-                errorAmount: 'Amount must be less than 1,000,000',
+                errorAmount: 'Amount must be between 0.01 and 100,000!',
             });
         }
 
@@ -91,8 +89,13 @@ class DepositCheck extends React.Component {
             this.setState({
                 errorMemo: 'Memo must be less than 50 characters long',
             });
+        } else if (this.state.memo.length == '') {
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo cannot be empty',
+            });
         }
-        if (this.state.memo.match(/^[A-Za-z0-9/]*$/gm) == null) {
+        if (this.state.memo.match(/^[A-Za-z0-9/ ]*$/gm) == null) {
             error = true;
             e.preventDefault();
             this.setState({
@@ -146,7 +149,7 @@ class DepositCheck extends React.Component {
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
-                        <h2 id="deposit-memo">Memo(optional)</h2>
+                        <h2 id="deposit-memo">Memo</h2>
                         <textarea
                             type="text"
                             className="memoInput"

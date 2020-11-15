@@ -13,7 +13,7 @@ class TransferExternal extends React.Component {
             from_acct: '',
             routing_num: localStorage.getItem('routing_num') || '',
             amount: localStorage.getItem('amount') || '',
-            memo: localStorage.getItem('memo') || 'n/a',
+            memo: localStorage.getItem('memo') || '',
 
             errorToAcct: '',
             errorFromAcct: '',
@@ -142,9 +142,11 @@ class TransferExternal extends React.Component {
         }
 
         //validates amount
-        if (this.state.amount <= 0) {
+        if (this.state.amount <= 0 || this.state.amount > 100000) {
             e.preventDefault();
-            this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+            this.setState({
+                errorAmount: 'Amount must be between 0.01 and 100,000!',
+            });
         }
         //validates memo
         if (this.state.memo.length >= 50) {
@@ -152,14 +154,18 @@ class TransferExternal extends React.Component {
             this.setState({
                 errorMemo: 'Memo must be less than 50 characters long',
             });
+        } else if (this.state.memo.length == '') {
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo cannot be empty',
+            });
         }
-        if (this.state.memo.match(/^[A-Za-z0-9/]*$/gm) == null) {
+        if (this.state.memo.match(/^[A-Za-z0-9/ ]*$/gm) == null) {
             e.preventDefault();
             this.setState({
                 errorMemo: 'Memo can only contain letters and numbers',
             });
         }
-        // NEED TO CHECK IF THE ROUTING NUMBER IS THE SAME, CHECK IF AN ACCOUNT NUMBER IS IN OUR BANK OR NOT
 
         if (
             this.state.errorToAcct == '' &&
@@ -247,17 +253,18 @@ class TransferExternal extends React.Component {
                             ></input>
                             <h6 className="error">{this.state.errorRouting}</h6>
                             <input
-                                type="text"
+                                type="number"
                                 className="amountInput"
                                 id="external-amount-div"
-                                placeholder="Amount"
-                                value={this.state.amount}
+                                min="0"
+                                placeholder="$"
                                 onChange={this.amount}
+                                value={this.state.amount}
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorAmount}</h6>
 
-                            <div id="external-memo">Memo(optional)</div>
+                            <div id="external-memo">Memo</div>
                             <textarea
                                 type="text"
                                 className="memoInput"

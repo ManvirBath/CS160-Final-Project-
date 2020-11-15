@@ -12,7 +12,7 @@ class TransferInternal extends React.Component {
             to_acct: '',
             from_acct: '',
             amount: localStorage.getItem('amount') || '',
-            memo: localStorage.getItem('memo') || 'n/a',
+            memo: localStorage.getItem('memo') || '',
 
             errorToAcct: '',
             errorFromAcct: '',
@@ -95,16 +95,22 @@ class TransferInternal extends React.Component {
         }
 
         //validates amount
-        if (this.state.amount <= 0) {
+        if (this.state.amount <= 0 || this.state.amount > 100000) {
             e.preventDefault();
-            this.setState({ errorAmount: 'Amount must be greater than 0' });
+            this.setState({
+                errorAmount: 'Amount must be between 0.01 and 100,000!',
+            });
         }
-
         //validates memo
         if (this.state.memo.length >= 50) {
             e.preventDefault();
             this.setState({
                 errorMemo: 'Memo must be less than 50 characters long',
+            });
+        } else if (this.state.memo.length == '') {
+            e.preventDefault();
+            this.setState({
+                errorMemo: 'Memo cannot be empty',
             });
         }
         if (this.state.memo.match(/^[A-Za-z0-9/ ]*$/gm) == null) {
@@ -202,17 +208,18 @@ class TransferInternal extends React.Component {
                     <div className="transferinternal-inputDiv">
                         <div id="internal-amount">Amount</div>
                         <input
-                            type="text"
+                            type="number"
                             className="amountInput"
-                            placeholder="$"
                             id="internal-amount-div"
+                            min="0"
+                            placeholder="$"
                             onChange={this.amount}
                             value={this.state.amount}
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
 
-                        <div id="transfer-internal-memo">Memo(optional)</div>
+                        <div id="transfer-internal-memo">Memo</div>
                         <textarea
                             type="text"
                             className="memoInput"
