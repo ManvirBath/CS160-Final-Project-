@@ -9,18 +9,17 @@ import {
   Link
 } from 'react-router-dom';
 class Main extends React.Component {
-  state = {};
   
-  // componentDidMount() {
-  //   if (localStorage.getItem('user_id') != null) {
-  //     return (
-  //       <Redirect to='/userdashboard' />
-  //     )
-  //   }
-  // }
+
+
   render() {
     const color = this.props.color || "rgb(70, 88, 190)";
-
+    
+    if (localStorage.getItem('email') != null) {
+      return (
+        <Redirect to='/userdashboard' />
+      )
+    }
     
     return (
       
