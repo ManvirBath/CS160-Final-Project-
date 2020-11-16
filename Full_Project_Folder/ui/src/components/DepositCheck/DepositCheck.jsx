@@ -42,7 +42,7 @@ class DepositCheck extends React.Component {
         this.setState({ errorAccount: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") });
         this.setState({ errorAmount: '' });
     }
     memo(e) {
@@ -118,6 +118,9 @@ class DepositCheck extends React.Component {
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
         ));
+
+        console.log(this.state.amount)
+
         return (
             <div className="DepositCheck">
                 <UserNavigationBar active={3} />

@@ -62,9 +62,10 @@ class TransferInternal extends React.Component {
         this.setState({ errorIsSameAcct: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") });
         this.setState({ errorAmount: '' });
     }
+
     memo(e) {
         this.setState({ memo: e.target.value });
         this.setState({ errorMemo: '' });
@@ -165,6 +166,8 @@ class TransferInternal extends React.Component {
             )
         );
 
+        console.log(this.state.amount)
+
         return (
             <div className="TransferInternal">
                 <UserNavigationBar active={2} />
@@ -215,6 +218,7 @@ class TransferInternal extends React.Component {
                             placeholder="$"
                             onChange={this.amount}
                             value={this.state.amount}
+                            step=".01"
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
