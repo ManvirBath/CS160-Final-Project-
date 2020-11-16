@@ -53,7 +53,7 @@ class EditProfile extends React.Component {
 
     async getClient() {
         try {
-            const res2 = await axiosInstance.get(`/clients`);
+            const res2 = await axiosInstance.get('/clients');
             const loaded_client = res2.data;
 
             this.setState({ firstname: loaded_client.first_name });
@@ -75,7 +75,7 @@ class EditProfile extends React.Component {
     // To check other user's emails (can't be the same!!!)
     async getOtherAccounts() {
         try {
-            const res2 = await axiosInstance.get(`/all_clients/`);
+            const res2 = await axiosInstance.get('/all_clients/');
 
             const loaded_accounts = res2.data;
 
@@ -144,21 +144,20 @@ class EditProfile extends React.Component {
         return age_now;
     };
 
-
-
-
     handleSubmit(e) {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname: 'Please omit any special characters and keep it between 2 and 40 characters long',
+                err_firstname:
+                    'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname: 'Please omit any special characters and keep it between 2 and 40 characters long',
+                err_lastname:
+                    'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
@@ -170,7 +169,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_email:
-                    'Not a valid email address',
+                    'Please omit special characters and ensure email is between 2-50 characters',
             });
         } else if (
             this.state.other_accts.some(
@@ -179,14 +178,16 @@ class EditProfile extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'This email is already in use. Please try again with a different email address.',
+                err_email:
+                    'This email is already in use. Please try again with a different email address',
             });
         }
 
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address: 'Please omit any special characters and ensure the address is between 2 and 50 characters long',
+                err_address:
+                    'Please omit special characters and ensure email address is between 2-50 characters',
             });
         }
 
@@ -198,7 +199,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Please omit any special characters and ensure the name is between 2 and 40 characters long.',
+                    'Please omit special characters and ensure the city names is between 2-40 characters',
             });
         }
 
@@ -206,24 +207,26 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_region:
-                    'Must select a U.S. State/Territory',
+                    'Must select a state or territory that is in the United States',
             });
         }
 
         if (this.state.zipcode.length != 5) {
             e.preventDefault();
             this.setState({
-                err_zipcode: 'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
+                err_zipcode:
+                    'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
             });
         }
 
         if (
-            this.state.phone_number.toString().length != 10 && this.state.phone_number.toString().length != 11
+            this.state.phone_number.toString().length != 10 &&
+            this.state.phone_number.toString().length != 11
         ) {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'The provided number is not valid. The country code is optional.'
+                    'The provided number is not valid. The country code is optional',
             });
         }
 
@@ -233,7 +236,8 @@ class EditProfile extends React.Component {
 
         if (this.state.birthday == '' || getAge <= 17) {
             this.setState({
-                err_birthday: 'You must be at least 18 years old to join.',
+                err_birthday:
+                    'You must be of the age 18 years or older in order to join',
             });
         }
     }
@@ -361,7 +365,9 @@ class EditProfile extends React.Component {
                         value={this.state.region}
                         onChange={this.region}
                     >
-                        <option value="" hidden={true}>U.S. State/Territory</option>
+                        <option value="" hidden={true}>
+                            U.S. State/Territory
+                        </option>
                         <optgroup label="States">
                             <option value="AL">Alabama</option>
                             <option value="AK">Alaska</option>
@@ -422,7 +428,7 @@ class EditProfile extends React.Component {
                             <option value="PR">Puerto Rico</option>
                             <option value="VI">U.S. Virgin Islands</option>
                         </optgroup>
-                     </select>
+                    </select>
                     <h6 className="error">{this.state.err_region}</h6>
                     <input
                         className="form-control"

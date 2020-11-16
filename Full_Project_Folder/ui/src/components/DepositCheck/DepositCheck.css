@@ -49,6 +49,12 @@
     margin-top: 50px;
     margin-left: 1050px;
 }
+.DepositCheck input {
+    width: 225px;
+}
+.DepositCheck .error {
+    max-width: 200px;
+}
 #button-depositcheck {
     display: flex;
     float: inherit;

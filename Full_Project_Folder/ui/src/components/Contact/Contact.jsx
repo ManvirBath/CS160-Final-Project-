@@ -14,7 +14,7 @@ class Contact extends React.Component {
         if (localStorage.getItem('email') == null) {
             button = (
                 <div className="footer">
-                    <Link to="/main">Home page</Link>
+                    <Link to="/main">Home</Link>
                 </div>
             );
         } else {

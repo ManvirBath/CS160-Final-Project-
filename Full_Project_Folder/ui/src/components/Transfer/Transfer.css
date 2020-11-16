@@ -25,6 +25,7 @@
 .transferexternal-inputDiv {
     justify-content: center;
     flex-direction: column;
+    width: 225px;
 }
 .transfer-external-confirm,
 .transfer-internal-confirm {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import Logo from '../Logo';
-import {useHistory, withRouter} from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../axios';
 
@@ -61,7 +61,7 @@ class Register extends React.Component {
     }
 
     password(e) {
-        this.setState({password: e.target.value, err_password: '' });
+        this.setState({ password: e.target.value, err_password: '' });
     }
     address(e) {
         this.setState({ address: e.target.value, err_address: '' });
@@ -103,14 +103,16 @@ class Register extends React.Component {
         if (this.state.firstname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_firstname: 'Please omit any special characters and keep it between 2 and 40 characters long',
+                err_firstname:
+                    'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
         if (this.state.lastname.match(/^[a-zA-Z ]{2,40}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_lastname: 'Please omit any special characters and keep it between 2 and 40 characters long',
+                err_lastname:
+                    'Please omit any special characters and keep it between 2 and 40 characters long',
             });
         }
 
@@ -121,20 +123,23 @@ class Register extends React.Component {
         ) {
             e.preventDefault();
             this.setState({
-                err_email: 'Not a valid email address',
+                err_email:
+                    'Entered an email address that is not valid. Please try again',
             });
         }
 
-        if(this.state.password.length < 10) {
+        if (this.state.password.length < 10) {
             e.preventDefault();
-            this.setState( {
-                err_password: 'Password must be at least 10 characters long'
-            })
+            this.setState({
+                err_password:
+                    'The password must be at least 10 characters long. Please try again',
+            });
         }
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
             e.preventDefault();
             this.setState({
-                err_address: 'Please omit any special characters and ensure the address is between 2 and 50 characters long',
+                err_address:
+                    'Please omit special characters and ensure address is between 2-50 characters',
             });
         }
 
@@ -146,7 +151,7 @@ class Register extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Please omit any special characters and ensure the name is between 2 and 40 characters long.',
+                    'Please omit special characters and ensure the name is between 2-40 characters',
             });
         }
 
@@ -154,24 +159,26 @@ class Register extends React.Component {
             e.preventDefault();
             this.setState({
                 err_region:
-                    'Must select a U.S. State/Territory',
+                    'Must select a state or territory that is in the United States',
             });
         }
 
         if (this.state.zipcode.length != 5) {
             e.preventDefault();
             this.setState({
-                err_zipcode: 'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
+                err_zipcode:
+                    'Not a valid U.S. zipcode. Please make sure it is 5 digits long',
             });
         }
 
         if (
-            this.state.phone_number.toString().length != 10 && this.state.phone_number.toString().length != 11
+            this.state.phone_number.toString().length != 10 &&
+            this.state.phone_number.toString().length != 11
         ) {
             e.preventDefault();
             this.setState({
                 err_phone_number:
-                    'The provided number is not valid. The country code is optional.'
+                    'The provided number is not valid. The country code is optional',
             });
         }
 
@@ -181,7 +188,8 @@ class Register extends React.Component {
 
         if (this.state.birthday == '' || getAge <= 17) {
             this.setState({
-                err_birthday: 'You must be at least 18 years old to join.',
+                err_birthday:
+                    'You must be of the age 18 years or older in order to join',
             });
         }
     }
@@ -202,7 +210,7 @@ class Register extends React.Component {
             console.log(this.state.firstname);
             console.log(this.state.lastname);
             console.log(this.state.email);
-            console.log(this.state.password)
+            console.log(this.state.password);
             console.log(this.state.address);
             console.log(this.state.city);
             console.log(this.state.region);
@@ -210,218 +218,239 @@ class Register extends React.Component {
             console.log(this.state.phone_number);
             console.log(this.state.birthday);
 
-            axiosInstance.post(`register/`, {
-                first_name: this.state.firstname,
-                last_name: this.state.lastname,
-                email: this.state.email,
-                password: this.state.password,
-                address: this.state.address,
-                city: this.state.city,
-                state: this.state.region,
-                zipcode: this.state.zipcode,
-                phone_num: this.state.phone_number,
-                birthday: this.state.birthday,
-            }).then(response => {
-                console.log(this.props.history);
-                this.props.history.push('/login/');
-            }).catch(err => {
-                if(err.response) {
-                    if(err.response.data.email != null)
-                        this.setState( {err_email: 'This email is already in use. Please try again with a different email address.' })
-                    else
-                        alert('A problem processing your input has occured. Please check the format of your input and try again. If this error persists, please contact support.')
-                } else if(err.request) {
-                    alert('Your request could not reach the server. Please check your internet connection ant try again. If this error persists, please contact support.')
-                } else {
-                    alert('An unknown error has occured. Please try again. If this error persists, please contact support.')
-                }
-            });
+            axiosInstance
+                .post('register/', {
+                    first_name: this.state.firstname,
+                    last_name: this.state.lastname,
+                    email: this.state.email,
+                    password: this.state.password,
+                    address: this.state.address,
+                    city: this.state.city,
+                    state: this.state.region,
+                    zipcode: this.state.zipcode,
+                    phone_num: this.state.phone_number,
+                    birthday: this.state.birthday,
+                })
+                .then((response) => {
+                    console.log(this.props.history);
+                    this.props.history.push('/login/');
+                })
+                .catch((err) => {
+                    if (err.response) {
+                        if (err.response.data.email != null)
+                            this.setState({
+                                err_email:
+                                    'This email is already in use. Please try again with a different email address.',
+                            });
+                        else
+                            alert(
+                                'A problem processing your input has occured. Please check the format of your input and try again. If this error persists, please contact support.'
+                            );
+                    } else if (err.request) {
+                        alert(
+                            'Your request could not reach the server. Please check your internet connection ant try again. If this error persists, please contact support.'
+                        );
+                    } else {
+                        alert(
+                            'An unknown error has occured. Please try again. If this error persists, please contact support.'
+                        );
+                    }
+                });
         }
-    };
+    }
 
     render() {
         return (
             <div className="Register">
                 <div className="form">
-                    <Logo color="rgb(255,255,255)" text="Deep Learning Bank"></Logo>
+                    <Logo
+                        color="rgb(255,255,255)"
+                        text="Deep Learning Bank"
+                    ></Logo>
                     <form className="form" onSubmit={this.onSubmit}>
-                    <input
-                        className="form-control"
-                        name="firstname"
-                        label="Firstname"
-                        id="firstname"
-                        placeholder="First Name"
-                        value={this.state.firstname}
-                        onChange={this.firstname}
-                    />
-                    <h6 className="error">{this.state.err_firstname}</h6>
-                    <input
-                        className="form-control"
-                        name="lastname"
-                        id="lastname"
-                        label="Lastname"
-                        placeholder="Last Name"
-                        value={this.state.lastname}
-                        onChange={this.lastname}
-                    />
-                    <h6 className="error">{this.state.err_lastname}</h6>
-                    <input
-                        className="form-control"
-                        name="email"
-                        id="email"
-                        label="email"
-                        placeholder="Email Address"
-                        value={this.state.email}
-                        onChange={this.email}
-                    />
-                    <h6 className="error">{this.state.err_email}</h6>
-                    <input
-                        className="form-control"
-                        type="password"
-                        name="password"
-                        id="password"
-                        label="password"
-                        placeholder="Password"
-                        onChange={this.password}
-                    />
-                    <h6 className="error">{this.state.err_password}</h6>
-                    <input
-                        className="form-control"
-                        type="address"
-                        name="address"
-                        id="address"
-                        label="address"
-                        placeholder="Address"
-                        value={this.state.address}
-                        onChange={this.address}
-                    />
-                    <h6 className="error">{this.state.err_address}</h6>
-                    <input
-                        className="form-control"
-                        type="city"
-                        name="city"
-                        id="city"
-                        label="city"
-                        placeholder="City"
-                        value={this.state.city}
-                        onChange={this.city}
-                    />
-                    <h6 className="error">{this.state.err_city}</h6>
-                    <select
-                        className="form-control"
-                        type="region"
-                        name="region"
-                        id="region"
-                        label="region"
-                        placeholder="Region"
-                        value={this.state.region}
-                        onChange={this.region}
-                    >
-                        <option value="" hidden={true}>U.S. State/Territory</option>
-                        <optgroup label="States">
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                            <option value="AR">Arkansas</option>
-                            <option value="CA">California</option>
-                            <option value="CO">Colorado</option>
-                            <option value="CT">Connecticut</option>
-                            <option value="DE">Deleware</option>
-                            <option value="FL">Florida</option>
-                            <option value="GA">Georgia</option>
-                            <option value="HI">Hawaii</option>
-                            <option value="ID">Idaho</option>
-                            <option value="IL">Illinois</option>
-                            <option value="IN">Indiana</option>
-                            <option value="IA">Iowa</option>
-                            <option value="KS">Kansas</option>
-                            <option value="KY">Kentucky</option>
-                            <option value="LS">Louisiana</option>
-                            <option value="ME">Maine</option>
-                            <option value="MD">Maryland</option>
-                            <option value="MA">Massachusetts</option>
-                            <option value="MI">Michigan</option>
-                            <option value="MN">Minnesota</option>
-                            <option value="MS">Mississippi</option>
-                            <option value="MO">Missouri</option>
-                            <option value="MT">Montana</option>
-                            <option value="NE">Nebraska</option>
-                            <option value="NV">Nevada</option>
-                            <option value="NH">New Hampshire</option>
-                            <option value="NJ">New Jersey</option>
-                            <option value="NM">New Mexico</option>
-                            <option value="NY">New York</option>
-                            <option value="NC">North Carolina</option>
-                            <option value="ND">North Dakota</option>
-                            <option value="OH">Ohio</option>
-                            <option value="OK">Oklahoma</option>
-                            <option value="OR">Oregon</option>
-                            <option value="PA">Pennsylvania</option>
-                            <option value="RI">Rhode Island</option>
-                            <option value="SC">South Carolina</option>
-                            <option value="SD">South Dakota</option>
-                            <option value="TN">Tennessee</option>
-                            <option value="TX">Texas</option>
-                            <option value="UT">Utah</option>
-                            <option value="VT">Vermont</option>
-                            <option value="VA">Virginia</option>
-                            <option value="WA">Washington</option>
-                            <option value="WV">West Virginia</option>
-                            <option value="WI">Wisconsin</option>
-                            <option value="WY">Wyoming</option>
-                        </optgroup>
-                        <optgroup label="U.S. Territories">
-                            <option value="DC">Washington D.C.</option>
-                            <option value="AS">American Samoa</option>
-                            <option value="GU">Guam</option>
-                            <option value="MP">Northern Mariana Islands</option>
-                            <option value="PR">Puerto Rico</option>
-                            <option value="VI">U.S. Virgin Islands</option>
-                        </optgroup>
-                     </select>
-                    <h6 className="error">{this.state.err_region}</h6>
-                    <input
-                        className="form-control"
-                        name="zipcode"
-                        id="zipcode"
-                        label="zipcode"
-                        placeholder="Zipcode"
-                        type="number"
-                        value={this.state.zipcode}
-                        onChange={this.zipcode}
-                    />
-                    <h6 className="error">{this.state.err_zipcode}</h6>
-                    <input
-                        className="form-control"
-                        name="phone_number"
-                        id="phone_number"
-                        label="phone_number"
-                        placeholder="Phone Number (numbers only)"
-                        type="number"
-                        value={this.state.phone_number}
-                        onChange={this.phone_number}
-                    />
-                    <h6 className="error">{this.state.err_phone_number}</h6>
-                    <input
-                        className="form-control"
-                        type="date"
-                        name="birthday"
-                        id="birthday"
-                        label="birthday"
-                        placeholder="Birthday"
-                        value={this.state.birthday}
-                        onChange={this.birthday}
-                    />
-                    <h6 className="error">{this.state.err_birthday}</h6>
-                    <button
-                        className="register-btn btn"
-                        type="submit"
-                        onSubmit={this.onSubmit}
-                        onClick={this.handleSubmit}
-                    >
-                        Submit
-                    </button>
-                </form>
+                        <input
+                            className="form-control"
+                            name="firstname"
+                            label="Firstname"
+                            id="firstname"
+                            placeholder="First Name"
+                            value={this.state.firstname}
+                            onChange={this.firstname}
+                        />
+                        <div className="error">{this.state.err_firstname}</div>
+                        <input
+                            className="form-control"
+                            name="lastname"
+                            id="lastname"
+                            label="Lastname"
+                            placeholder="Last Name"
+                            value={this.state.lastname}
+                            onChange={this.lastname}
+                        />
+                        <div className="error">{this.state.err_lastname}</div>
+                        <input
+                            className="form-control"
+                            name="email"
+                            id="email"
+                            label="email"
+                            placeholder="Email Address"
+                            value={this.state.email}
+                            onChange={this.email}
+                        />
+                        <div className="error">{this.state.err_email}</div>
+                        <input
+                            className="form-control"
+                            type="password"
+                            name="password"
+                            id="password"
+                            label="password"
+                            placeholder="Password"
+                            onChange={this.password}
+                        />
+                        <div className="error">{this.state.err_password}</div>
+                        <input
+                            className="form-control"
+                            type="address"
+                            name="address"
+                            id="address"
+                            label="address"
+                            placeholder="Address"
+                            value={this.state.address}
+                            onChange={this.address}
+                        />
+                        <div className="error">{this.state.err_address}</div>
+                        <input
+                            className="form-control"
+                            type="city"
+                            name="city"
+                            id="city"
+                            label="city"
+                            placeholder="City"
+                            value={this.state.city}
+                            onChange={this.city}
+                        />
+                        <div className="error">{this.state.err_city}</div>
+                        <select
+                            className="form-control"
+                            type="region"
+                            name="region"
+                            id="region"
+                            label="region"
+                            placeholder="Region"
+                            value={this.state.region}
+                            onChange={this.region}
+                        >
+                            <option value="" hidden={true}>
+                                U.S. State/Territory
+                            </option>
+                            <optgroup label="States">
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Deleware</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LS">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </optgroup>
+                            <optgroup label="U.S. Territories">
+                                <option value="DC">Washington D.C.</option>
+                                <option value="AS">American Samoa</option>
+                                <option value="GU">Guam</option>
+                                <option value="MP">
+                                    Northern Mariana Islands
+                                </option>
+                                <option value="PR">Puerto Rico</option>
+                                <option value="VI">U.S. Virgin Islands</option>
+                            </optgroup>
+                        </select>
+                        <div className="error">{this.state.err_region}</div>
+                        <input
+                            className="form-control"
+                            name="zipcode"
+                            id="zipcode"
+                            label="zipcode"
+                            placeholder="Zipcode"
+                            type="number"
+                            value={this.state.zipcode}
+                            onChange={this.zipcode}
+                        />
+                        <div className="error">{this.state.err_zipcode}</div>
+                        <input
+                            className="form-control"
+                            name="phone_number"
+                            id="phone_number"
+                            label="phone_number"
+                            placeholder="Phone Number (numbers only)"
+                            type="number"
+                            value={this.state.phone_number}
+                            onChange={this.phone_number}
+                        />
+                        <div className="error">
+                            {this.state.err_phone_number}
+                        </div>
+                        <input
+                            className="form-control"
+                            type="date"
+                            name="birthday"
+                            id="birthday"
+                            label="birthday"
+                            placeholder="Birthday"
+                            value={this.state.birthday}
+                            onChange={this.birthday}
+                        />
+                        <div className="error">{this.state.err_birthday}</div>
+                        <button
+                            className="register-btn btn"
+                            type="submit"
+                            onSubmit={this.onSubmit}
+                            onClick={this.handleSubmit}
+                        >
+                            Submit
+                        </button>
+                    </form>
                 </div>
                 <div className="footer">
                     Already have an account? <Link to="/login">Login</Link>
@@ -430,8 +459,8 @@ class Register extends React.Component {
                     <Link to="/main">Back to home page</Link>
                 </div>
             </div>
-        )
-    };
+        );
+    }
 }
 
 export default withRouter(Register);
