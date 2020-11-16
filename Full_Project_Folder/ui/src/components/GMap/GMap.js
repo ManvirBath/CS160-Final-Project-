@@ -226,7 +226,7 @@ class MapContainer extends React.Component {
         if (localStorage.getItem('email') == null) {
             button = (
                 <Link className="homepage-header" to="/main">
-                    Home page{' '}
+                    Home{' '}
                 </Link>
             );
         } else {
