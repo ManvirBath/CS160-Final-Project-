@@ -74,6 +74,7 @@ class TransferExternal extends React.Component {
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
+        // STOPS USER TO TWO DECIMAL PLACES
         this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") });
         this.setState({ errorAmount: '' });
     }
