@@ -52,7 +52,7 @@ class DepositCheckTransaction extends React.Component {
                 <UserNavigationBar active={3} />
                 <div
                     className="TransactionAlert"
-                    class={localStorage.getItem('alert-type')}
+                    class={localStorage.getItem('alert_type')}
                     role="alert"
                     id="depositchecktransaction-ty"
                 >
