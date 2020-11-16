@@ -6,7 +6,7 @@
     flex-direction: column;
     height: 100vh;
 }
-.Deposit-Page {
+.DepositCheck .Deposit-Page {
     justify-content: center;
     text-align: center;
     margin-top: 50px;
@@ -31,7 +31,7 @@
     flex-direction: column;
     overflow: hidden;
     float: right;
-    margin-top: 50px;
+    margin-top: 25px;
     margin-left: 100px;
 }
 .depositcheck-confirm-details {
@@ -52,8 +52,15 @@
 .DepositCheck input {
     width: 225px;
 }
+.DepositCheck #img {
+    width: 400px;
+}
 .DepositCheck .error {
     max-width: 200px;
+}
+.DepositCheck .checkImg {
+    width: 400px;
+    height: 275px;
 }
 #button-depositcheck {
     display: flex;
@@ -74,4 +81,7 @@
 }
 #depositchecktransaction-ty {
     font-size: 1.5em;
+}
+.DepositCheck #amount-input {
+    margin: 0 auto;
 }
