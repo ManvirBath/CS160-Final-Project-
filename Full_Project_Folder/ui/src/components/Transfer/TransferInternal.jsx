@@ -174,9 +174,6 @@ class TransferInternal extends React.Component {
 
         console.log(this.state.amount)
         
-        if (this.state.from_acct) {
-            console.log(parseFloat(this.state.from_acct.text.split(' ')[2]))
-        }
         return (
             <div className="TransferInternal">
                 <UserNavigationBar active={2} />

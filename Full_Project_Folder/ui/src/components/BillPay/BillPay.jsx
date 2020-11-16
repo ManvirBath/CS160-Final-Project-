@@ -47,7 +47,7 @@ class BillPay extends React.Component {
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
-        // STOPS USER TO TWO DECIMAL PLACES --> NOT WORKING HERE
+        // STOPS USER TO TWO DECIMAL PLACES
         this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") , errorAmount: '' });
     }
     routing_num(e) {
