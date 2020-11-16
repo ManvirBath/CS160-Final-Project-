@@ -102,6 +102,11 @@ class TransferInternal extends React.Component {
             this.setState({
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
             });
+        } else if (this.state.amount > parseFloat(this.state.from_acct.text.split(' ')[2])) {
+            e.preventDefault();
+            this.setState({
+                errorAmount: 'Amount cannot be greater than the account balance.',
+            });
         }
         //validates memo
         if (this.state.memo.length >= 50) {
@@ -168,7 +173,10 @@ class TransferInternal extends React.Component {
         );
 
         console.log(this.state.amount)
-
+        
+        if (this.state.from_acct) {
+            console.log(parseFloat(this.state.from_acct.text.split(' ')[2]))
+        }
         return (
             <div className="TransferInternal">
                 <UserNavigationBar active={2} />
