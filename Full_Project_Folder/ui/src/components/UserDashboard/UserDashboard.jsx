@@ -6,7 +6,7 @@ import {
     Route,
     Switch,
     Redirect,
-    Link
+    Link,
 } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
@@ -79,13 +79,12 @@ class UserDashboard extends React.Component {
         }
     }
     async componentDidMount() {
-
         this.state.axiosInstance = await axiosInstance;
         console.log(
             'Header AFTER: ' +
                 this.state.axiosInstance.defaults.headers['Authorization']
         );
-        localStorage.removeItem('bill_id')
+        localStorage.removeItem('bill_id');
         localStorage.removeItem('to_acct');
         localStorage.removeItem('from_acct');
         localStorage.removeItem('routing_num');
@@ -97,13 +96,12 @@ class UserDashboard extends React.Component {
         localStorage.removeItem('to_account');
         localStorage.removeItem('to_account_num');
         localStorage.removeItem('check_image');
-        
+
         const clients = await this.getClients();
         const accounts = await this.getAccounts();
         const iD = await this.setID();
         this.setState({ loading: false });
     }
-    
 
     render() {
         localStorage.setItem('user_id', this.state.id);
@@ -132,16 +130,20 @@ class UserDashboard extends React.Component {
                             balance: v.balance,
                         }}
                         onClick={() => {
-                            localStorage.setItem('account_num', v.account_num)
-                            localStorage.setItem('account_type', v.account_type)
-                            localStorage.setItem('balance', v.balance)
-                        }
-                        }
+                            localStorage.setItem('account_num', v.account_num);
+                            localStorage.setItem(
+                                'account_type',
+                                v.account_type
+                            );
+                            localStorage.setItem('balance', v.balance);
+                        }}
                     >
                         <div className={v.account_type} id="accounts-info">
                             <div id="userdb-account-type">{v.account_type}</div>
 
-                            <div id="userdb-account-balance">${v.balance}</div>
+                            <div id="userdb-account-balance">
+                                ${parseFloat(v.balance).toFixed(2)}
+                            </div>
                             <div id="userdb-account-number">
                                 {v.account_num}
                             </div>
