@@ -17,6 +17,9 @@
 .EditProfile .form-control {
     display: flex;
     justify-content: center;
+    width: 250px;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
 }
 .EditProfile .Logo {
     margin-bottom: 1.5em;
@@ -39,13 +42,14 @@
 .EditProfile .editprofile-btn {
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 250px;
 }
 .EditProfile .error {
-    color: red;
-    max-width: 225px;
-    max-height: 0px;
-    font-size: 0.95em;
     position: relative;
+    color: red;
+    max-width: 275px;
+    max-height: 0px;
+    font-size: 0.86em;
     top: -43px;
     left: 300px;
 }
