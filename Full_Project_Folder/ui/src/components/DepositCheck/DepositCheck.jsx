@@ -42,7 +42,6 @@ class DepositCheck extends React.Component {
         this.setState({ errorAccount: '' });
     }
     amount(e) {
-        //this.setState({ amount: parseFloat(e.target.value).toFixed(2) });
         this.setState({ amount: e.target.value });
         this.setState({ errorAmount: '' });
     }
@@ -105,14 +104,12 @@ class DepositCheck extends React.Component {
         }
         if (error) {
         } else {
-            console.log('hello');
             localStorage.setItem('to_account', this.state.to_account);
             localStorage.setItem('amount', this.state.amount);
             localStorage.setItem('memo', this.state.memo);
             localStorage.setItem('file', this.state.file);
             localStorage.setItem('check_image', this.state.check_image);
             localStorage.setItem('to_account_num', this.state.to_account_num);
-            console.log('123' + localStorage.getItem('to_account_num'));
         }
     }
     render() {
