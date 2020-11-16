@@ -7,19 +7,18 @@
 .Register .form {
     display: flex;
     flex-direction: column;
-    margin-top: 7.5vh;
+    margin-top: 5vh;
+    align-items: center;
 }
 .Register .form-control {
     display: flex;
     justify-content: center;
+    width: 300px;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
 }
 .Register.Logo {
     margin-bottom: 1.5em;
-}
-.Register input {
-    color: black;
-    margin-top: 7.5px;
-    margin-bottom: 7.5px;
 }
 .Register .header {
     font-size: 1.5em;
@@ -38,4 +37,16 @@
 }
 .Register button:hover {
     background: #1c41b0;
+}
+.Register .error {
+    position: relative;
+    color: white;
+    max-width: 275px;
+    max-height: 0px;
+    font-size: 0.86em;
+    top: -43px;
+    left: 325px;
+}
+.Register .register-btn {
+    width: 300px;
 }
