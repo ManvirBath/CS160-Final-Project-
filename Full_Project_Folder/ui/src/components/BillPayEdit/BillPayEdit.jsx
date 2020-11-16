@@ -67,7 +67,8 @@ class BillPayEdit extends React.Component {
         });
     }
     amount(e) {
-        this.setState({ amount: e.target.value, errorAmount: '' });
+        // STOPS USER TO TWO DECIMAL PLACES
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") , errorAmount: '' });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value, errorRouting: '' });
@@ -136,7 +137,7 @@ class BillPayEdit extends React.Component {
         if (this.state.amount <= 0) {
             e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
-        }
+        } 
         //validate paydate (make sure date selected isn't in past)
         var today = new Date();
         var parts = this.state.pay_date.split('-');
@@ -182,6 +183,8 @@ class BillPayEdit extends React.Component {
         );
 
         // console.log(String(this.state.from_acct.value))
+        console.log(this.state.amount)
+
         return (
             <div className="BillPay">
                 <UserNavigationBar active={1} />

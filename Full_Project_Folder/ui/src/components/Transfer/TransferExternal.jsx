@@ -74,7 +74,8 @@ class TransferExternal extends React.Component {
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
+        // STOPS USER TO TWO DECIMAL PLACES
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") });
         this.setState({ errorAmount: '' });
     }
     memo(e) {
@@ -148,6 +149,20 @@ class TransferExternal extends React.Component {
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
             });
         }
+
+        //validates amount if amount is greater than the user's to account
+        if (this.state.amount <= 0 || this.state.amount > 100000) {
+            e.preventDefault();
+            this.setState({
+                errorAmount: 'Amount must be between 0.01 and 100,000!',
+            });
+        } else if (this.state.amount > parseFloat(this.state.from_acct.text.split(' ')[2])) {
+            e.preventDefault();
+            this.setState({
+                errorAmount: 'Amount cannot be greater than the account balance.',
+            });
+        }
+        
         //validates memo
         if (this.state.memo.length >= 50) {
             e.preventDefault();
@@ -207,6 +222,8 @@ class TransferExternal extends React.Component {
                 </option>
             )
         );
+
+        console.log(this.state.amount)
 
         return (
             <div className="TransferExternal">

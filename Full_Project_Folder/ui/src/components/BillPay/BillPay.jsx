@@ -47,8 +47,8 @@ class BillPay extends React.Component {
         this.setState({ errorFromAcct: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
-        this.setState({ errorAmount: '' });
+        // STOPS USER TO TWO DECIMAL PLACES
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") , errorAmount: '' });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value });
@@ -156,7 +156,9 @@ class BillPay extends React.Component {
                 {v.account_type} {v.account_num}: {v.balance}
             </option>
         ));
-        console.log(String(this.state.from_acct.value));
+        // console.log(String(this.state.from_acct.value));
+        console.log(this.state.amount)
+
         return (
             <div className="BillPay">
                 <UserNavigationBar active={1} />

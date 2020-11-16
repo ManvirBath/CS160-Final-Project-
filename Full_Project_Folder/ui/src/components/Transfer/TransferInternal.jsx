@@ -62,9 +62,11 @@ class TransferInternal extends React.Component {
         this.setState({ errorIsSameAcct: '' });
     }
     amount(e) {
-        this.setState({ amount: e.target.value });
+        // STOPS USER TO TWO DECIMAL PLACES
+        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") });
         this.setState({ errorAmount: '' });
     }
+
     memo(e) {
         this.setState({ memo: e.target.value });
         this.setState({ errorMemo: '' });
@@ -99,6 +101,11 @@ class TransferInternal extends React.Component {
             e.preventDefault();
             this.setState({
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
+            });
+        } else if (this.state.amount > parseFloat(this.state.from_acct.text.split(' ')[2])) {
+            e.preventDefault();
+            this.setState({
+                errorAmount: 'Amount cannot be greater than the account balance.',
             });
         }
         //validates memo
@@ -165,6 +172,8 @@ class TransferInternal extends React.Component {
             )
         );
 
+        console.log(this.state.amount)
+        
         return (
             <div className="TransferInternal">
                 <UserNavigationBar active={2} />
@@ -215,6 +224,7 @@ class TransferInternal extends React.Component {
                             placeholder="$"
                             onChange={this.amount}
                             value={this.state.amount}
+                            step=".01"
                             class="form-control"
                         ></input>
                         <h6 className="error">{this.state.errorAmount}</h6>
