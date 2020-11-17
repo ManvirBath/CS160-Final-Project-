@@ -24,7 +24,7 @@ class DepositCheckConfirm extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    async check(e) {
         const to_curr_acc = await localStorage.getItem('to_account_num');
         localStorage.setItem('alert_type', 'alert alert-success');
         localStorage.setItem(
@@ -45,7 +45,7 @@ class DepositCheckConfirm extends React.Component {
                     'ERROR: This was not a valid deposit. Please try again.'
                 );
             });
-    }
+      }
 
     render() {
         return (
@@ -57,7 +57,7 @@ class DepositCheckConfirm extends React.Component {
                     Please confirm your details before submitting.
                 </div>
                 <div className="depositcheck-confirm-details">
-                    <h4>Deposit to: {this.state.account}</h4>
+                    <h4>Deposit to: {this.state.to_account_num}</h4>
                     <h4>Amount: {this.state.amount}</h4>
                     <h4>Memo: {this.state.memo}</h4>
                     <h4>Check file: {this.state.check_image}</h4>
@@ -77,7 +77,7 @@ class DepositCheckConfirm extends React.Component {
                                 to_account_num: this.state.to_account_num,
                             }}
                         >
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" onClick={this.check}>
                                 Submit
                             </button>
                         </Link>

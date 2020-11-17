@@ -36,24 +36,22 @@ class TransferExternalTransaction extends React.Component {
     }
 
     componentWillUnmount() {
-        window.removeEventListener('beforeunload', this._confirm);
-        window.onpopstate = () => {};
-    }
-
+        window.removeEventListener("beforeunload", this._confirm);
+        window.onpopstate = () => { }
+      }
+    
     _backConfirm = async () => {
-        let event = window.confirm(
-            'Cannot go back to transfer submission page. '
-        );
-        if (event) {
-            window.history.pushState(null, '', window.location.href);
+        let event = window.confirm("Cannot go back to submission page. ");
+        if(event){
+            window.history.pushState(null, "", window.location.href);
         }
-    };
-
+    }
+    
     _confirm = (e) => {
-        var confirmationMessage = 'o/';
+        var confirmationMessage = "\o/";
         e.returnValue = confirmationMessage;
         return confirmationMessage;
-    };
+    }
 
     render() {
         const { amount } = this.state;

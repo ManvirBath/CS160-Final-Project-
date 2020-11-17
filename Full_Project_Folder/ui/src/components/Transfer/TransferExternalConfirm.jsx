@@ -24,12 +24,8 @@ class TransferExternalConfirm extends React.Component {
             memo: this.props.location.memo || localStorage.getItem('memo'),
         };
     }
-    async componentDidMount() {
-        // console.log(localStorage.getItem('to_acct'))
-        // console.log(localStorage.getItem('from_acct'))
-        // console.log(localStorage.getItem('routing_num'))
-        // console.log(localStorage.getItem('amount'))
-        // console.log(localStorage.getItem('memo'))
+
+    async check(e) {
         localStorage.setItem(
             'status_response',
             'Thank you for your transfer request! Please contact us if you have any questions or concerns.'
@@ -72,47 +68,8 @@ class TransferExternalConfirm extends React.Component {
                     );
                 });
         }
+
     }
-
-    // async check(e) {
-    //     const from_cur_acc = await localStorage.getItem('from_acct');
-    //     const cur_rout_num = await localStorage.getItem('routing_num')
-    //     if (parseInt(cur_rout_num) == parseInt("123456789")) {
-    //         const res1 = await axiosInstance
-    //           .post(`accounts/${from_cur_acc}/transfer_internal/`, {
-    //             to_account_number: localStorage.getItem('to_acct'),
-    //             amount: localStorage.getItem('amount'),
-    //             location: "Online",
-    //             memo: localStorage.getItem('memo'),
-    //           })
-    //           .catch((error) => {
-    //             console.log(error.response.status);
-    //             this.setState({ alert_type: "alert alert-danger" });
-    //             this.setState({
-    //               status_response:
-    //                 "ERROR: This was not a valid transaction. Please try again.",
-    //             });
-    //           });
-    //       } else {
-    //         const res2 = await axiosInstance
-    //           .post(`accounts/${from_cur_acc}/transfer_external/`, {
-    //             amount: localStorage.getItem('amount'),
-    //             location: "Online",
-    //             routing_num: localStorage.getItem('routing_num'),
-    //             to_account_num: localStorage.getItem('to_acct'),
-    //             memo: localStorage.getItem('memo'),
-    //           })
-    //           .catch((error) => {
-    //             console.log(error.response.status);
-    //             this.setState({ alert_type: "alert alert-danger" });
-    //             this.setState({
-    //               status_response:
-    //                 "ERROR: This was not a valid transaction. Please try again.",
-    //             });
-    //           });
-    //       }
-
-    // }
 
     render() {
         return (
@@ -159,6 +116,7 @@ class TransferExternalConfirm extends React.Component {
                                 type="button"
                                 class="btn btn-primary"
                                 id="transfer-external-btn2"
+                                onClick={this.check}
                             >
                                 Submit
                             </button>
