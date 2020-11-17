@@ -31,21 +31,22 @@ class DepositCheckTransaction extends React.Component {
 
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this._confirm);
-        window.onpopstate = () => {};
-    }
-
+        window.onpopstate = () => { }
+      }
+    
     _backConfirm = async () => {
         let event = window.confirm('Cannot go back to submission page. ');
-        if (event) {
+        if(event){
             window.history.pushState(null, '', window.location.href);
         }
-    };
+    }
 
     _confirm = (e) => {
-        var confirmationMessage = 'o/';
+        var confirmationMessage = '\o/';
         e.returnValue = confirmationMessage;
         return confirmationMessage;
-    };
+    }
+      
     render() {
         return (
             <div className="DepositCheckTransaction">
@@ -59,7 +60,7 @@ class DepositCheckTransaction extends React.Component {
                     <p>{localStorage.getItem('status_response')}</p>
                 </div>
                 <div className="depositchecktransaction-info">
-                    <h4>Deposit to: {this.state.account}</h4>
+                    <h4>Deposit to: {this.state.to_account_num}</h4>
                     <h4>Amount: {this.state.amount}</h4>
                     <h4>Memo: {this.state.memo}</h4>
                     <h4>Check file: {this.state.check_image}</h4>

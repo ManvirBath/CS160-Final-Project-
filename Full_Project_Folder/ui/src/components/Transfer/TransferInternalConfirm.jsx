@@ -20,7 +20,7 @@ class TransferInternalConfirm extends React.Component {
         };
     }
 
-    async componentDidMount() {
+    async check(e) {
         console.log(localStorage.getItem('to_acct'));
         console.log(localStorage.getItem('from_acct'));
         console.log(localStorage.getItem('amount'));
@@ -110,6 +110,7 @@ class TransferInternalConfirm extends React.Component {
                             type="submit"
                             class="btn btn-primary"
                             id="transfer-internal-btn2"
+                            onClick={this.check}
                         >
                             Submit
                         </button>

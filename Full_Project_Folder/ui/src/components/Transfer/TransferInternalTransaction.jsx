@@ -35,25 +35,24 @@ class TransferInternalTransaction extends React.Component {
         window.history.pushState(null, '', window.location.href);
         window.onpopstate = this._backConfirm;
     }
+    
     componentWillUnmount() {
         window.removeEventListener('beforeunload', this._confirm);
-        window.onpopstate = () => {};
-    }
-
-    _backConfirm = async () => {
-        let event = window.confirm(
-            'Cannot go back to transfer submission page. '
-        );
-        if (event) {
-            window.history.pushState(null, '', window.location.href);
-        }
-    };
-
-    _confirm = (e) => {
-        var confirmationMessage = 'o/';
-        e.returnValue = confirmationMessage;
-        return confirmationMessage;
-    };
+        window.onpopstate = () => { }
+      }
+    
+      _backConfirm = async () => {
+          let event = window.confirm('Cannot go back to submission page. ');
+          if(event){
+              window.history.pushState(null, '', window.location.href);
+          }
+      }
+    
+      _confirm = (e) => {
+          var confirmationMessage = '\o/';
+          e.returnValue = confirmationMessage;
+          return confirmationMessage;
+      }
 
     render() {
         return (
