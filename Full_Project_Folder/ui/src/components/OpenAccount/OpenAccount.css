@@ -18,6 +18,10 @@
 .openaccount-types {
     margin-bottom: 250px;
 }
+.OpenAccount .error {
+    margin-top: 5px;
+    height: 10px;
+}
 #openacct-greeting {
     font-size: 3em;
     margin: 10px;

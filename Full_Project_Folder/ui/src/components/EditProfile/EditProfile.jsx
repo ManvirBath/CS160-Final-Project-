@@ -149,7 +149,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_firstname:
-                    'Please omit any special characters and keep it between 2 and 40 characters long',
+                    'Please omit any special characters and keep it between 2-40 characters long',
             });
         }
 
@@ -157,7 +157,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_lastname:
-                    'Please omit any special characters and keep it between 2 and 40 characters long',
+                    'Please omit any special characters and keep it between 2-40 characters long',
             });
         }
 
@@ -187,7 +187,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_address:
-                    'Please omit special characters and ensure email address is between 2-50 characters',
+                    'Please omit special characters and ensure email is between 2-50 characters',
             });
         }
 
@@ -199,7 +199,7 @@ class EditProfile extends React.Component {
             e.preventDefault();
             this.setState({
                 err_city:
-                    'Please omit special characters and ensure the city names is between 2-40 characters',
+                    'Please omit special characters and ensure name is between 2-40 characters',
             });
         }
 

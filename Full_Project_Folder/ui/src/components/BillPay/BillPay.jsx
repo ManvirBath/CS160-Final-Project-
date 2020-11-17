@@ -54,7 +54,14 @@ class BillPay extends React.Component {
     }
     amount(e) {
         // STOPS USER TO TWO DECIMAL PLACES
-        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") , errorAmount: '' });
+        this.setState({
+            amount: e.target.value
+                .toString()
+                .split('.')
+                .map((el, i) => (i ? el.split('').slice(0, 2).join('') : el))
+                .join('.'),
+            errorAmount: '',
+        });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value });
@@ -142,18 +149,20 @@ class BillPay extends React.Component {
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
 
-        if (this.state.errorToAcct == '' &&
+        if (
+            this.state.errorToAcct == '' &&
             this.state.errorFromAcct == '' &&
             this.state.errorRouting == '' &&
             this.state.errorAmount == '' &&
-            this.state.errorDate== '') {
-                localStorage.setItem('to_acct', this.state.to_acct);
-                localStorage.setItem('from_acct', this.state.from_acct.value); // FROM ACCOUNT?? ISSUE!!!
-                localStorage.setItem('routing_num', this.state.routing_num);
-                localStorage.setItem('amount', this.state.amount);
-                localStorage.setItem('frequency', this.state.frequency);
-                localStorage.setItem('pay_date', this.state.pay_date);
-            }
+            this.state.errorDate == ''
+        ) {
+            localStorage.setItem('to_acct', this.state.to_acct);
+            localStorage.setItem('from_acct', this.state.from_acct.value); // FROM ACCOUNT?? ISSUE!!!
+            localStorage.setItem('routing_num', this.state.routing_num);
+            localStorage.setItem('amount', this.state.amount);
+            localStorage.setItem('frequency', this.state.frequency);
+            localStorage.setItem('pay_date', this.state.pay_date);
+        }
     }
 
     render() {
@@ -169,13 +178,13 @@ class BillPay extends React.Component {
             </option>
         ));
         // console.log(String(this.state.from_acct.value));
-        console.log(this.state.amount)
+        console.log(this.state.amount);
 
         return (
             <div className="BillPay">
                 <UserNavigationBar active={1} />
+                <div className="greeting-billpay">BillPay</div>
                 <div className="container-billpay">
-                    <div className="greeting-billpay">BillPay</div>
                     <div className="flexbox-column-billpay">
                         <div id="transfer-from">From</div>
                         <select
