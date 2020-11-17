@@ -15,8 +15,10 @@
 }
 .greeting-billpay {
     display: flex;
-    height: 15%;
+    height: 3%;
     font-size: 3em;
+    margin-top: 5px;
+    justify-content: center;
 }
 .billpay-confirm-details {
     display: flex;
@@ -49,8 +51,12 @@
     font-size: 1.15em;
 }
 .BillPay .error {
-    width: 250px;
-    max-height: 20px;
+    position: relative;
+    color: red;
+    max-width: 250px;
+    max-height: 0px;
+    top: -25px;
+    left: 300px;
 }
 #transfer-from {
     display: flex;

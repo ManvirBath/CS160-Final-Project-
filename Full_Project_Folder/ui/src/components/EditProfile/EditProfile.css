@@ -47,7 +47,7 @@
 .EditProfile .error {
     position: relative;
     color: red;
-    max-width: 275px;
+    max-width: 250px;
     max-height: 0px;
     font-size: 0.86em;
     top: -43px;
