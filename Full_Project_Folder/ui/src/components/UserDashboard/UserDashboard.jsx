@@ -106,6 +106,12 @@ class UserDashboard extends React.Component {
     render() {
         localStorage.setItem('user_id', this.state.id);
 
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+
         if (this.state.loading) {
             return (
                 <div>

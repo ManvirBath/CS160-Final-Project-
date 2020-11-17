@@ -1,6 +1,12 @@
 import React from "react";
 import "./CloseAccount.css";
-import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+  Link,
+} from 'react-router-dom';
 import UserNavigationBar from "../UserNavBar/UserNavBar";
 import axiosInstance from "../../axios";
 
@@ -87,6 +93,12 @@ class CloseAccount extends React.Component {
   }
 
   render() {
+    if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+      return (
+          <Redirect to="/managerdashboard" />
+      )
+  }
+
     let userAccts = this.state.accts.map((v) => (
       <option value={v.account_num + "|" + v.balance}>
         {v.account_type} {v.account_num}: {v.balance}

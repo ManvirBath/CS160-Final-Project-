@@ -1,6 +1,12 @@
 import React from 'react';
 import './Transfer.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class TransferInternalTransaction extends React.Component {
@@ -55,6 +61,12 @@ class TransferInternalTransaction extends React.Component {
       }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+        
         return (
             <div className="DepositCheckTransaction">
                 <UserNavigationBar active={2} />

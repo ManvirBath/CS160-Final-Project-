@@ -1,6 +1,12 @@
 import React from 'react';
 import './Account.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import Logo from '../Logo';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import axiosInstance from '../../axios';
@@ -41,6 +47,12 @@ class Account extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+
         let acctTransaction = this.state.transaction_arr.map((v, index) => (
             <tr>
                 <th>{index + 1}</th>

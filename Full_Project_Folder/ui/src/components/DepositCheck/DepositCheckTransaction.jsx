@@ -1,6 +1,12 @@
 import React from 'react';
 import './DepositCheck.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class DepositCheckTransaction extends React.Component {
@@ -48,6 +54,12 @@ class DepositCheckTransaction extends React.Component {
     }
       
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+
         return (
             <div className="DepositCheckTransaction">
                 <UserNavigationBar active={3} />
