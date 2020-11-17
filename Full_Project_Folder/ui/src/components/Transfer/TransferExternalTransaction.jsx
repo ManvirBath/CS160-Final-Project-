@@ -1,6 +1,12 @@
 import React from 'react';
 import './Transfer.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import axiosInstance from '../../axios';
 
@@ -54,6 +60,12 @@ class TransferExternalTransaction extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+
         const { amount } = this.state;
         return (
             <div className="DepositCheckTransaction">

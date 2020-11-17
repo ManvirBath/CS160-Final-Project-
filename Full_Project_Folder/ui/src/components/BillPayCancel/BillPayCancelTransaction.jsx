@@ -1,6 +1,12 @@
 import React from 'react';
 import './BillPayCancel.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
 class BillPayCancelTransaction extends React.Component {
@@ -51,6 +57,12 @@ class BillPayCancelTransaction extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/managerdashboard" />
+            )
+        }
+
         return (
             <div className="BillPayCancelTransaction">
                 <UserNavigationBar active={1} />

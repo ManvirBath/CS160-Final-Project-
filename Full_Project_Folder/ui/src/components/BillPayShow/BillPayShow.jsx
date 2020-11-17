@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './BillPayShow.css';
 import Logo from '../Logo';
-import { Link, useHistory } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import Loader from 'react-loader-spinner';
@@ -47,6 +53,12 @@ class BillPayShow extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/managerdashboard" />
+            )
+        }
+
         let paymentTemplate = this.state.bill_payments.map((v) => (
             <div className="box-billpayshow">
                 <div key={v.id} className="billpayshow-container">

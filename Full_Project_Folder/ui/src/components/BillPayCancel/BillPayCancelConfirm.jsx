@@ -1,6 +1,12 @@
 import React from 'react';
 import './BillPayCancel.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+  } from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 
@@ -33,6 +39,12 @@ class BillPayCancelConfirm extends React.Component {
       }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/managerdashboard" />
+            )
+        }
+
         return (
             <div className="BillPayCancel">
                 <UserNavigationBar active={1} />

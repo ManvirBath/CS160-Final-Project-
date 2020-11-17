@@ -282,6 +282,12 @@ class EditProfile extends React.Component {
     };
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+        
         if (this.state.loading) {
             return (
                 <div>

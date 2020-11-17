@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import './ManagerDashboard.css';
 import axiosInstance from '../../axios';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import ManagerNavigationBar from '../ManagerNavBar/ManagerNavBar';
 import Loader from 'react-loader-spinner';
 
@@ -94,6 +101,12 @@ class ManagerDashboard extends React.Component {
         }
     }
     render() {
+        if (localStorage.getItem('email') != 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/userdashboard" />
+            )
+        }
+
         let all_client_email = this.state.all_clients.map((v) => (
             <option value={v}>{v}</option>
         ));

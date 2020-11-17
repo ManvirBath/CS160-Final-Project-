@@ -1,6 +1,12 @@
 import React from "react";
 import "./OpenAccount.css";
-import { Link, useHistory } from "react-router-dom";
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import Logo from "../Logo";
 import UserNavigationBar from "../UserNavBar/UserNavBar";
 import axiosInstance from "../../axios";
@@ -41,6 +47,12 @@ class OpenAccount extends React.Component {
   }
   
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/managerdashboard" />
+            )
+        }
+        
         return (
             <div className="OpenAccount">
                 <UserNavigationBar active={0} />

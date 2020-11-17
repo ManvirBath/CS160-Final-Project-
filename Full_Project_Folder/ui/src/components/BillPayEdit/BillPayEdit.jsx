@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import './BillPayEdit.css';
 import Logo from '../Logo';
-import { Link, useHistory } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import axiosInstance from '../../axios';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import Loader from 'react-loader-spinner';
@@ -170,6 +176,12 @@ class BillPayEdit extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="/managerdashboard" />
+            )
+        }
+
         let userAccts = this.state.accts.map((v) =>
             v.account_num == this.state.from_acct ? (
                 <option value={v.account_num} selected>

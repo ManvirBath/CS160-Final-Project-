@@ -1,6 +1,12 @@
 import React from 'react';
 import './Transfer.css';
-import { Link } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect,
+    Link,
+} from 'react-router-dom';
 import UserNavigationBar from '../UserNavBar/UserNavBar';
 import axiosInstance from '../../axios';
 import Loader from 'react-loader-spinner';
@@ -198,6 +204,12 @@ class TransferExternal extends React.Component {
     }
 
     render() {
+        if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
+            return (
+                <Redirect to="managerdashboard" />
+            )
+        }
+
         if (this.state.loading) {
             return (
                 <div>
