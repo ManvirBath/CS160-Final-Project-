@@ -47,3 +47,13 @@
 .usernavbar .nav-item .btn {
     box-shadow: none;
 }
+.usernavbar #logout-usernavbar {
+    padding: 0;
+    background-color: #4169e1;
+    border: none;
+    font-size: 1.5em;
+    color: white;
+}
+.usernavbar #logout-usernavbar:hover {
+    color: rgba(255, 255, 255, 0.5);
+}
