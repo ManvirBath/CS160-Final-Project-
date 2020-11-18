@@ -45,16 +45,16 @@
 .MapContainer .homepage-header {
     position: absolute;
     z-index: 2;
-    left: 1px;
+    left: 3px;
     color: black;
-    font-size: 1.25em;
+    font-size: 1.35em;
 }
 .MapContainer .userdb-header {
     position: absolute;
     z-index: 2;
-    left: 1px;
+    left: 3px;
     color: black;
-    font-size: 1.25em;
+    font-size: 1.35em;
 }
 .MapContainer .open-option {
     font-size: 2em;
@@ -63,4 +63,7 @@
 .MapContainer .close-option {
     font-size: 2em;
     right: 0;
+}
+.MapContainer a:hover {
+    text-decoration: none;
 }

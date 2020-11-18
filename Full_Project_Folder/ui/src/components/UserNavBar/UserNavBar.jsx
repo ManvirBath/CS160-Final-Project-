@@ -70,7 +70,7 @@ const dropDown = [
                 href: '/editprofile',
             },
             {
-                name: 'Find ATMS',
+                name: 'ATM Finder',
                 href: '/GMap',
             },
             {

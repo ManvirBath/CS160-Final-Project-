@@ -262,7 +262,7 @@ class Register extends React.Component {
     render() {
         return (
             <div className="Register">
-                <div className="form">
+                <div className="contain">
                     <Logo
                         color="rgb(255,255,255)"
                         text="Deep Learning Bank"
