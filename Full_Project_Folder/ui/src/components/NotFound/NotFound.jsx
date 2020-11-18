@@ -6,7 +6,22 @@ class NotFound extends React.Component {
     constructor(props) {
         super(props);
     }
+
     render() {
+        let button;
+        if (localStorage.getItem('email') == null) {
+            button = (
+                <div className="footer">
+                    <Link to="/main">Home</Link>
+                </div>
+            );
+        } else {
+            button = (
+                <div className="footer">
+                    <Link to="/userdashboard">Dashboard</Link>
+                </div>
+            );
+        }
         return (
             <div className="NotFound">
                 <div className="Container-NotFound">
@@ -18,7 +33,7 @@ class NotFound extends React.Component {
                             id="notfound-navigateback-button"
                             href="/login"
                         >
-                            Navigate back to home page
+                            {button}{' '}
                         </a>
                     </div>
                 </div>

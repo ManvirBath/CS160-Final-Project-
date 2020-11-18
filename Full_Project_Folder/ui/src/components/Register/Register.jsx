@@ -448,7 +448,7 @@ class Register extends React.Component {
                             onSubmit={this.onSubmit}
                             onClick={this.handleSubmit}
                         >
-                            Submit
+                            Register
                         </button>
                     </form>
                 </div>

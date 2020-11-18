@@ -26,17 +26,12 @@
 #notfound-navigateback-button {
     text-decoration: none;
 }
-.button-notfound {
-    justify-content: center;
-    color: #fff;
-    font-size: 1.2em;
-    border: 1px solid #efefef;
-    padding: 0.5em;
-    border-radius: 3px;
-    transition: all 0.3s linear;
+.NotFound a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.3em;
 }
-
-.button-notfound:hover {
-    background-color: #007aff;
-    color: #fff;
+.NotFound a:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
 }

@@ -48,11 +48,14 @@
     position: absolute;
     text-decoration: none;
     color: white;
-    font-size: 1.5em;
+    font-size: 1.55em;
     margin-top: 50px;
     left: 49%;
     margin-right: 50%;
     transform: translate(-50%, -50%);
+}
+.contact .footer a:hover {
+    color: rgba(255, 255, 255, 0.5);
 }
 .contact #contactus-greeting {
     text-align: center;
