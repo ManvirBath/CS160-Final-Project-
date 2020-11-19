@@ -5,27 +5,25 @@
     height: 100vh;
     overflow-x: hidden;
 }
-.container-billpayedit {
-    position: absolute;
-    color: black;
-    left: 300px;
-    top: 25vh;
+.BillPayEdit .container-billpay {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    height: 72.5%;
 }
-#greeting-billpayedit {
-    position: absolute;
-    font-size: 2em;
-    font-family: serif;
+.BillPayEdit .greeting-billpayedit {
+    display: flex;
+    height: 17.5%;
+    font-size: 3em;
+    margin-top: 5px;
+    justify-content: center;
 }
-#greeting-billpayedit2 {
-    position: absolute;
-    top: 9vh;
-    left: 1vw;
-    font-size: 2em;
-    font-family: serif;
-}
-​ .billpayedit {
+.BillPayEdit .error {
     position: relative;
-}
-.billpayedit-temp {
-    font-size: 1em;
+    color: red;
+    max-width: 250px;
+    max-height: 0px;
+    top: -25px;
+    left: 300px;
 }

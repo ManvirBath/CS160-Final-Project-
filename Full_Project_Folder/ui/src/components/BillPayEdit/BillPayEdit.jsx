@@ -19,12 +19,22 @@ class BillPayEdit extends React.Component {
             id: this.props.location.id || localStorage.getItem('bill_id'),
             bill_payment: [],
 
-            to_acct: this.props.location.to_acct || localStorage.getItem('to_acct'),
-            from_acct: this.props.location.from_acct || localStorage.getItem('from_acct'),
-            routing_num: this.props.location.routing_num || localStorage.getItem('routing_num'),
-            amount: this.props.location.amount || localStorage.getItem('amount'),
-            pay_date: this.props.location.pay_date || localStorage.getItem('pay_date'),
-            frequency: this.props.location.frequency || localStorage.getItem('frequency'),
+            to_acct:
+                this.props.location.to_acct || localStorage.getItem('to_acct'),
+            from_acct:
+                this.props.location.from_acct ||
+                localStorage.getItem('from_acct'),
+            routing_num:
+                this.props.location.routing_num ||
+                localStorage.getItem('routing_num'),
+            amount:
+                this.props.location.amount || localStorage.getItem('amount'),
+            pay_date:
+                this.props.location.pay_date ||
+                localStorage.getItem('pay_date'),
+            frequency:
+                this.props.location.frequency ||
+                localStorage.getItem('frequency'),
 
             accts: [],
             errorToAcct: '',
@@ -54,13 +64,13 @@ class BillPayEdit extends React.Component {
             });
         });
 
-        console.log(localStorage.getItem('bill_id'))
-        console.log(localStorage.getItem('to_acct'))
-        console.log(localStorage.getItem('from_acct'))
-        console.log(localStorage.getItem('routing_num'))
-        console.log(localStorage.getItem('amount'))
-        console.log(localStorage.getItem('pay_date'))
-        console.log(localStorage.getItem('frequency'))
+        console.log(localStorage.getItem('bill_id'));
+        console.log(localStorage.getItem('to_acct'));
+        console.log(localStorage.getItem('from_acct'));
+        console.log(localStorage.getItem('routing_num'));
+        console.log(localStorage.getItem('amount'));
+        console.log(localStorage.getItem('pay_date'));
+        console.log(localStorage.getItem('frequency'));
     }
 
     to_acct(e) {
@@ -74,7 +84,14 @@ class BillPayEdit extends React.Component {
     }
     amount(e) {
         // STOPS USER TO TWO DECIMAL PLACES
-        this.setState({ amount: e.target.value.toString().split(".").map((el,i)=>i?el.split("").slice(0,2).join(""):el).join(".") , errorAmount: '' });
+        this.setState({
+            amount: e.target.value
+                .toString()
+                .split('.')
+                .map((el, i) => (i ? el.split('').slice(0, 2).join('') : el))
+                .join('.'),
+            errorAmount: '',
+        });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value, errorRouting: '' });
@@ -143,7 +160,7 @@ class BillPayEdit extends React.Component {
         if (this.state.amount <= 0) {
             e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
-        } 
+        }
         //validate paydate (make sure date selected isn't in past)
         var today = new Date();
         var parts = this.state.pay_date.split('-');
@@ -160,26 +177,26 @@ class BillPayEdit extends React.Component {
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
 
-        if (this.state.errorToAcct == '' &&
+        if (
+            this.state.errorToAcct == '' &&
             this.state.errorFromAcct == '' &&
             this.state.errorRouting == '' &&
             this.state.errorAmount == '' &&
-            this.state.errorDate== '') {
-                console.log("Hello")
-                localStorage.setItem('to_acct', this.state.to_acct);
-                localStorage.setItem('from_acct', this.state.from_acct);
-                localStorage.setItem('routing_num', this.state.routing_num);
-                localStorage.setItem('amount', this.state.amount);
-                localStorage.setItem('frequency', this.state.frequency);
-                localStorage.setItem('pay_date', this.state.pay_date);
-            }
+            this.state.errorDate == ''
+        ) {
+            console.log('Hello');
+            localStorage.setItem('to_acct', this.state.to_acct);
+            localStorage.setItem('from_acct', this.state.from_acct);
+            localStorage.setItem('routing_num', this.state.routing_num);
+            localStorage.setItem('amount', this.state.amount);
+            localStorage.setItem('frequency', this.state.frequency);
+            localStorage.setItem('pay_date', this.state.pay_date);
+        }
     }
 
     render() {
         if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
-            return (
-                <Redirect to="/managerdashboard" />
-            )
+            return <Redirect to="/managerdashboard" />;
         }
 
         let userAccts = this.state.accts.map((v) =>
@@ -195,13 +212,13 @@ class BillPayEdit extends React.Component {
         );
 
         // console.log(String(this.state.from_acct.value))
-        console.log(this.state.amount)
+        console.log(this.state.amount);
 
         return (
-            <div className="BillPay">
+            <div className="BillPayEdit">
                 <UserNavigationBar active={1} />
                 <div className="container-billpay">
-                    <div className="greeting-billpay">Edit BillPay</div>
+                    <div className="greeting-billpayedit">Edit BillPay</div>
                     <div className="flexbox-column-billpay">
                         <div id="transfer-from">From</div>
                         <select
