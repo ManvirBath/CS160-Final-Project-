@@ -5,6 +5,7 @@
     background-color: #f1f1f1;
     flex-direction: column;
     height: 100vh;
+    overflow-x: hidden;
 }
 .container-billpay {
     display: flex;
