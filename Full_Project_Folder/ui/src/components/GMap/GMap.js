@@ -260,6 +260,9 @@ class MapContainer extends React.Component {
                                     position={
                                         searchedLocation.geometry.location
                                     }
+                                    icon={
+                                        'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                                    }
                                     title="Initial Search Location"
                                 />
                             )}
