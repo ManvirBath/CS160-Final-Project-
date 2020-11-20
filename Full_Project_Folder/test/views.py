@@ -32,7 +32,7 @@ Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYME
 @background(schedule=30)
 # Make sure to validate that if routing number in this bank, the account number is valid
 def automated_bill():
-    time.sleep(5) # PUT 28800 TO RUN THIS EVERY 8 HOURS!!!
+    time.sleep(28800) # PUT LIKE 1-5 SECONDS TO RUN THIS INSTANTLY. THE AUTOMATED BILL PAYMENT IS DEFAULTED TO RUN EVERY 8 HOURS
     queryset = BillPayment.objects.all()
     account_queryset = Account.objects.all()
     for i in range(len(queryset)):
