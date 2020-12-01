@@ -33,6 +33,10 @@ import Account from './components/Account';
 import OpenAccount from './components/OpenAccount';
 import CloseAccount from './components/CloseAccount';
 import NotFound from './components/NotFound';
+import Withdraw from './components/Withdraw';
+import WithdrawConfirm from './components/Withdraw/WithdrawConfirm';
+import WithdrawTransaction from './components/Withdraw/WithdrawTransaction';
+
 import {
     BrowserRouter as Router,
     Route,
@@ -180,6 +184,15 @@ class App extends React.Component {
                         <LoggedInRoute
                             path="/billpaytransaction"
                             component={BillPayTransaction}
+                        />
+                        <LoggedInRoute path="/withdraw" component={Withdraw} />
+                        <LoggedInRoute
+                            path="/withdrawconfirm"
+                            component={WithdrawConfirm}
+                        />
+                        <LoggedInRoute
+                            path="/withdrawtransaction"
+                            component={WithdrawTransaction}
                         />
                         <LoggedInRoute path="/account" component={Account} />
                         <LoggedInRoute

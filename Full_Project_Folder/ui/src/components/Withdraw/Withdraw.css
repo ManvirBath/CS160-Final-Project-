@@ -1,0 +1,72 @@
+.Withdraw,
+.WithdrawConfirm,
+.WithdrawTransaction {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    height: 100vh;
+    overflow-x: hidden;
+}
+.withdrawPage {
+    justify-content: center;
+    margin-top: 50px;
+    font-size: 1.75em;
+    float: none;
+    margin: 0 auto;
+}
+.greeting-withdraw {
+    height: 5%;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 3em;
+    height: 150px;
+}
+.withdraw-inputDiv {
+    justify-content: center;
+    flex-direction: column;
+    width: 225px;
+    margin-top: 25px;
+}
+.withdraw-confirm {
+    display: flex;
+    background-color: #f1f1f1;
+    flex-direction: column;
+    text-align: center;
+    font-size: 2.25em;
+    margin-top: 35px;
+    height: 200px;
+}
+.details-withdraw-confirm {
+    margin-top: 50px;
+    font-size: 0.75em;
+}
+.buttons-withdraw-confirm {
+    display: flex;
+    margin-left: 1100px;
+    margin-top: 50px;
+}
+.withdraw-headerDivTransaction {
+    font-size: 1em;
+}
+.withdraw-transactionInfo {
+    text-align: center;
+    flex-direction: column;
+    margin-top: 50px;
+}
+.withdraw-transactionbuttons {
+    justify-content: flex-end;
+    display: flex;
+    margin-right: 500px;
+    margin-top: 100px;
+}
+.Withdraw .error {
+    position: relative;
+    color: red;
+    max-width: 250px;
+    max-height: 0px;
+    top: -35px;
+    left: 300px;
+}
+#withdraw-greeting {
+    font-size: 0.6em;
+}
