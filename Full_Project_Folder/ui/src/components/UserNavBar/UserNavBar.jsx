@@ -52,12 +52,16 @@ const dropDown = [
         ],
     },
     {
-        name: 'Deposit',
+        name: 'Deposit/Withdraw',
         href: '',
         children: [
             {
                 name: 'Deposit Money',
                 href: '/depositcheck',
+            },
+            {
+                name: 'Withdraw Money',
+                href: '/withdraw',
             },
         ],
     },
