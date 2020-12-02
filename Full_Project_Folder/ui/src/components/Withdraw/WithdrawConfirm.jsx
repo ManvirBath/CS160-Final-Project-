@@ -23,6 +23,29 @@ class WithdrawConfirm extends React.Component {
         };
     }
 
+    async check(e) {
+        const from_curr_acc = await localStorage.getItem('from_acct');
+        localStorage.setItem('alert_type', 'alert alert-success');
+        localStorage.setItem(
+            'status_response',
+            'Thank you for withdrawing! Please contact us if you have any questions or concerns.'
+        );
+        axiosInstance
+            .post(`accounts/${from_curr_acc}/withdraw/`, {
+                amount: localStorage.getItem('amount'),
+                location: 'Online',
+                memo: `Withdraw from ${from_curr_acc}` 
+            })
+            .catch((error) => {
+                console.log(error.response.status);
+                localStorage.setItem('alert_type', 'alert alert-danger');
+                localStorage.setItem(
+                    'status_response',
+                    'ERROR: This was not a valid withdraw. Please try again.'
+                );
+            });
+      }
+
     render() {
         if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
             return <Redirect to="managerdashboard" />;
@@ -45,7 +68,7 @@ class WithdrawConfirm extends React.Component {
                     <Link
                         to={{
                             pathname: '/withdraw',
-                            from_acct: this.state.from_acct.value,
+                            from_acct: this.state.from_acct,
                             amount: this.state.amount,
                         }}
                     >
@@ -61,9 +84,7 @@ class WithdrawConfirm extends React.Component {
                         to={{
                             pathname: '/withdrawtransaction',
                             from_acct: this.state.from_acct,
-                            to_acct: this.state.to_acct,
                             amount: this.state.amount,
-                            memo: this.state.memo,
                         }}
                     >
                         <button

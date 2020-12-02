@@ -73,7 +73,7 @@ class Withdraw extends React.Component {
         }
 
         //validates amount
-        if (this.state.amount <= 0 || this.state.amount > 100000) {
+        if (this.state.amount <= 0.01 || this.state.amount > 100000) {
             e.preventDefault();
             this.setState({
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
@@ -87,6 +87,14 @@ class Withdraw extends React.Component {
                 errorAmount:
                     'Amount cannot be greater than the account balance.',
             });
+        }
+
+        if (
+            this.state.errorFromAcct == '' &&
+            this.state.errorAmount == '' 
+        ) {
+            localStorage.setItem('from_acct', this.state.from_acct.value);
+            localStorage.setItem('amount', this.state.amount);
         }
     }
 
