@@ -232,6 +232,7 @@ class Register extends React.Component {
                     birthday: this.state.birthday,
                 })
                 .then((response) => {
+                    alert('Registration successful');
                     console.log(this.props.history);
                     this.props.history.push('/login/');
                 })
@@ -437,7 +438,7 @@ class Register extends React.Component {
                             name="birthday"
                             id="birthday"
                             label="birthday"
-                            placeholder="Birthday"
+                            placeholder="Date of birth"
                             value={this.state.birthday}
                             onChange={this.birthday}
                         />
