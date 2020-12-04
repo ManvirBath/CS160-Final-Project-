@@ -24,6 +24,11 @@
     margin: 10px;
     text-align: center;
 }
+.closeAccount #closeacct-header {
+    font-size: 3;
+    margin: 10px;
+    text-align: center;
+}
 .closeAccount #closeacct-option {
     font-size: 1.5em;
     margin-bottom: 25px;
