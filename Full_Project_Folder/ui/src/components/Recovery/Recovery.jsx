@@ -28,7 +28,7 @@ class Recovery extends React.Component {
                     <button
                         className="Recovery-btn btn"
                         onClick={() => {
-                            this.props.Recovery({ email });
+                            this.props.history.push('notfound');
                         }}
                     >
                         Reset Password

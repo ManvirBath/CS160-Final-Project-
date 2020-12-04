@@ -41,7 +41,7 @@ class Contact extends React.Component {
                         <div id="line3">24/7, 365 Customer Service.</div>
                     </div>
                     <span className="contact-office-location">
-                        <div id="office-location-header">Office Location: </div>
+                        <div id="office-location-header">Office Location </div>
                         <div className="office-location">
                             123 Avenue X
                             <div id="office-location2">
@@ -62,6 +62,11 @@ class Contact extends React.Component {
                             <i class="material-icons">mail</i>
                         </div>
                         <div id="contact-email">DeepLearningBank@email.com</div>
+                    </span>
+                    <span className="contact-routing-number">
+                        <div id="contact-routing-number-header">
+                            <div>Routing Number: 123456789</div>
+                        </div>
                     </span>
                 </Jumbotron>
                 {button}
