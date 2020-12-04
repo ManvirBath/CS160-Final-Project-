@@ -162,7 +162,7 @@ class TransferExternal extends React.Component {
             this.setState({
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
             });
-        } else if (this.state.amount > parseFloat(this.state.from_acct.text.split(' ')[2])) {
+        } else if (this.state.from_acct !== '' && this.state.amount > parseFloat(this.state.from_acct.text.split(' ')[2])) {
             e.preventDefault();
             this.setState({
                 errorAmount: 'Amount cannot be greater than the account balance.',
