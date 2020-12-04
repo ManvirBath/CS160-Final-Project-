@@ -53,16 +53,24 @@ class BillPayEdit extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         // const bills = await this.getBillPayments()
         console.log(this.props.location.id);
-        const accounts = axiosInstance.get('/accounts/').then((res) => {
+        const accounts = await axiosInstance.get('/accounts/').then((res) => {
             const d = res.data;
             this.setState({
                 accts: d,
                 from_acct: this.state.from_acct,
             });
         });
+
+        const setFrom = await this.state.accts.map((v) =>
+            v.account_num == localStorage.getItem('from_acct') ? (
+                localStorage.setItem('limit', v.balance)
+            ) : (
+                console.log("Hello")
+            )
+        );
 
         console.log(localStorage.getItem('bill_id'));
         console.log(localStorage.getItem('to_acct'));
@@ -78,7 +86,7 @@ class BillPayEdit extends React.Component {
     }
     from_acct(e) {
         this.setState({
-            from_acct: e.target.selectedOptions[0].value,
+            from_acct: e.target.selectedOptions[0],
             errorFromAcct: '',
         });
     }
@@ -160,6 +168,16 @@ class BillPayEdit extends React.Component {
         if (this.state.amount <= 0) {
             e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+        } else if (
+            this.state.from_acct !== '' &&
+            this.state.amount >
+            localStorage.getItem('limit')
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorAmount:
+                    'Amount cannot be greater than the account balance.',
+            });
         }
         //validate paydate (make sure date selected isn't in past)
         var today = new Date();
@@ -210,9 +228,6 @@ class BillPayEdit extends React.Component {
                 </option>
             )
         );
-
-        // console.log(String(this.state.from_acct.value))
-        console.log(this.state.amount);
 
         return (
             <div className="BillPayEdit">

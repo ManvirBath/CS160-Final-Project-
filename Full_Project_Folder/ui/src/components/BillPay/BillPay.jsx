@@ -132,7 +132,18 @@ class BillPay extends React.Component {
         if (this.state.amount <= 0) {
             e.preventDefault();
             this.setState({ errorAmount: 'Amount must be greater than 0.00!' });
+        } else if (
+            this.state.from_acct !== '' &&
+            this.state.amount >
+            parseFloat(this.state.from_acct.text.split(' ')[2])
+        ) {
+            e.preventDefault();
+            this.setState({
+                errorAmount:
+                    'Amount cannot be greater than the account balance.',
+            });
         }
+        
         //validate paydate (make sure date selected isn't in past)
         var today = new Date();
         var parts = this.state.pay_date.split('-');
