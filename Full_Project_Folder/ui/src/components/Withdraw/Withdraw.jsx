@@ -79,6 +79,7 @@ class Withdraw extends React.Component {
                 errorAmount: 'Amount must be between 0.01 and 100,000!',
             });
         } else if (
+            this.state.from_acct !== '' &&
             this.state.amount >
             parseFloat(this.state.from_acct.text.split(' ')[2])
         ) {
