@@ -128,11 +128,11 @@ class Register extends React.Component {
             });
         }
 
-        if (this.state.password.length < 10) {
+        if (this.state.password.length < 12) {
             e.preventDefault();
             this.setState({
                 err_password:
-                    'The password must be at least 10 characters long. Please try again',
+                    'The password must be at least 12 characters long. Please try again',
             });
         }
         if (this.state.address.match(/^[.#0-9a-zA-Z ]{2,50}$/gm) == null) {
