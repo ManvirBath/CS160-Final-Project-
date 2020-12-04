@@ -48,9 +48,7 @@ class Account extends React.Component {
 
     render() {
         if (localStorage.getItem('email') == 'dlb.admin@dlb.com') {
-            return (
-                <Redirect to="managerdashboard" />
-            )
+            return <Redirect to="managerdashboard" />;
         }
 
         let acctTransaction = this.state.transaction_arr.map((v, index) => (
@@ -61,7 +59,6 @@ class Account extends React.Component {
                 <th>{v.trans_type}</th>
                 <th>{v.memo}</th>
                 <th>{v.location}</th>
-                <th>{v.check_path}</th>
             </tr>
         ));
         return (
@@ -84,7 +81,6 @@ class Account extends React.Component {
                             <th>Type</th>
                             <th>Memo</th>
                             <th>Location</th>
-                            <th>Check Path</th>
                         </tr>
                         {acctTransaction}
                     </table>
