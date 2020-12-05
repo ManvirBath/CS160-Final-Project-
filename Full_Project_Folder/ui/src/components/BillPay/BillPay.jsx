@@ -60,8 +60,8 @@ class BillPay extends React.Component {
                 .split('.')
                 .map((el, i) => (i ? el.split('').slice(0, 2).join('') : el))
                 .join('.'),
-            errorAmount: '',
         });
+        this.setState({ errorAmount: '' });
     }
     routing_num(e) {
         this.setState({ routing_num: e.target.value });
@@ -232,10 +232,13 @@ class BillPay extends React.Component {
                             <h6 className="error">{this.state.errorRouting}</h6>
 
                             <input
-                                type="text"
+                                type="number"
                                 className="amountInput"
-                                placeholder="Amount"
+                                min="0"
+                                placeholder="$"
                                 onChange={this.amount}
+                                value={this.state.amount}
+                                step=".01"
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorAmount}</h6>
