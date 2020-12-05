@@ -171,7 +171,7 @@ class BillPayEdit extends React.Component {
         } else if (
             this.state.from_acct !== '' &&
             this.state.amount >
-            localStorage.getItem('limit')
+            parseFloat(localStorage.getItem('limit'))
         ) {
             e.preventDefault();
             this.setState({
@@ -230,6 +230,9 @@ class BillPayEdit extends React.Component {
             )
         );
 
+        console.log(this.state.amount)
+        console.log(localStorage.getItem('limit'))
+
         return (
             <div className="BillPayEdit">
                 <UserNavigationBar active={1} />
@@ -273,11 +276,13 @@ class BillPayEdit extends React.Component {
                             <h6 className="error">{this.state.errorRouting}</h6>
 
                             <input
-                                type="text"
+                                type="number"
                                 className="amountInput"
-                                placeholder="Amount"
+                                min="0"
+                                placeholder="$"
                                 onChange={this.amount}
                                 value={this.state.amount}
+                                step=".01"
                                 class="form-control"
                             ></input>
                             <h6 className="error">{this.state.errorAmount}</h6>
