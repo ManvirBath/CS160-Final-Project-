@@ -49,6 +49,7 @@ class BillPayShow extends React.Component {
         localStorage.removeItem('amount');
         localStorage.removeItem('pay_date');
         localStorage.removeItem('frequency');
+        localStorage.removeItem('limit')
         this.setState({ loading: false });
     }
 
@@ -72,7 +73,7 @@ class BillPayShow extends React.Component {
                                 Bill Amount: ${v.amount}
                             </div>
                             <div id="billpayshow-account-number">
-                                Routing Number: {v.account.split('/')[5]}
+                                Routing Number: {v.routing_num}
                             </div>
                             <div id="billpayshow-account-number">
                                 Date: {v.date}
@@ -161,6 +162,7 @@ class BillPayShow extends React.Component {
             );
         }
 
+        console.log(this.state.bill_payments)
         return (
             <div className="BillPayShow">
                 <UserNavigationBar active={1} />

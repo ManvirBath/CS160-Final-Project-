@@ -21,9 +21,7 @@ class BillPayEdit extends React.Component {
 
             to_acct:
                 this.props.location.to_acct || localStorage.getItem('to_acct'),
-            from_acct:
-                this.props.location.from_acct ||
-                localStorage.getItem('from_acct'),
+            from_acct: '',
             routing_num:
                 this.props.location.routing_num ||
                 localStorage.getItem('routing_num'),
@@ -63,14 +61,6 @@ class BillPayEdit extends React.Component {
                 from_acct: this.state.from_acct,
             });
         });
-
-        const setFrom = await this.state.accts.map((v) =>
-            v.account_num == localStorage.getItem('from_acct') ? (
-                localStorage.setItem('limit', v.balance)
-            ) : (
-                console.log("Hello")
-            )
-        );
 
         console.log(localStorage.getItem('bill_id'));
         console.log(localStorage.getItem('to_acct'));
@@ -164,6 +154,16 @@ class BillPayEdit extends React.Component {
                 errorFromAcct: 'Select an account to transfer from',
             });
         }
+
+        //checks if from and to account are the same
+        if (this.state.to_acct === this.state.from_acct.value && 
+            this.state.routing_num == "123456789") {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Source and destination account cannot be the same.',
+            });
+        }
+
         //validates amount
         if (this.state.amount <= 0) {
             e.preventDefault();
@@ -171,7 +171,7 @@ class BillPayEdit extends React.Component {
         } else if (
             this.state.from_acct !== '' &&
             this.state.amount >
-            parseFloat(localStorage.getItem('limit'))
+            parseFloat(this.state.from_acct.text.split(' ')[2])
         ) {
             e.preventDefault();
             this.setState({
@@ -196,21 +196,6 @@ class BillPayEdit extends React.Component {
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
 
-        if (
-            this.state.errorToAcct == '' &&
-            this.state.errorFromAcct == '' &&
-            this.state.errorRouting == '' &&
-            this.state.errorAmount == '' &&
-            this.state.errorDate == ''
-        ) {
-            console.log('Hello');
-            localStorage.setItem('to_acct', this.state.to_acct);
-            localStorage.setItem('from_acct', this.state.from_acct);
-            localStorage.setItem('routing_num', this.state.routing_num);
-            localStorage.setItem('amount', this.state.amount);
-            localStorage.setItem('frequency', this.state.frequency);
-            localStorage.setItem('pay_date', this.state.pay_date);
-        }
     }
 
     render() {
@@ -219,19 +204,20 @@ class BillPayEdit extends React.Component {
         }
 
         let userAccts = this.state.accts.map((v) =>
-            v.account_num == this.state.from_acct ? (
-                <option value={v.account_num} selected>
-                    {v.account_type} {v.account_num}: {v.balance}
-                </option>
-            ) : (
-                <option value={v.account_num}>
-                    {v.account_type} {v.account_num}: {v.balance}
-                </option>
-            )
+            <option value={v.account_num}>
+                {v.account_type} {v.account_num}: {v.balance}
+            </option>
         );
 
         console.log(this.state.amount)
-        console.log(localStorage.getItem('limit'))
+        console.log(this.state.from_acct)
+
+        localStorage.setItem('to_acct', this.state.to_acct);
+        localStorage.setItem('from_acct', this.state.from_acct.value);
+        localStorage.setItem('routing_num', this.state.routing_num);
+        localStorage.setItem('amount', this.state.amount);
+        localStorage.setItem('frequency', this.state.frequency);
+        localStorage.setItem('pay_date', this.state.pay_date);
 
         return (
             <div className="BillPayEdit">
@@ -314,7 +300,7 @@ class BillPayEdit extends React.Component {
                             to={{
                                 pathname: `/billpayedit_confirm/${this.state.id}`,
                                 to_acct: this.state.to_acct,
-                                from_acct: this.state.from_acct,
+                                from_acct: this.state.from_acct.value,
                                 routing_num: this.state.routing_num,
                                 amount: this.state.amount,
                                 pay_date: this.state.pay_date,
