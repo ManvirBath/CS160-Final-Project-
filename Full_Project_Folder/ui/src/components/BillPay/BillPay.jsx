@@ -128,6 +128,16 @@ class BillPay extends React.Component {
                 errorFromAcct: 'Select an account to transfer from',
             });
         }
+
+        //checks if from and to account are the same
+        if (this.state.to_acct === this.state.from_acct.value && 
+            this.state.routing_num == "123456789") {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Source and destination account cannot be the same.',
+            });
+        }
+
         //validates amount
         if (this.state.amount <= 0) {
             e.preventDefault();
@@ -159,21 +169,6 @@ class BillPay extends React.Component {
             e.preventDefault();
             this.setState({ errorDate: 'Select a date to pay bill' });
         }
-
-        if (
-            this.state.errorToAcct == '' &&
-            this.state.errorFromAcct == '' &&
-            this.state.errorRouting == '' &&
-            this.state.errorAmount == '' &&
-            this.state.errorDate == ''
-        ) {
-            localStorage.setItem('to_acct', this.state.to_acct);
-            localStorage.setItem('from_acct', this.state.from_acct.value); // FROM ACCOUNT?? ISSUE!!!
-            localStorage.setItem('routing_num', this.state.routing_num);
-            localStorage.setItem('amount', this.state.amount);
-            localStorage.setItem('frequency', this.state.frequency);
-            localStorage.setItem('pay_date', this.state.pay_date);
-        }
     }
 
     render() {
@@ -191,6 +186,13 @@ class BillPay extends React.Component {
         // console.log(String(this.state.from_acct.value));
         console.log(this.state.amount);
 
+        localStorage.setItem('to_acct', this.state.to_acct);
+        localStorage.setItem('from_acct', this.state.from_acct.value);
+        localStorage.setItem('routing_num', this.state.routing_num);
+        localStorage.setItem('amount', this.state.amount);
+        localStorage.setItem('frequency', this.state.frequency);
+        localStorage.setItem('pay_date', this.state.pay_date);
+        
         return (
             <div className="BillPay">
                 <UserNavigationBar active={1} />
