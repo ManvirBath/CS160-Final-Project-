@@ -180,6 +180,14 @@ class ManagerDashboard extends React.Component {
                     </span>
                 </div>
 
+                <div id="selected-client-info">
+                    <h1>{this.state.selected_client_name}</h1>
+                    <h3>Email: {this.state.selected_client_email}</h3>
+                    <h3>Phone: {this.state.selected_client_phone}</h3>
+                    <h4>Date of Birth: {this.state.selected_client_dob}</h4>
+                    <h4>Address: {this.state.selected_client_addr}</h4>
+                </div>
+
                 <div className="search-area">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="clients">
@@ -196,14 +204,6 @@ class ManagerDashboard extends React.Component {
                         </option>
                         {all_client_email}
                     </select>
-
-                    <div id="selected-client-info">
-                        <h1>{this.state.selected_client_name}</h1>
-                        <h3>Email: {this.state.selected_client_email}</h3>
-                        <h3>Phone: {this.state.selected_client_phone}</h3>
-                        <h4>Date of Birth: {this.state.selected_client_dob}</h4>
-                        <h4>Address: {this.state.selected_client_addr}</h4>
-                    </div>
 
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="accounts">
