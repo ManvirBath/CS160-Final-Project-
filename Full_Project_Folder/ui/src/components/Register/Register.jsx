@@ -260,6 +260,14 @@ class Register extends React.Component {
         }
     }
 
+    _onFocus(e) {
+        e.currentTarget.type = 'date';
+    }
+    _onBlur(e) {
+        e.currentTarget.type = 'text';
+        e.currentTarget.placeholder = 'Date of birth';
+    }
+
     render() {
         return (
             <div className="Register">
@@ -433,12 +441,14 @@ class Register extends React.Component {
                             {this.state.err_phone_number}
                         </div>
                         <input
-                            className="form-control"
-                            type="date"
+                            className="form-control DOB placeholderc"
+                            type="text"
                             name="birthday"
                             id="birthday"
                             label="birthday"
                             placeholder="Date of birth"
+                            onFocus={this._onFocus}
+                            onBlur={this._onBlur}
                             value={this.state.birthday}
                             onChange={this.birthday}
                         />
