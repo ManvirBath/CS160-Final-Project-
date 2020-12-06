@@ -52,12 +52,3 @@
 .Register .register-btn {
     width: 300px;
 }
-.Register input[type='date']:before {
-    width: 100%;
-    content: attr(placeholder);
-    color: gray;
-}
-.Register input[type='date']:hover::before {
-    width: 0%;
-    content: '';
-}
