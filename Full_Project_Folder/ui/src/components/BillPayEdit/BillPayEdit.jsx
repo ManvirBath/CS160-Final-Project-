@@ -160,7 +160,7 @@ class BillPayEdit extends React.Component {
             this.state.routing_num == "123456789") {
             e.preventDefault();
             this.setState({
-                errorToAcct: 'Accounts cannot be the same if within our bank!',
+                errorToAcct: 'Source and destination account cannot be the same.',
             });
         }
 
