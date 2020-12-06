@@ -25,6 +25,11 @@ class ManagerDashboard extends React.Component {
             num_accounts: 0,
             num_transactions: 0,
             loading: true,
+            selected_client_name: '',
+            selected_client_addr: '',
+            selected_client_dob: '',
+            selected_client_email: '',
+            selected_client_phone: '',
         };
         this.selected_client = this.selected_client.bind(this);
         this.selected_acct = this.selected_acct.bind(this);
@@ -77,7 +82,23 @@ class ManagerDashboard extends React.Component {
             let all_info = this.state.all_info;
             for (var index = 0; index < all_info.length; index++) {
                 if (all_info[index].email === this.state.selected_client) {
-                    console.log(all_info[index].accounts);
+                    console.log(all_info[index]);
+                    //console.log(all_info[index].accounts);
+                    this.setState({
+                        selected_client_name: all_info[index].name,
+                    });
+                    this.setState({
+                        selected_client_addr: all_info[index].address,
+                    });
+                    this.setState({
+                        selected_client_dob: all_info[index].birthday,
+                    });
+                    this.setState({
+                        selected_client_email: all_info[index].email,
+                    });
+                    this.setState({
+                        selected_client_phone: all_info[index].phone_number,
+                    });
                     this.setState({
                         selected_client_accts: all_info[index].accounts.map(
                             (x) => x
@@ -102,9 +123,7 @@ class ManagerDashboard extends React.Component {
     }
     render() {
         if (localStorage.getItem('email') != 'dlb.admin@dlb.com') {
-            return (
-                <Redirect to="/userdashboard" />
-            )
+            return <Redirect to="/userdashboard" />;
         }
 
         let all_client_email = this.state.all_clients.map((v) => (
@@ -161,6 +180,14 @@ class ManagerDashboard extends React.Component {
                     </span>
                 </div>
 
+                <div id="selected-client-info">
+                    <h1>{this.state.selected_client_name}</h1>
+                    <h3>Email: {this.state.selected_client_email}</h3>
+                    <h3>Phone: {this.state.selected_client_phone}</h3>
+                    <h4>Date of Birth: {this.state.selected_client_dob}</h4>
+                    <h4>Address: {this.state.selected_client_addr}</h4>
+                </div>
+
                 <div className="search-area">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="clients">
@@ -194,7 +221,6 @@ class ManagerDashboard extends React.Component {
                         {client_accts}
                     </select>
                 </div>
-
                 <div className="query-results">
                     <h3>Transactions</h3>
                     <div className="account-table">
