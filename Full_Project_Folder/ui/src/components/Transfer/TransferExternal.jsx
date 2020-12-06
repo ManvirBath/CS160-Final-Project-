@@ -168,6 +168,15 @@ class TransferExternal extends React.Component {
                 errorAmount: 'Amount cannot be greater than the account balance.',
             });
         }
+
+        //checks if from and to account are the same
+        if (this.state.to_acct === this.state.from_acct.value && 
+            this.state.routing_num == "123456789") {
+            e.preventDefault();
+            this.setState({
+                errorToAcct: 'Accounts cannot be the same if within our bank!',
+            });
+        }
         
         //validates memo
         if (this.state.memo.length >= 50) {
@@ -186,20 +195,6 @@ class TransferExternal extends React.Component {
             this.setState({
                 errorMemo: 'Memo can only contain letters and numbers',
             });
-        }
-
-        if (
-            this.state.errorToAcct == '' &&
-            this.state.errorFromAcct == '' &&
-            this.state.errorAmount == '' &&
-            this.state.errorRouting == '' &&
-            this.state.errorMemo == ''
-        ) {
-            localStorage.setItem('to_acct', this.state.to_acct);
-            localStorage.setItem('from_acct', this.state.from_acct.value);
-            localStorage.setItem('routing_num', this.state.routing_num);
-            localStorage.setItem('amount', this.state.amount);
-            localStorage.setItem('memo', this.state.memo);
         }
     }
 
@@ -236,6 +231,13 @@ class TransferExternal extends React.Component {
         );
 
         console.log(this.state.amount)
+        console.log(this.state.from_acct)
+
+        localStorage.setItem('to_acct', this.state.to_acct);
+        localStorage.setItem('from_acct', this.state.from_acct.value);
+        localStorage.setItem('routing_num', this.state.routing_num);
+        localStorage.setItem('amount', this.state.amount);
+        localStorage.setItem('memo', this.state.memo);
 
         return (
             <div className="TransferExternal">
