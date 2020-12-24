@@ -12,6 +12,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
+from django.conf import settings
 from django.urls import include, path
 from django.conf.urls import url
 from django.contrib import admin
@@ -41,9 +43,12 @@ urlpatterns = [
     path('api/reset_password/', views.reset_password),
     path('api/all_accounts/', views.all_accounts),
     path('api/all_clients/', views.all_clients),
+    path('api/performance_test_regular/', views.performance_test_regular),
+    path('api/performance_test_selected/', views.performance_test_selected),
     path('api/bank_statistics/', views.bank_statistics),
     path('api/client_account_statistics/', views.client_account_statistics),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('__debug__/', include(debug_toolbar.urls)),
 ]
 
 automated_bill()

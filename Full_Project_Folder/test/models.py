@@ -84,28 +84,3 @@ class BillPayment(models.Model):
         ('processed', 'processed'),
     )
     status = models.CharField(max_length=10, default='active', null=False, choices=STATUS)
-
-
-
-"""
-PROVE THAT THIS IS GONNA WORK. 
-POINT OUT SIMPLIFYING THE MODEL AND OVERCOMPLICATING
-- I analyzed the model compared to the website
-
-- Only thing we need is to add or subtract funds from each account --> 
-
-- Talk about internal or external transfer, external it's like withdrawing from the bank 
-and either the other bank is withdrawing it or depositing it
-
-- However you are required to provide an API (e.g. web service) 
-for remote client to credit or debit their account.
-
-   - this is just withdrawing
-
-JUST MAKE THE APIS THEM BEFORE THE MEETING:
-   - withdrawing money
-   - depositing money
-        - from online
-        - from ATM
-   - transfer money
-"""
