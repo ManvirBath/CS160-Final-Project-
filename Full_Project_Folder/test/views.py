@@ -1,4 +1,3 @@
-# from __future__ import unicode_literals
 
 from django.core import serializers
 from django.shortcuts import render, HttpResponse
@@ -33,8 +32,8 @@ Automatic One Time External Transfer (THIS IS AN EXAMPLE OF AUTOMATED BILL PAYME
 # Make sure to validate that if routing number in this bank, the account number is valid
 def automated_bill():
     time.sleep(28800) # PUT LIKE 1-5 SECONDS TO RUN THIS INSTANTLY. THE AUTOMATED BILL PAYMENT IS DEFAULTED TO RUN EVERY 8 HOURS
-    queryset = BillPayment.objects.all()
-    account_queryset = Account.objects.all()
+    queryset = BillPayment.objects.select_related('account').all() # BillPayment.objects.all()
+    account_queryset = Account.objects.select_related('client').all() # Account.objects.all()
     for i in range(len(queryset)):
         cur_bill_pay = queryset[i]
         account = cur_bill_pay.account
@@ -153,9 +152,44 @@ def automated_bill():
         else:
             continue
 
+@api_view(['GET'])
+def performance_test_regular(request):
+    # NUM_EVAL_RUNS = 100
+    print('Regular Query Calls...')
+    # regular_time = 0
+    # for i in range(NUM_EVAL_RUNS):
+    # start = time.perf_counter()
 
-        
-    
+    # Calls done here ...
+    bills = BillPayment.objects.all()
+    accounts = Account.objects.all()
+    clients = Client.objects.all()
+    transactions= Transaction.objects.all()
+
+    # regular_time += time.perf_counter() - start
+
+    # regular_time /= NUM_EVAL_RUNS
+    return render(request, 'perf.html', {'bills': bills, 'accounts': accounts, 'clients': clients, 'transactions': transactions,})
+
+@api_view(['GET'])
+def performance_test_selected(request):
+    # NUM_EVAL_RUNS = 100
+    print('Select Query Calls...')
+    # regular_time = 0
+    # for i in range(NUM_EVAL_RUNS):
+    # start = time.perf_counter()
+
+    # Calls done here ...
+    bills = BillPayment.objects.select_related('account').all()
+    accounts = Account.objects.select_related('client').all()
+    clients = Client.objects.all()
+    transactions= Transaction.objects.select_related('account').all()
+
+    # regular_time += time.perf_counter() - start
+
+    # regular_time /= NUM_EVAL_RUNS
+    return render(request, 'perf.html', {'bills': bills, 'accounts': accounts, 'clients': clients, 'transactions': transactions,})
+    # RESULTS: SELECTED DID 4 MS WITH 4 QUERIES AS REGULAR DID 42 MS 214 QUERIES
 
 
 @api_view(['GET'])
@@ -248,7 +282,7 @@ def client_account_statistics(request):
 # Create your views here.
 @api_view(['GET'])
 def all_accounts(request):  # not including user's accounts
-    account_queryset = Account.objects.all()
+    account_queryset = Account.objects.select_related('client').all() # Account.objects.all()
     try:
         accounts = account_queryset.filter(~Q(client=request.user))
         # data = serializers.serialize('json', list(client))
@@ -362,7 +396,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     API endpoint that allows users to be viewed or edited.
     """
     queryset = Client.objects.all()
-    account_queryset = Account.objects.all()
+    account_queryset = Account.objects.select_related('client').all() # Account.objects.all()
     serializer_class = ClientSerializer
     pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
@@ -508,7 +542,7 @@ class AccountViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows accounts to be viewed or edited.
     """
-    queryset = Account.objects.all()
+    queryset = Account.objects.select_related('client').all() # Account.objects.all()
     serializer_class = AccountSerializer
     pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
@@ -543,7 +577,7 @@ class AccountViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_404_NOT_FOUND)
 
             elif account.client == request.user:
-                transaction_set = Transaction.objects.all()
+                transaction_set = Transaction.objects.select_related('account').all() # Transaction.objects.all()
                 transactions = list(transaction_set.filter(account=account))
 
                 serializer = TransactionSerializer(transactions, many=True, context={'request' : request})
@@ -798,7 +832,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
     API endpoint for list of transactions
     """
-    queryset = Transaction.objects.all()
+    queryset = Transaction.objects.select_related('account').all() # Transaction.objects.all()
     serializer_class = TransactionSerializer
     pagination_class = None
     # permission_classes = [permissions.IsAuthenticated]
@@ -807,8 +841,8 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
     """
     API endpoint for client's bill payments
     """
-    queryset = BillPayment.objects.all()
-    account_queryset = Account.objects.all()
+    queryset = BillPayment.objects.select_related('account').all() # BillPayment.objects.all()
+    account_queryset = Account.objects.select_related('client').all() # Account.objects.all()
     serializer_class = BillPaymentSerializer
     pagination_class = None
     permission_classes = [permissions.IsAuthenticated]
@@ -880,16 +914,3 @@ class BillPaymentViewSet(viewsets.ModelViewSet):
 
         return Response({'status': 'cancel bill payment successful'})
 
-
-
-# TO DO LIST
-"""
-- Create Transfer External API $$$
-- Edit Register API (create address and other fields) Edits For Addresses, Phone Numbers, ZipCode, etc. (For User) $$$
-- Create Automation to do Transfer External Every 5 seconds (Just for one time payment)
-- Do Create, Edit and Delete (Just Making It Cancelled) of Bill Payments $$$
-- NO Deletions for Rest Of the Model. $$$
-- Validating of the forms inputted.
-- Connecting backend with frontends.
----> Optimize Django queries (After semester is over.)
-"""
