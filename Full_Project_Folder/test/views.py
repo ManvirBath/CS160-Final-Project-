@@ -222,6 +222,11 @@ def client_account_statistics(request):
     [
         {
             "email" : client's email
+            "name" : client's full name (in the format firstName lastName)
+            "address" : client's home address (includes house #, street name, city name, state, and postal code)
+            "phone_number" : client's phone number
+            "birthday" : client's birthday (in yyyy-mm-dd format)
+
             "accounts" :
                 [
                     {
@@ -246,11 +251,15 @@ def client_account_statistics(request):
     """
     if request.user.is_staff:
         bank_data = []
-        for client in Client.objects.all():
+        for client in Client.objects.filter(Q(is_staff=False) & Q(is_superuser=False)):
             client_data = {}
             bank_data.append(client_data)
 
             client_data['email'] = client.email
+            client_data['name'] = client.first_name + ' ' + client.last_name
+            client_data['address'] = client.address + ', ' + client.city + ', ' + client.state + ' ' + client.zipcode
+            client_data['phone_number'] = client.phone_num
+            client_data['birthday'] = client.birthday
 
             client_accounts = []
             client_data['accounts'] = client_accounts
